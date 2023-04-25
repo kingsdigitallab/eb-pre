@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Entry search</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/itemsjs@latest/dist/itemsjs.min.js"></script>
+    <style>
+      .hidden {
+        display: none;
+      }
+      label.is-active {
+        background-color: #ff8;
+        font-weight: bold;
+      }
+      .tag-tei {
+        margin-left: 1em;
+      }
+    </style>
+  </head>
+  <body>
+  <section class="section">
+    <div class="container" id="search">
+      <h1 class="title">
+        Search ({{ pagination.total }})
+      </h1>
+      <div class="columns">
+        <form class="column is-3" @submit.prevent.default="onSubmitForm()">
+          <div class="panel">
+            <div class="panel-block">
+              <div class="control">
+                <input class="input is-primary" type="search" v-model="query">
+              </div>
+            </div>
+          </div>
+          <div v-for="facet in facets" class="panel">
+            <p class="panel-heading">{{ facet.title }}</p>
+            <label v-for="option in facet.buckets" :class="{'panel-block': 1, 'is-active': option.selected}">
+              <input v-model="option.selected" @change="onOptionChanged" type="checkbox" class="input hidden">
+              {{ option.key }} ({{ option.doc_count }})
+            </label>
+          </div>
+        </form>
+        <div class="column">
+          <table class="table">
+            <thead>
+              <tr>
+                <td>Title</td>
+                <td>Location</td>
+                <td>Length (Chars)</td>
+              </tr>
+            </thead>
+            <tbody>
+              <template v-for="item in items">
+                <tr>
+                  <td>
+                    <a target="_blank" :href="'https://raw.githubusercontent.com/TU-plogan/kp-editions/main/' + getTextPathFromId(item.index)">{{item.title}}</a>
+                    <span class="tag is-link is-light tag-tei">
+                      <a target="_blank" :href="'https://raw.githubusercontent.com/TU-plogan/kp-editions/main/' + item.index">TEI</a>
+                    </span>
+                  </td>
+                  <td>[{{item.edition}}:{{item.volume}}:{{item.page}}]</td>
+                  <td>{{item.chars}}</td>
+                </tr>
+                <tr>
+                  <td colspan="5">{{ getStringFromLabels(item) }}</td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  </body>
+  <script>
+    const { createApp } = Vue
+
+    createApp({
+      data() {
+        return {
+          message: 'Hello Vue!',
+          items: [],
+          query: '',
+          facets: {},
+          pagination: {}
+        }
+      },
+      mounted() {
+        fetch("../data/index.json")
+          .then(response => response.json())
+          .then(json => {
+            this.entries = json.data
+
+            this.itemsjs = itemsjs(this.entries, {
+              sortings: {
+                name_asc: {
+                  field: 'title',
+                  order: 'asc'
+                }
+              },
+              aggregations: {
+                edition: {
+                  title: 'Edition',
+                  size: 10,
+                  // conjunction: false
+                },
+                /* volume: {
+                  title: 'Volume',
+                  size: 10
+                }, */
+                labels: {
+                  title: 'Terms',
+                  size: 10
+                },
+              },
+              searchableFields: ['title', 'index', 'labels']
+            });
+
+            /**
+            * get filtered list of movies
+            */
+            this.search()
+          });
+      },
+      computed: {
+        filters() {
+          let ret = {};
+          for (let facet of Object.values(this.facets)) {
+            for (let option of facet.buckets) {
+              if (option.selected) {
+                if (!ret[facet.name]) {
+                  ret[facet.name] = []
+                }
+                ret[facet.name].push(option.key)
+              }
+            }
+          }
+          return ret;
+        }
+      },
+      methods: {
+        onSubmitForm() {
+          this.search()
+        },
+        getStringFromLabels(item) {
+          // let ret = []
+          return [...new Set(item.labels)].join(', ')
+        },
+        onOptionChanged() {
+          this.$nextTick(() => {
+            console.log('changed')
+            this.search()
+          })
+        },
+        search() {
+          let res = this.itemsjs.search({
+            per_page: 100,
+            sort: 'name_asc',
+            query: this.query,
+            filters: this.filters
+          })
+          console.log(res)
+          this.items = res.data.items
+          this.facets = res.data.aggregations
+          this.pagination = res.pagination
+          // console.log(this.items)
+        },
+        getTextPathFromId(aid) {
+          return aid.replace('xml', 'txt').replace('XML', 'TXT')
+        }
+      }
+    }).mount('#search')
+  </script>
+</html>

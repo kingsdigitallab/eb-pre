@@ -1,0 +1,8 @@
+# pip uninstall -y -r <(pip freeze)
+# pip install pip-tools
+# pip-compile build/requirements.in > build/requirements.txt
+# pip-sync build/requirements.txt
+tqdm
+lexicalrichness
+intel-tensorflow==2.12.0
+top2vec[sentence_encoders]
