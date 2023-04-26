@@ -5,6 +5,18 @@ from tqdm import tqdm
 
 
 class Index:
+    '''Encapsulate a panda dataframe with one row per entry.
+    Example of a row:
+        index:      eb09/XML/y24/kp-eb0924-073802-0783-v1.xml
+        edition:    9
+        volume:     24
+        page:       738
+        title:      YEMEN
+        labels:     [Ethiopia, Saba, Syria, Rome, Africa, India, E...
+        refs:       [fast:1205830, fast:1241948, fast:1208757, fas...
+        mtld:       74.52
+        chars:      32406
+    '''
     def __init__(self):
         self.corpus = Corpus()
         self.df = None

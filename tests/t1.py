@@ -12,37 +12,36 @@ index = Index()
 index.load_or_create()
 # index.create()
 
-def compute_linguistic_properties():
-    from lexicalrichness import LexicalRichness
+if 0:
+    entries = index.query()
+    import pandas as pd
+    # pd.set_option('display.max_columns', None)
+    # pd.set_option('display.width', 1000)
+    print(entries.head(1))
 
-    # index.df['chars'] = 0
-
-    query = 'edition == 9 and volume == 1'
-    query = None
+def index_linguistic_properties(query=None):
+    '''
+    Calculate linguistic properties of entries and add them to the index.
+    query is a panda query over the index, which entries should be processed.
+        query = 'edition == 9 and volume == 1'
+    Takes ~30 mins for 2 editions.
+    '''
+    from tools import nlp
 
     for aid in tqdm(index.query(query).index):
         # item = index.df.loc[aid]
         text = index.corpus.read_body(aid)
-        lex = LexicalRichness(text)
-        # print(len(text))
-        vocd = msttr = 0
-        try:
-            vocd = lex.vocd(within_sample=100)
-        except ValueError:
-            pass
-        try:
-            msttr = lex.msttr(segment_window=25)
-        except ValueError:
-            pass
-        chars = len(text)
-        # print(lex.words, lex.terms, vocd)
-        index.update(aid, 'chars', chars)
-        index.update(aid, 'vocd', vocd)
-        index.update(aid, 'msttr', msttr)
+        props = nlp.compute_linguistic_properties(text)
+
+        for k, v in props.items():
+            index.update(aid, k, v)
 
     index.save()
 
-# compute_linguistic_properties()
+if 0:
+    index_linguistic_properties()
+
+
 if 0:
     from tools.fast import Fast
     fast = Fast()
@@ -119,7 +118,7 @@ if 0:
         print("-----------")
         print()
 
-if 1:
+if 0:
     from bertopic import BERTopic
     from tools.corpus import Corpus
     corpus = Corpus()
