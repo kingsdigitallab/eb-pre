@@ -3,7 +3,7 @@ from pathlib import Path
 def get_path_from_top_directory(directory_name):
     ret = Path(Path(__file__).parent.parent, Path(directory_name))
     if not ret.is_dir():
-        raise Exception(f'settings.CORPUS_PATH = "{CORPUS_PATH}" is not a directory')
+        raise Exception(f'"{ret}" is not a directory')
     return ret
 
 SUBCORPUS = ['kp-eb0901-\d+-\d+-\d+']
@@ -39,7 +39,7 @@ DOMAINS = {
         'desc': '',
     },
 }
-CORPUS_PATH = get_path_from_top_directory('kp-editions')
 DATA_PATH = get_path_from_top_directory('data')
+CORPUS_PATH = Path(DATA_PATH, Path('kp-editions'))
 INDEX_PATH = Path(DATA_PATH, Path('index.json'))
 
