@@ -19,6 +19,7 @@ class Samples:
             self.df = self.df.rename(columns={'entry term': 'heading'})
             self.df = self.df[self.df['heading'].notnull()]
             self.df['path'] = self.df['URI'].apply(lambda uri: re.sub(r'^.*/main/', '', uri))
+            self.df['domain'] = self.df['domain'].apply(lambda domain: re.sub(r'\W+', '_', domain.lower().strip()))
 
     def get_all(self):
         return [row for i, row in self.df.iterrows()]
