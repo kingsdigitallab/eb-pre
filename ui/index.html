@@ -115,6 +115,10 @@
                   title: 'Terms',
                   size: 10
                 },
+                title: {
+                  title: 'Title',
+                  size: 10
+                },
               },
               searchableFields: ['title', 'index', 'labels']
             });
@@ -156,13 +160,18 @@
           })
         },
         search() {
-          let res = this.itemsjs.search({
+          let options = {
             per_page: 100,
             sort: 'name_asc',
-            query: this.query,
             filters: this.filters
-          })
-          console.log(res)
+          }
+          if (this.query.includes(':')) {
+            options.filters_query = this.query
+          } else {
+            options.query = this.query
+          }
+          let res = this.itemsjs.search(options)
+          // console.log(res)
           this.items = res.data.items
           this.facets = res.data.aggregations
           this.pagination = res.pagination

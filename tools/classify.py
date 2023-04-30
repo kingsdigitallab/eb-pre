@@ -38,6 +38,7 @@ def test_classifier(ClassifierClass):
     return ret
 
 
-from helpers.classifiers.test import Test as Classifier
+# from helpers.classifiers.test import Test as Classifier
+from helpers.classifiers.semantic_search import SemanticSearch as Classifier
 res = test_classifier(Classifier)
 print(f'{Classifier.__name__} - Tested: {res["tested"]}, Accuracy: {res["correct"] / res["tested"]}')

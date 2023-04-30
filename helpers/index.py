@@ -44,6 +44,7 @@ class Index:
         labels = len(ids) * [None]
         refs = len(ids) * [None]
 
+        # TODO: use list of dictionary instead
         for i, aid in tqdm(enumerate(ids)):
             parts = self.corpus.decode_id(aid)
             # print(parts)
