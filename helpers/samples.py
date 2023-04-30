@@ -21,6 +21,14 @@ class Samples:
             self.df['path'] = self.df['URI'].apply(lambda uri: re.sub(r'^.*/main/', '', uri))
             self.df['domain'] = self.df['domain'].apply(lambda domain: re.sub(r'\W+', '_', domain.lower().strip()))
 
+    def add_custom_samples(self):
+        samples = {
+            'heading': ['HYPOCHONDRIASIS'],
+            'path': ['eb09/XML/h12/kp-eb0912-059801-0613-v1.xml'],
+            'domain': ['medecine'],
+        }
+        self.df = self.df.append(samples)
+
     def get_all(self):
         return [row for i, row in self.df.iterrows()]
 
@@ -28,5 +36,6 @@ class Samples:
     def read_all(cls):
         samples = cls()
         samples.load()
+        sample.add_custom_samples()
         return samples.get_all()
 
