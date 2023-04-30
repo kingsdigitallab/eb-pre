@@ -1,12 +1,12 @@
-from top2vec import Top2Vec
 from helpers import settings
 from pathlib import Path
 from tqdm import tqdm
+from .base_classifier import BaseClassifier
 import re
 import json
 
 
-class SemanticSearch:
+class SemanticSearch(BaseClassifier):
     '''
     Classify entries using top2vec semantic search.
     method:
@@ -22,13 +22,16 @@ class SemanticSearch:
         self.model = None
         # path to the loaded model
         self.model_path = None
+        # results of semantic searches on all the pre-defined domains
+        # {domain_string: {'scores': [], 'aids': []}, ...}
+        self.domain_results = None
 
     def get_options(self):
         return dict(
             embedding_model='doc2vec',
             # embedding_model='universal-sentence-encoder', # POOR results
             # embedding_model='distiluse-base-multilingual-cased', # decent results, promotes short entries
-            speed='fast-learn',
+            speed='learn',
             embedding_batch_size=12,  # 32
             use_embedding_model_tokenizer=True,
             workers=12,
@@ -36,57 +39,54 @@ class SemanticSearch:
             documents=[]
         )
 
-    def before_classify(self):
-        top2vec_domains_path = Path(settings.DATA_PATH, "models", 'top2vec_domains.json')
+    def before_classify(self, entry):
 
-        domain_results = {}
+        edition = entry["edition"]
+        options = self.get_options()
+        top2vec_domains_path = self.get_file_path(f'domains_edition_{edition}_{options["speed"]}.json')
 
-        model_filename = 'edition_7--1-doc2vec-deep-learn-True.d2v'
-        path = str(Path(settings.DATA_PATH, "models", model_filename))
-        self.model = Top2Vec.load(path)
-        print('loaded')
+        if top2vec_domains_path.exists():
+            self.domain_results = json.loads(top2vec_domains_path.read_text())
+        else:
+            self.domain_results = {}
+            model = self.load_model(edition)
 
-        aids = []
-        titles = []
-        query = 'edition==7'
-        from helpers.index import Index
-        from helpers.corpus import Corpus
-        corpus = Corpus()
-        index = Index()
-        index.load()
-        for aid in index.query(query).index:
-            body = corpus.read_body(aid)
-            if len(body) > 10:
-                # documents.append(body.lower())
-                aids.append(aid)
-                titles.append(body[:20])
+            for domain_key, domain_def in settings.DOMAINS.items():
+                res = model.search_documents_by_keywords(domain_def['name_modern'], 10000, return_documents=False)
 
-        for domain_key, domain_def in settings.DOMAINS.items():
-            print(domain_key)
-            res = list(zip(*self.model.search_documents_by_keywords(domain_def['name_modern'], 10000)))
+                self.domain_results[domain_key] = {
+                    'scores': res[0].tolist(),
+                    'aids': res[1].tolist(),
+                }
 
-            for r in res[:4]:
-                print(r[0][:20])
-                print(r[2], aids[r[2]], titles[r[2]])
-            exit()
-
-            domain_results[domain_key] = [
-                p.tolist() for p in res
-            ]
-
-        top2vec_domains_path.write_text(json.dumps(domain_results))
+            top2vec_domains_path.write_text(json.dumps(self.domain_results))
 
     def classify(self, entry):
         ret = 'history'
 
-        model = self.load_model(entry['edition'])
+        idx = None
+        self.before_classify(entry)
+        best = {
+            'score': 0,
+            'domain': '',
+        }
+        for domain_key, results in self.domain_results.items():
+            try:
+                idx = results['aids'].index(entry['aid'])
+                score = results['scores'][idx]
+                if score > best['score']:
+                    best['domain'] = domain_key
+                    best['score'] = score
+            except ValueError:
+                pass
 
-        return ret
+        return best['domain']
 
     def load_model(self, edition):
         model_path = self.get_model_path(edition)
         if self.model_path != model_path:
             if model_path.exists():
+                from top2vec import Top2Vec
                 self.model = Top2Vec.load(model_path)
             else:
                 self.model = self.train(edition)
@@ -95,6 +95,8 @@ class SemanticSearch:
         return self.model
 
     def train(self, edition):
+        from top2vec import Top2Vec
+
         from helpers.corpus import Corpus
         corpus = Corpus()
         from helpers.index import Index
@@ -122,17 +124,11 @@ class SemanticSearch:
 
         return model
 
-    def get_model_path(self, edition):
-        return Path(settings.DATA_PATH, "models", self.get_model_filename(edition))
-
     def get_model_filename(self, edition):
         options = self.get_options()
         query = self.get_query(edition)
         query_hash = re.sub(r'\W+', r'_', query)
         return f'{query_hash}-{self.max_docs}-{options["embedding_model"]}-{options["speed"]}-{options["use_embedding_model_tokenizer"]}.t2v'
-
-    def get_query(self, edition):
-        return f'edition=={edition}'
 
 
         # num_topics = model.get_num_topics()

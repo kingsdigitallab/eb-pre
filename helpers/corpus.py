@@ -48,6 +48,7 @@ class Corpus:
         ret = self.read_metadata(aid)
         ret['body'] = self.read_body(aid)
         ret.update(self.decode_id(aid))
+        ret['aid'] = aid
         return ret
 
     def get_terms_from_dom(self, root):

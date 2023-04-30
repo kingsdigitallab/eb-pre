@@ -27,10 +27,11 @@ def test_classifier(ClassifierClass):
         data = corpus.read_body_and_metadata(sample['path'])
         predicted = classifier.classify(data)
         expected = sample['domain'].lower().strip()
-        print(f'{sample["heading"]}: expected: {expected}, predicted: {predicted}')
         ret['tested'] += 1
         if expected == predicted:
             ret['correct'] += 1
+        else:
+            print(f'{sample["heading"]}: expected: {expected}, predicted: {predicted}')
 
         if sample['domain'] not in settings.DOMAINS:
             print(f'Domain not found in index: {sample["domain"]}')
@@ -41,4 +42,4 @@ def test_classifier(ClassifierClass):
 # from helpers.classifiers.test import Test as Classifier
 from helpers.classifiers.semantic_search import SemanticSearch as Classifier
 res = test_classifier(Classifier)
-print(f'{Classifier.__name__} - Tested: {res["tested"]}, Accuracy: {res["correct"] / res["tested"]}')
+print(f'{Classifier.__name__} - Accuracy: {int(res["correct"] / res["tested"] * 100)}% = {res["correct"]} / {res["tested"]}')
