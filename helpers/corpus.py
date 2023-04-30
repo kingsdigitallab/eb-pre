@@ -44,6 +44,11 @@ class Corpus:
         }
         return ret
 
+    def read_body_and_metadata(self, aid):
+        ret = self.read_metadata(aid)
+        ret['body'] = self.read_body(aid)
+        return ret
+
     def get_terms_from_dom(self, root):
         # <term ref="fast:1205830">Ethiopia</term>
         ret = [

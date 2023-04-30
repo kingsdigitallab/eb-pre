@@ -7,7 +7,7 @@ import re
 project_path = Path(__file__).parent.parent
 sys.path.append(str(project_path))
 
-from tools.index import Index
+from helpers.index import Index
 index = Index()
 index.load_or_create()
 # index.create()
@@ -19,31 +19,8 @@ if 0:
     # pd.set_option('display.width', 1000)
     print(entries.head(1))
 
-def index_linguistic_properties(query=None):
-    '''
-    Calculate linguistic properties of entries and add them to the index.
-    query is a panda query over the index, which entries should be processed.
-        query = 'edition == 9 and volume == 1'
-    Takes ~30 mins for 2 editions.
-    '''
-    from tools import nlp
-
-    for aid in tqdm(index.query(query).index):
-        # item = index.df.loc[aid]
-        text = index.corpus.read_body(aid)
-        props = nlp.compute_linguistic_properties(text)
-
-        for k, v in props.items():
-            index.update(aid, k, v)
-
-    index.save()
-
 if 0:
-    index_linguistic_properties()
-
-
-if 0:
-    from tools.fast import Fast
+    from helpers.fast import Fast
     fast = Fast()
     fast.load()
     # fast.getParents('')
@@ -65,7 +42,7 @@ if 0:
     aids = [
         'eb09/XML/h12/kp-eb0912-060001-0615-v1.xml'
     ]
-    from tools.corpus import Corpus
+    from helpers.corpus import Corpus
     corpus = Corpus()
     documents = []
 
@@ -120,7 +97,7 @@ if 0:
 
 if 0:
     from bertopic import BERTopic
-    from tools.corpus import Corpus
+    from helpers.corpus import Corpus
     corpus = Corpus()
     documents = []
 
@@ -155,3 +132,13 @@ if 0:
     print(model.get_topic_info())
 
     model.save(str(Path(project_path, "data", "models", model_filename)))
+
+if 0:
+    from helpers.samples import Samples
+    samples = Samples()
+    samples.load()
+    print(samples.df.head())
+
+    # print(samples.df.columns)
+
+    index.query().column

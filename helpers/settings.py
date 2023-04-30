@@ -25,7 +25,7 @@ DOMAINS = {
     },
     'natural_history': {
         'name': 'Natural History',
-        'name_modern': 'Science',
+        'name_modern': 'science',
         'desc': 'Applied Science',
     },
     'useful_arts': {
@@ -35,11 +35,12 @@ DOMAINS = {
     },
     'fine_arts': {
         'name': 'Fine Arts',
-        'name_modern': 'Arts',
+        'name_modern': 'arts',
         'desc': '',
     },
 }
+
 DATA_PATH = get_path_from_top_directory('data')
 CORPUS_PATH = Path(DATA_PATH, Path('kp-editions'))
 INDEX_PATH = Path(DATA_PATH, Path('index.json'))
-
+SAMPLES_PATH = Path(DATA_PATH, Path('kp_sample_entries.csv'))
