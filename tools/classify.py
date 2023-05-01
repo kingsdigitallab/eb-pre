@@ -40,6 +40,7 @@ def test_classifier(ClassifierClass):
 
 
 # from helpers.classifiers.test import Test as Classifier
-from helpers.classifiers.semantic_search import SemanticSearch as Classifier
+# from helpers.classifiers.title_taxonomy import TitleTaxonomy as Classifier
+from helpers.classifiers.subjects_taxonomy import SubjectsTaxonomy as Classifier
 res = test_classifier(Classifier)
 print(f'{Classifier.__name__} - Accuracy: {int(res["correct"] / res["tested"] * 100)}% = {res["correct"]} / {res["tested"]}')
