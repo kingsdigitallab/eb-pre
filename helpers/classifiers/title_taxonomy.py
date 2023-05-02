@@ -1,17 +1,17 @@
-import difflib
-from ..taxonomies import TaxonomyLCSH
+from ..taxonomies import TaxonomyLCSH, TaxonomyFastTopical
 
 class TitleTaxonomy:
 
     def __init__(self):
-        self.taxonomy = TaxonomyLCSH()
-        self.max_levels = 10
+        self.taxonomy = TaxonomyFastTopical()
+        # self.taxonomy = TaxonomyLCSH()
+        self.max_levels = 5
     
     def classify(self, entry):
         ret = ''
 
         title = entry['title']
-        uri = self.get_uri_from_term_label(title)
+        uri = self.taxonomy.get_nearest_concept(title)
         if uri:
             terms_count = self.taxonomy.count_parent_terms([uri], self.max_levels)
             print([
@@ -23,23 +23,6 @@ class TitleTaxonomy:
             #     print('', self.concepts[parent])
 
         return ret
-
-    def get_uri_from_term_label(self, label):
-        '''Return exact match if it exists in the taxonomy.
-        Otherwise returns the best match based on string similarity.'''
-        ret = self.taxonomy.get_concept(label)
-        if not ret:
-            print(f'WARNING: term label not found in taxonomy: "{label}"')
-        return ret
-
-        label = label.lower().strip()
-        ret = self.concepts.get(label, None)
-        if not ret:
-            print(f'WARNING: term label not found in taxonomy: "{label}"')
-            print('\t', difflib.get_close_matches(label, self.concepts.keys(), 5))
-
-        return ret
-
 
 '''
 issues:

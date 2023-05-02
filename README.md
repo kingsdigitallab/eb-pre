@@ -1,5 +1,10 @@
 https://github.com/TU-plogan/kp-editions
 
+feasibility:
+
+FAST on titles (but need good algo; and not inductive nor aligned to historical domains)
+SEMSEARCH on body (only tested on samples)
+
 # Modules
 
 * domain classifers

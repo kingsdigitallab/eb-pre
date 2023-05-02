@@ -24,6 +24,8 @@ def test_classifier(ClassifierClass):
     classifier = ClassifierClass()
 
     for sample in Samples.read_all():
+        print('-'*40)
+
         data = corpus.read_body_and_metadata(sample['path'])
         predicted = classifier.classify(data)
         expected = sample['domain'].lower().strip()
@@ -40,7 +42,7 @@ def test_classifier(ClassifierClass):
 
 
 # from helpers.classifiers.test import Test as Classifier
-# from helpers.classifiers.title_taxonomy import TitleTaxonomy as Classifier
 from helpers.classifiers.subjects_taxonomy import SubjectsTaxonomy as Classifier
+# from helpers.classifiers.title_taxonomy import TitleTaxonomy as Classifier
 res = test_classifier(Classifier)
 print(f'{Classifier.__name__} - Accuracy: {int(res["correct"] / res["tested"] * 100)}% = {res["correct"]} / {res["tested"]}')
