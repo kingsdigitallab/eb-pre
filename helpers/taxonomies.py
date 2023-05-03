@@ -126,15 +126,16 @@ class TaxonomyLCSH(Taxonomy):
                 if uris[1-i] not in self.related[uris[i]]:
                     self.related[uris[i]].append(uris[1-i])
 
-        res = cur.execute("select ConceptURI, AlternateURI from ALTERNATE")
+        if 1:
+            res = cur.execute("select ConceptURI, AlternateURI from ALTERNATE")
 
-        for rec in res.fetchall():
-            uris = [uri.lower().strip() for uri in rec]
-            for i in [0, 1]:
-                if uris[i] not in self.related:
-                    self.related[uris[i]] = []
-                if uris[1-i] not in self.related[uris[i]]:
-                    self.related[uris[i]].append(uris[1-i])
+            for rec in res.fetchall():
+                uris = [uri.lower().strip() for uri in rec]
+                for i in [0, 1]:
+                    if uris[i] not in self.related:
+                        self.related[uris[i]] = []
+                    if uris[1-i] not in self.related[uris[i]]:
+                        self.related[uris[i]].append(uris[1-i])
 
 
 class TaxonomyFastTopical(Taxonomy):

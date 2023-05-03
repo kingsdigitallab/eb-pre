@@ -4,8 +4,8 @@ from ..taxonomies import TaxonomyLCSH, TaxonomyFastTopical
 class TitleTaxonomy(BaseClassifier):
 
     def __init__(self):
-        self.taxonomy = TaxonomyFastTopical()
-        # self.taxonomy = TaxonomyLCSH()
+        # self.taxonomy = TaxonomyFastTopical()
+        self.taxonomy = TaxonomyLCSH()
         self.max_levels = 5
 
     def get_params(self):
@@ -38,59 +38,5 @@ issues:
 3. related can be related (drift) or broader
 4. may need more than one hop to reach top label
 
-(venv) jeff@j3470:~/src/prj/brit19$ python tools/classify.py 
- law
- surgery, operative—jurisprudence
- evidence (law)
- negligence
- malpractice
- medical laws and legislation
- poisons
- pharmacists
- chemistry, forensic
-MEDICAL JURISPRUDENCE: expected: medicine, predicted: 
- biology
- medicine
- hygiene
- science
- anatomy
-PHYSIOLOGY: expected: medicine, predicted: 
-HISTORY: expected: history, predicted: 
-ROMAN HISTORY: expected: history, predicted: 
- footprints, fossil
- engineering
- kinematics
- machinery
- physics
- dynamics
- motion
- mathematics
-MECHANICS: expected: natural_philosophy, predicted: 
- light
- physics
- photometry
-OPTICS: expected: natural_philosophy, predicted: 
- bas-relief
- decoration and ornament
- statues
- esthetics
- art
-SCULPTURE: expected: fine_arts, predicted: 
-PAINTING: expected: fine_arts, predicted: 
-ARCHITECT: expected: useful_arts, predicted: 
-COTTON MANUFACTURE: expected: useful_arts, predicted: 
- geography
- earth
- geology
-PHYSICAL GEOGRAPHY: expected: natural_history, predicted: 
- natural history
- science
- plants
- nature study
- fixed ideas
-BOTANY: expected: natural_history, predicted: 
-HYPOCHONDRIASIS: expected: medicine, predicted: 
-HAMMER: expected: useful_arts, predicted: 
-RUSSIA: expected: history, predicted: 
-TitleTaxonomy - Accuracy: 0% = 0 / 15
+
 '''

@@ -1,0 +1,2309 @@
+SubjectsTaxonomy - Wed May  3 13:58:45 2023
+========================================
+----------------------------------------
+         americanisms
+           dialects
+         cooperation
+           association and associations
+             assembly, right of
+             civilization
+             sociology
+             social sciences
+             trade and professional associations
+             societies
+             associations
+           profit-sharing
+             welfare institutions for laborers
+             cooperation
+             commerce
+             labor and laboring classes
+             wages
+             capital and labor
+             labor and capital
+           trade-unions
+             association and associations
+             cooperation
+             strikes and lockouts
+             commerce
+             economics
+             trade and professional associations
+             gilds
+             labor and laboring classes
+             friendly societies
+             societies
+             socialism
+             working-men's associations
+             capital and labor
+             labor-unions
+             women in trade-unions
+             collective bargaining
+             unions, trade
+             labor organizations
+             labor, organized
+             labor and capital
+             closed shop
+           commerce
+             balance of trade
+             finance
+             economics
+             tariff
+             capital
+             communication and traffic
+             manufactures
+             exports
+             trade
+             imports
+             routes of trade
+           social sciences
+             civilization
+             sociology
+             economics
+             sciences, social
+           economics
+             commerce
+             social sciences
+             capital
+             political economy
+             distribution of wealth
+             production
+           labor and laboring classes
+             work
+             sociology
+             social conditions
+             social sciences
+             economics
+             gilds
+             poor
+             socialism
+             capital and labor
+             laborers
+             labor and capital
+           socialism
+             cooperation
+             sociology
+             indium—bibi
+             equality
+             social sciences
+             collectivism
+             economics
+             political science
+             labor and laboring classes
+             communism
+             democracy
+             land, nationalization of
+             social democracy
+             paternalism
+           solidarity
+             sociology, christian
+             social conditions
+             social sciences
+             economics
+             socialism
+           distribution, cooperative
+             cooperation
+           capital and labor
+             cooperation
+             strikes and lockouts
+             employers' associations
+             profit-sharing
+             trade-unions
+             employers' liability
+             industry—hist.
+             labor and laboring classes
+             wages
+             arbitration, industrial
+           production, cooperative
+             cooperation
+           cooperative stores
+             cooperation
+           labor and capital
+             industry—history
+             cooperation
+             strikes and lockouts
+             employers' associations
+             profit-sharing
+             trade-unions
+             employers' liability
+             labor and laboring classes
+             capital
+             wages
+             arbitration, industrial
+         germans
+         essays
+           literature
+             language and languages
+             philology
+             belles-lettres
+         mosaics
+           decoration and ornament
+             art, decorative
+             arabesques
+             art
+             architecture
+             design, decorative
+             painting, decorative
+             nature in ornament
+             ornament
+           art, decorative
+             decoration and ornament
+             design, decorative
+             decorative art
+             painting, decorative
+           art
+             civilization
+             esthetics
+             iconography
+             fine arts
+           mural painting and decoration
+             painting
+             decoration and ornament
+             mosaics
+             frescoes
+             walls
+             house decoration
+             paper-hanging
+             painting, decorative
+             wall decoration
+             wall-painting
+         stomach
+           abdomen
+             viscera
+         death
+           biology
+             natural history
+             evolution
+             life
+             science
+             epigenesis
+           life
+             biology
+           mortality
+             death
+             vital statistics
+             death—causes
+             population
+             burial statistics
+             death rate
+             mortuary statistics
+           eschatology
+             theology
+             future life
+             immortality
+           future life
+             heaven
+             soul
+             eschatology
+             immortality
+             purgatory
+             death
+             future punishment
+             resurrection
+             elysium
+             retribution
+             hades
+             eternal life
+         health
+           hygiene
+             medicine
+             climatology, medical
+             woman—health and hygiene
+             sanitation
+             longevity
+             cleanliness
+             health
+             preventive medicine
+             medicine, preventive
+         water
+           hydrology
+             water
+[('cooperation', 9), ('economics', 7), ('social sciences', 6)]
+DIFF MEDICAL JURISPRUDENCE: expected: medicine, predicted: 
+----------------------------------------
+         blood
+           anemia
+             anaemia
+           haematology
+             blood
+           hematology
+             blood
+         matter
+           atoms
+             chemistry, physical and theoretical
+             matter, constitution of
+             stereochemistry
+           gravitation
+             physics
+             matter, properties of
+             centrifugal force
+           physics
+             science
+             dynamics
+             natural science
+           dynamics
+             footprints, fossil
+             mechanics, analytic
+             statics
+             physics
+             mechanics
+             mathematics
+             lagrange's equations
+             kinetics
+         founding
+           iron-founding
+             founding
+             cast-iron
+             casting
+           pattern-making
+             iron-founding
+             founding
+           metal-work
+             decoration and ornament
+             goldsmithing
+             brass-founding
+             metals—coloring
+             bronze
+             silversmithing
+             metal industries
+           brass-founding
+             founding
+           cast-iron
+             iron-founding
+             iron
+             pig-iron
+           bronze
+             founding
+             tin
+           moulding (metal)
+             founding
+           molding (metal)
+             founding
+           casting
+             iron-founding
+             founding
+             plaster casts
+             steel castings
+           foundry practice
+             pattern-making
+             founding
+         bones
+           skeleton
+             bones
+             anatomy, comparative
+             osteology
+           bone
+             skeleton
+             bones
+           dislocations
+             surgery
+             joints
+             bones
+             luxations
+           fractures
+             surgery
+             bones
+           physiology
+             biology
+             medicine
+             hygiene
+             science
+             anatomy
+             body, human
+             human body
+           osteology
+             skeleton
+             bones
+         mayos
+           mayo indians
+             indians of mexico
+             mayos
+         caucasians
+           caucasie race
+             kaukasic race
+             caucasians
+         bells
+           archaeology
+             civilization
+             man, prehistoric
+             anthropology, prehistoric
+             anthropology
+             classical antiquities
+             art
+             stone age
+             ethnology
+             philology
+             history, ancient
+             history
+             ruins
+             antiquities
+             excavations
+             prehistoric antiquities
+             paleo-ethnology
+           chimes and chiming
+             church music
+             liturgies
+             bells
+           churches
+           church bells
+             bells
+         greeks
+           mediterranean race
+             latin peoples
+             caucasie race
+           aryans
+             caucasie race
+             indo-germanic peoples
+             indo-europeans
+         americanisms
+           dialects
+[('founding', 9), ('bones', 6), ('iron-founding', 4)]
+DIFF PHYSIOLOGY: expected: medicine, predicted: 
+----------------------------------------
+         power
+           mechanics
+             footprints, fossil
+             engineering
+             kinematics
+             machinery
+             physics
+             dynamics
+             motion
+             mathematics
+           mechanical engineering
+             engineering
+             chemical engineering
+             civil engineering
+             machinery
+             industrial arts
+             steam engineering
+             engineering, mechanical
+             applied mechanics
+         christ
+           jesus christ
+             incarnation
+             theology
+             messiah
+             god
+             christianity
+             trinity
+             christology
+             christ
+         religion
+           theology
+             religion
+             god
+             christianity
+             creation
+           god
+             religion
+             theology
+             deism
+             theism
+             philosophy
+             christianity
+             metaphysics
+             trinity
+             creation
+           religions
+             belief
+             civilization
+             religion
+             denominations, religious
+             religious denominations
+         bishops
+           episcopacy
+             bishops
+             apostolic succession
+             church of england
+             priests
+             church polity
+           christian biography
+             biography
+             martyrs
+             religious biography
+             church biography
+             ecclesiastical biography
+           clergy
+             priests
+             church polity
+             theology, pastoral
+             christian biography
+             catholic church—clergy
+             pastors
+             ministers of the gospel
+             rectors
+           archbishops
+             bishops
+         christianity
+           deism
+             atheism
+             religion
+             theology
+             theism
+             god
+             christianity
+             rationalism
+             pantheism
+           theism
+             atheism
+             religion
+             theology
+             pluralism
+             deism
+             god
+             philosophy
+             christianity
+             rationalism
+             pantheism
+         jews
+           church history
+             history
+             religious history
+             ecclesiastical history
+             history, church
+           ghetto
+             jews
+           hebrews
+             jews
+         turks
+         goths
+           visigoths
+             ostrogoths
+             goths
+[('christianity', 7), ('religion', 6), ('theology', 6)]
+DIFF HISTORY: expected: history, predicted: 
+----------------------------------------
+         cæsars
+           roman emperors
+             emperors
+             decennalia
+             cæsars
+             sovereigns
+         gauls
+           galathea (corvette) galatians
+         goths
+           visigoths
+             ostrogoths
+             goths
+         war
+           neutrality, armed
+             peace
+             war
+           peace
+             neutrality, armed
+             arbitration, international
+             war
+             social sciences
+             disarmament
+             international law and relations
+             ethics
+           hostages
+             war
+           social sciences
+             civilization
+             sociology
+             economics
+             sciences, social
+           military art and science
+             soldiers
+             armies
+             naval art and science
+             war
+             strategy
+             drill and minor tactics
+             military power
+             military science
+             army
+             fighting
+           competition, international
+             colonies
+             tariff
+             colonization
+             international competition
+           international law and relations
+             neutrality, armed
+             consular law
+             naturalization
+             diplomacy
+             peace
+             natural law
+             arbitration, international
+             war
+             hostages
+             commerce
+             disarmament
+             political science
+             maritime law
+             diplomatie and consular service
+             pirates
+             public law
+             nations, law of
+             law, international
+             international relations
+             law of nations
+           ethics
+             civilization
+             life
+             natural law
+             theology
+             conduct of life
+             virtue
+             philosophy
+             duty
+             ethology
+             ethics, practical
+             moral philosophy
+             philosophy, moral
+             morals
+             science, moral
+             deontology
+           hostilities
+             war, declaration of
+             war
+             war, maritime (international law)
+           wars
+             military history
+             war
+             naval history
+           fighting
+             fencing
+             naval art and science
+             tournaments
+             boxing
+             war
+             bull-fights
+             military art and science
+             gladiators
+             dueling
+         death
+           biology
+             natural history
+             evolution
+             life
+             science
+             epigenesis
+           life
+             biology
+           mortality
+             death
+             vital statistics
+             death—causes
+             population
+             burial statistics
+             death rate
+             mortuary statistics
+           eschatology
+             theology
+             future life
+             immortality
+           future life
+             heaven
+             soul
+             eschatology
+             immortality
+             purgatory
+             death
+             future punishment
+             resurrection
+             elysium
+             retribution
+             hades
+             eternal life
+         head
+           skull
+             skeleton
+             bones
+             head
+             cranium
+           brain
+             craniology
+             head
+             somatology
+             nervous system
+         man
+           anthropology
+             civilization
+             cliff-dwellings
+             science
+             ethnology
+             man
+           primates
+             mammals
+             quadrumana
+           creation
+             cosmology
+             cosmogony
+             evolution
+             earth
+             universe
+             nebular hypothesis
+             religion and science
+             teleology
+             god
+             philosophy
+             geology
+             natural theology
+             man
+         law
+           legislation
+             law
+             statutes
+             political science
+           political science
+             education of princes
+             state, the
+             social sciences
+             constitutional history
+             constitutions
+             democracy
+             history
+             civics
+             government
+             science, political
+             administration
+             civil government
+             commonwealth, the
+           jurisprudence
+             natural law
+             political science
+             law
+[('war', 9), ('political science', 4), ('death', 3)]
+DIFF ROMAN HISTORY: expected: history, predicted: 
+----------------------------------------
+         memoirs
+           biography
+             genealogy
+             history
+             memoirs
+           autobiography
+             biography
+             memoirs
+         journalism
+           literature
+             language and languages
+             philology
+             belles-lettres
+           periodicals
+             newspapers
+             press
+             magazines
+           reporters and reporting
+             journalism
+             newspapers
+             interviewing
+           authorship
+             literature
+             editing
+             writing (authorship)
+             literature as a profession
+           press
+             journalism
+             literature
+             liberty of the press
+             newspapers
+             periodicals
+           editing
+             journalism
+             authorship
+           writing (authorship)
+             journalism
+             authorship
+           literature as a profession
+             journalism
+             litterateurs
+             journalists
+             authors
+             authorship
+           interviewing
+             journalism
+             reporters and reporting
+         art
+           civilization
+             sociology
+             history—philosophy
+             social sciences
+             anthropology
+             political science
+             education
+             ethnology
+             culture
+             history, ancient
+             progress
+             history
+           esthetics
+             art
+             beautiful, the
+             aesthetics
+             beauty
+             taste (esthetics)
+           iconography
+             art
+             christian art and symbolism
+             portraits
+           fine arts
+             art
+         parents
+           family
+             sociology
+             domestic relations
+             home
+             marriage
+             matriarchy
+             patriarchy
+             kinship
+         motion
+           footprints, fossil
+             paleontology
+             ichnology
+           kinematics
+             mechanics, analytic
+             physics
+             dynamics
+             mechanics
+             motion
+             mathematics
+           physics
+             science
+             dynamics
+             natural science
+           dynamics
+             footprints, fossil
+             mechanics, analytic
+             statics
+             physics
+             mechanics
+             mathematics
+             lagrange's equations
+             kinetics
+           mechanics
+             footprints, fossil
+             engineering
+             kinematics
+             machinery
+             physics
+             dynamics
+             motion
+             mathematics
+           kinetics
+             mechanics, analytic
+             dynamics
+             motion
+         equality
+           sociology
+             social sciences
+             social science
+             science, social
+           class distinction
+             sociology
+             manners and customs
+             equality
+             social sciences
+             social distinctions
+           social sciences
+             civilization
+             sociology
+             economics
+             sciences, social
+           political science
+             education of princes
+             state, the
+             social sciences
+             constitutional history
+             constitutions
+             democracy
+             history
+             civics
+             government
+             science, political
+             administration
+             civil government
+             commonwealth, the
+           democracy
+             monarchy
+             republics
+             despotism
+             equality
+             representative government and representation
+             state, the
+             social sciences
+             constitutional history
+             political science
+             aristocracy
+             liberty
+             self-government
+             free institutions
+           socialism
+             cooperation
+             sociology
+             indium—bibi
+             equality
+             social sciences
+             collectivism
+             economics
+             political science
+             labor and laboring classes
+             communism
+             democracy
+             land, nationalization of
+             social democracy
+             paternalism
+           social equality
+             equality
+         friction
+           machinery
+             engineering
+             mills and mill-work
+             industrial arts
+             motors
+             power transmission
+             mechanics
+             technology
+             manufactures
+             mechanical engineering
+             tools
+             power (mechanics)
+         wheels
+           vegetarianism
+             vegetables
+             diet
+             food
+             animal food
+         numbers
+           algebra
+             calculus of differences
+             mathematics
+         winds
+           weather
+             meteorology
+             climatology
+           storms
+             ocean
+             weather
+             rain and rainfall
+             typhoons
+             cyclones
+             hurricanes
+             meteorology
+             tornadoes
+             blizzards
+             gales
+           navigation
+             steam-navigation
+             ocean
+             hydrography
+             hydrographic surveying
+             locomotion
+             ships
+             naval art and science
+             pilots and pilotage
+             astronomy, spherical and practical
+             nautical astronomy
+             marine service
+             sailing
+           meteorology
+             weather
+             storms
+             geophysics
+             earth
+             rain and rainfall
+             physics
+             science
+             atmosphere
+             climatology
+             physical geography
+           physical geography
+             geography
+             earth
+             geology
+             geography, physical
+             physiography
+           currents
+             winds
+             ocean currents
+             electric currents
+           gales
+             winds
+             storms
+[('journalism', 7), ('social sciences', 7), ('sociology', 6)]
+DIFF MECHANICS: expected: natural_philosophy, predicted: 
+----------------------------------------
+         light
+           waves
+             ocean
+             water
+             vibration
+             hydrodynamics
+           radiation
+             waves
+             optics
+             light
+             physics
+           optics
+             light
+             physics
+             photometry
+           vibration
+             sound, velocity of
+             sound
+             elastic solids
+             mechanics
+           physics
+             science
+             dynamics
+             natural science
+           spectrum analysis
+             chemistry, analytic—qualitative
+             radiation
+             chemistry
+             wave-motion, theory of
+             optics
+             light
+             sun
+             astronomy
+             astrophysics
+             spectroscope
+             absorption spectra
+             spectra
+             spectroscopy
+             analysis, spectrum
+             astronomical spectroscopy
+           electromagnetic theory
+             magneto-optics
+             electrons
+             light, wave theory of
+             magnetism
+             optics. physical
+             light, electromagnetic theory of
+           photometry
+             electric light
+             optics
+             light
+         lighting
+           sanitation, household
+             plumbing
+             household sanitation
+           domestic engineering
+           gas-lighting
+             lighting
+           illumination
+             lighting
+         journalism
+           literature
+             language and languages
+             philology
+             belles-lettres
+           periodicals
+             newspapers
+             press
+             magazines
+           reporters and reporting
+             journalism
+             newspapers
+             interviewing
+           authorship
+             literature
+             editing
+             writing (authorship)
+             literature as a profession
+           press
+             journalism
+             literature
+             liberty of the press
+             newspapers
+             periodicals
+           editing
+             journalism
+             authorship
+           writing (authorship)
+             journalism
+             authorship
+           literature as a profession
+             journalism
+             litterateurs
+             journalists
+             authors
+             authorship
+           interviewing
+             journalism
+             reporters and reporting
+         crystallization
+           chemistry, physical and theoretical
+             physics
+             stereochemistry
+             matter, properties of
+             theoretical chemistry
+             stoichiometry
+             physical chemistry
+         founding
+           iron-founding
+             founding
+             cast-iron
+             casting
+           pattern-making
+             iron-founding
+             founding
+           metal-work
+             decoration and ornament
+             goldsmithing
+             brass-founding
+             metals—coloring
+             bronze
+             silversmithing
+             metal industries
+           brass-founding
+             founding
+           cast-iron
+             iron-founding
+             iron
+             pig-iron
+           bronze
+             founding
+             tin
+           moulding (metal)
+             founding
+           molding (metal)
+             founding
+           casting
+             iron-founding
+             founding
+             plaster casts
+             steel castings
+           foundry practice
+             pattern-making
+             founding
+         plating
+           silver-plating
+             plating
+         plate
+           silverware
+             silver-plated ware
+             plate
+             silver
+           hall-marks
+             silverware
+             plate
+             silver—standards of fineness
+             goldsmithing
+             silversmithing
+             gold—standards of fineness
+             marks on plate
+           goldsmithing
+             jewelry
+             gold
+             hall-marks
+             metal-work
+           silversmithing
+             jewelry
+             hall-marks
+             metal-work
+           gold plate
+             plate
+[('founding', 9), ('journalism', 7), ('light', 5)]
+DIFF OPTICS: expected: natural_philosophy, predicted: 
+----------------------------------------
+         egyptians
+         scythians
+         indians
+           cliff-dwellings
+             archaeology
+             indians of north america
+           american aborigines
+             indians
+         amazons
+           women as soldiers
+         greeks
+           mediterranean race
+             latin peoples
+             caucasie race
+           aryans
+             caucasie race
+             indo-germanic peoples
+             indo-europeans
+         artists
+           painters
+         work
+         art
+           civilization
+             sociology
+             history—philosophy
+             social sciences
+             anthropology
+             political science
+             education
+             ethnology
+             culture
+             history, ancient
+             progress
+             history
+           esthetics
+             art
+             beautiful, the
+             aesthetics
+             beauty
+             taste (esthetics)
+           iconography
+             art
+             christian art and symbolism
+             portraits
+           fine arts
+             art
+         modeling
+           sculpture
+             bas-relief
+             decoration and ornament
+             statues
+             esthetics
+             art
+           clay
+             bricks
+             soils
+           sculpture—technique
+             modeling
+             molding (clay, plaster, etc.)
+           manual training
+             sloyd
+             industrial arts
+             education
+             technical education
+             schools
+             industrial education
+             education, industrial
+             industrial schools
+             training, manual
+           clay modeling
+             modeling
+           molding (clay, plaster, etc.)
+             sculpture—technique
+             modeling
+         hair
+           beauty, personal
+             cosmetics
+             face
+             woman—health and hygiene
+             toilet
+             hygiene
+             complexion
+             personal beauty
+             beauty
+           scalp
+             hair
+             skin
+           head
+             skull
+             brain
+[('art', 5), ('modeling', 4), ('indians', 2)]
+DIFF SCULPTURE: expected: fine_arts, predicted: 
+----------------------------------------
+         man
+           anthropology
+             civilization
+             cliff-dwellings
+             science
+             ethnology
+             man
+           primates
+             mammals
+             quadrumana
+           creation
+             cosmology
+             cosmogony
+             evolution
+             earth
+             universe
+             nebular hypothesis
+             religion and science
+             teleology
+             god
+             philosophy
+             geology
+             natural theology
+             man
+         painters
+         work
+         light
+           waves
+             ocean
+             water
+             vibration
+             hydrodynamics
+           radiation
+             waves
+             optics
+             light
+             physics
+           optics
+             light
+             physics
+             photometry
+           vibration
+             sound, velocity of
+             sound
+             elastic solids
+             mechanics
+           physics
+             science
+             dynamics
+             natural science
+           spectrum analysis
+             chemistry, analytic—qualitative
+             radiation
+             chemistry
+             wave-motion, theory of
+             optics
+             light
+             sun
+             astronomy
+             astrophysics
+             spectroscope
+             absorption spectra
+             spectra
+             spectroscopy
+             analysis, spectrum
+             astronomical spectroscopy
+           electromagnetic theory
+             magneto-optics
+             electrons
+             light, wave theory of
+             magnetism
+             optics. physical
+             light, electromagnetic theory of
+           photometry
+             electric light
+             optics
+             light
+         lighting
+           sanitation, household
+             plumbing
+             household sanitation
+           domestic engineering
+           gas-lighting
+             lighting
+           illumination
+             lighting
+         greeks
+           mediterranean race
+             latin peoples
+             caucasie race
+           aryans
+             caucasie race
+             indo-germanic peoples
+             indo-europeans
+         egyptians
+         spaniards
+         chapels
+           church architecture
+             chapels
+             christian antiquities
+             christian art and symbolism
+             architecture
+             churches
+             architecture, ecclesiastical
+             ecclesiastical architecture
+             religious art
+         schools
+           public schools
+             education
+             schools
+             grammar schools
+             rural schools
+             country schools
+             secondary schools
+             free schools
+           education
+             learning and scholarship
+             civilization
+             social sciences
+             teaching
+             students
+             public schools
+             coeducation
+             mental discipline
+             culture
+             schools
+             instruction
+             discipline, mental
+             pedagogy
+           rural schools
+             public schools
+             schools
+           country schools
+             public schools
+             schools
+[('light', 5), ('schools', 5), ('optics', 4)]
+DIFF PAINTING: expected: fine_arts, predicted: 
+----------------------------------------
+         heights
+           altitudes
+             physical geography
+             elevations
+             heights
+         columns
+           architecture
+             building
+             engineering
+             art
+             construction
+             architectural engineering
+           pillars
+             columns
+         founding
+           iron-founding
+             founding
+             cast-iron
+             casting
+           pattern-making
+             iron-founding
+             founding
+           metal-work
+             decoration and ornament
+             goldsmithing
+             brass-founding
+             metals—coloring
+             bronze
+             silversmithing
+             metal industries
+           brass-founding
+             founding
+           cast-iron
+             iron-founding
+             iron
+             pig-iron
+           bronze
+             founding
+             tin
+           moulding (metal)
+             founding
+           molding (metal)
+             founding
+           casting
+             iron-founding
+             founding
+             plaster casts
+             steel castings
+           foundry practice
+             pattern-making
+             founding
+         manners
+           courtesy
+             conduct of life
+             etiquette
+             ethics
+             politeness
+             gentlemen
+             manners
+           etiquette
+             courtesy
+             manners and customs
+             conduct of life
+             entertaining
+             politeness
+             condolence, etiquette of
+             usages
+             gentlemen
+             ceremonies
+             manners
+             behavior
+         periodicals
+           newspapers
+             journalism
+             periodicals
+             press
+           press
+             journalism
+             literature
+             liberty of the press
+             newspapers
+             periodicals
+           magazines
+             periodicals
+         greeks
+           mediterranean race
+             latin peoples
+             caucasie race
+           aryans
+             caucasie race
+             indo-germanic peoples
+             indo-europeans
+         egyptians
+         celtic
+           keltic
+             celtic
+         christianity
+           jesus christ
+             incarnation
+             theology
+             messiah
+             god
+             christianity
+             trinity
+             christology
+             christ
+           theology
+             religion
+             god
+             christianity
+             creation
+           deism
+             atheism
+             religion
+             theology
+             theism
+             god
+             christianity
+             rationalism
+             pantheism
+           theism
+             atheism
+             religion
+             theology
+             pluralism
+             deism
+             god
+             philosophy
+             christianity
+             rationalism
+             pantheism
+           god
+             religion
+             theology
+             deism
+             theism
+             philosophy
+             christianity
+             metaphysics
+             trinity
+             creation
+           religions
+             belief
+             civilization
+             religion
+             denominations, religious
+             religious denominations
+         wrens
+[('founding', 9), ('christianity', 6), ('theology', 5)]
+DIFF ARCHITECT: expected: useful_arts, predicted: 
+----------------------------------------
+         cotton
+           fibers
+             hemp
+             cordage
+             cotton
+             fixed ideas
+           yarn
+             textile industry and fabrics
+             wool
+         wages
+           piece-work
+             labor and laboring classes
+             sweating system
+           prices
+             supply and demand
+             value
+             cost
+             commerce
+             social sciences
+             finance
+             money
+             cost and standard of living
+             consumption (economics)
+             manufactures
+             wages
+             justum pretium
+           economics
+             commerce
+             social sciences
+             capital
+             political economy
+             distribution of wealth
+             production
+           cost and standard of living
+             saving and thrift
+             wealth
+             prices
+             social conditions
+             domestic economy
+             poor
+             labor and laboring classes
+             wages
+             social problems
+             living. cost of
+             standard of living
+             food, cost of
+             living. standard of
+             household expenses
+             comfort, standard of
+           labor and laboring classes
+             work
+             sociology
+             social conditions
+             social sciences
+             economics
+             gilds
+             poor
+             socialism
+             capital and labor
+             laborers
+             labor and capital
+           sweating system
+             home labor
+             labor and laboring classes
+             manufactures
+           servants
+             master and servant
+             domestic economy
+             table
+             labor and laboring classes
+             housemaids
+             domestic service
+             domestics
+           labor contract
+             piece-work
+             labor representation in regulation of industry
+             labor laws and legislation
+             wages
+             contracts
+             collective bargaining
+           compensation
+             bounties
+             damages
+             wages
+             pensions
+           capital and labor
+             cooperation
+             strikes and lockouts
+             employers' associations
+             profit-sharing
+             trade-unions
+             employers' liability
+             industry—hist.
+             labor and laboring classes
+             wages
+             arbitration, industrial
+           wage-fund
+             wages
+           labor and capital
+             industry—history
+             cooperation
+             strikes and lockouts
+             employers' associations
+             profit-sharing
+             trade-unions
+             employers' liability
+             labor and laboring classes
+             capital
+             wages
+             arbitration, industrial
+         periodicals
+           newspapers
+             journalism
+             periodicals
+             press
+           press
+             journalism
+             literature
+             liberty of the press
+             newspapers
+             periodicals
+           magazines
+             periodicals
+         wool
+         state
+           administration
+             civil service
+             state
+             political science
+             administration of estates
+             administrative law
+             administrative division
+         swiss
+         scotch
+         irish
+         egyptians
+         americanisms
+           dialects
+[('wages', 8), ('labor and laboring classes', 7), ('periodicals', 4)]
+DIFF COTTON MANUFACTURE: expected: useful_arts, predicted: 
+----------------------------------------
+         caucasians
+           caucasie race
+             kaukasic race
+             caucasians
+         journalism
+           literature
+             language and languages
+             philology
+             belles-lettres
+           periodicals
+             newspapers
+             press
+             magazines
+           reporters and reporting
+             journalism
+             newspapers
+             interviewing
+           authorship
+             literature
+             editing
+             writing (authorship)
+             literature as a profession
+           press
+             journalism
+             literature
+             liberty of the press
+             newspapers
+             periodicals
+           editing
+             journalism
+             authorship
+           writing (authorship)
+             journalism
+             authorship
+           literature as a profession
+             journalism
+             litterateurs
+             journalists
+             authors
+             authorship
+           interviewing
+             journalism
+             reporters and reporting
+         wells
+           water
+             hydrology
+           hydraulic engineering
+             water-supply engineering
+             water
+             engineering
+             hydraulics
+             civil engineering
+             rivers
+             hydromechanics
+             water-power
+             fixed ideas
+             engineering, hydraulic
+           water-supply
+             water, pollution of
+             water-storage
+             reservoirs
+             sanitary engineering
+             hygiene, public
+             sanitation
+             wells
+             pumping stations
+             filter-presses
+             natural resources
+             waterworks
+           springs
+             water
+             geysers
+             water, underground
+             wells
+             hot springs
+             thermal waters
+           water, underground
+             wells
+             physical geography
+             underground water
+             subterranean water
+             water, subterranean
+             ground water
+         deer
+           ruminantia
+             mammals
+           cervidae
+             deer
+           cervus
+             deer
+         bear
+         air
+           hygiene
+             medicine
+             climatology, medical
+             woman—health and hygiene
+             sanitation
+             longevity
+             cleanliness
+             health
+             preventive medicine
+             medicine, preventive
+           meteorology
+             weather
+             storms
+             geophysics
+             earth
+             rain and rainfall
+             physics
+             science
+             atmosphere
+             climatology
+             physical geography
+           atmosphere
+             earth
+             meteorology
+         earth
+           cosmology
+             philosophy of nature
+             earth
+             universe
+             philosophy
+             creation
+           solar system
+             stars
+             sun
+             astronomy
+           geology
+             natural history
+             earth
+             petrology
+             science
+             rocks
+             creation
+             physiography
+             geognosy
+           astronomy
+             cosmology
+             science
+             constellations
+           physical geography
+             geography
+             earth
+             geology
+             geography, physical
+             physiography
+           creation
+             cosmology
+             cosmogony
+             evolution
+             earth
+             universe
+             nebular hypothesis
+             religion and science
+             teleology
+             god
+             philosophy
+             geology
+             natural theology
+             man
+         ocean
+           meteorology, maritime
+             ocean
+             maritime meteorology
+           thalassography
+             ocean
+           sea
+             ocean
+           oceanography
+             ocean
+         land
+           social sciences
+             civilization
+             sociology
+             economics
+             sciences, social
+           economics
+             commerce
+             social sciences
+             capital
+             political economy
+             distribution of wealth
+             production
+           agriculture
+             industrial arts
+             land
+             planting
+             husbandry
+             farming
+         founding
+           iron-founding
+             founding
+             cast-iron
+             casting
+           pattern-making
+             iron-founding
+             founding
+           metal-work
+             decoration and ornament
+             goldsmithing
+             brass-founding
+             metals—coloring
+             bronze
+             silversmithing
+             metal industries
+           brass-founding
+             founding
+           cast-iron
+             iron-founding
+             iron
+             pig-iron
+           bronze
+             founding
+             tin
+           moulding (metal)
+             founding
+           molding (metal)
+             founding
+           casting
+             iron-founding
+             founding
+             plaster casts
+             steel castings
+           foundry practice
+             pattern-making
+             founding
+[('founding', 9), ('earth', 8), ('journalism', 7)]
+DIFF PHYSICAL GEOGRAPHY: expected: natural_history, predicted: 
+----------------------------------------
+         numbers
+           algebra
+             calculus of differences
+             mathematics
+         tubes
+         seeds
+           plant propagation
+             nurseries (horticulture)
+             plant-breeding
+             propagation of plants
+           botany
+             natural history
+             science
+             plants
+             nature study
+             fixed ideas
+             phytography
+             wild flowers
+             phytology
+             vegetable kingdom
+             botany—phytography
+         planting
+           tree planting
+             footprints, fossil
+             trees
+             planting
+           landscape gardening
+             shrubs
+             hedges
+             footprints, fossil
+             gardening
+             trees
+             parks
+             planting
+             garden architecture
+           gardening
+             plants, cultivated
+             plants
+             agriculture
+             vegetable gardening
+             fixed ideas
+             planting
+             horticulture
+             market-gardening
+             truck-farming
+           agriculture
+             industrial arts
+             land
+             planting
+             husbandry
+             farming
+           afforestation
+             reforestation
+             tree planting
+             planting
+         plants
+           trees
+             footprints, fossil
+             timber
+             tree planting
+             landscape
+             agriculture
+             botany
+             dendrology
+             arboriculture
+           vegetable kingdom
+             plants
+             botany
+         greeks
+           mediterranean race
+             latin peoples
+             caucasie race
+           aryans
+             caucasie race
+             indo-germanic peoples
+             indo-europeans
+         viola
+         germans
+         peruvian
+           peruan
+             peruvian
+         mosses
+           cryoscopy
+             molecular weights
+             chemistry, physical and theoretical
+             solution (chemistry)
+             freezing points of solutions
+           acrogens
+             cryptogams
+             ferns
+             mosses
+           bryology
+             mosses
+           bryophytes
+             cryptogams
+             mosses
+[('planting', 6), ('plants', 4), ('mosses', 4)]
+DIFF BOTANY: expected: natural_history, predicted: 
+----------------------------------------
+         health
+           hygiene
+             medicine
+             climatology, medical
+             woman—health and hygiene
+             sanitation
+             longevity
+             cleanliness
+             health
+             preventive medicine
+             medicine, preventive
+         symptoms
+           semiology
+             symptoms
+             semeiology
+           diagnosis
+             pathology
+             semiology
+             medicine, clinical
+             prognosis
+             medicine—practice
+             examinations, medical
+             symptoms
+         state
+           administration
+             civil service
+             state
+             political science
+             administration of estates
+             administrative law
+             administrative division
+         hysteria
+           insanity
+             degeneration
+             consanguinity
+             hallucinations and illusions
+             brain—diseases
+             personality, disorders of
+             psychology, pathological
+             idiocy
+             madness
+             psychiatry
+             mental diseases
+             eccentrics and eccentricities
+             mania
+             lunacy
+           fixed ideas
+             impulse
+             monomania
+             insanity
+             hysteria
+             cranks
+             psychology, pathological
+             ideas, fixed
+           psychology, pathological
+             mental physiology and hygiene
+             insanity
+             hysteria
+             nervous system
+             brain—diseases
+             psychiatry
+             mental diseases
+             pathological psychology
+             psychology, medical
+         life
+           biology
+             natural history
+             evolution
+             life
+             science
+             epigenesis
+[('symptoms', 3), ('hysteria', 3), ('insanity', 3)]
+DIFF HYPOCHONDRIASIS: expected: medicine, predicted: 
+----------------------------------------
+         hand
+           beauty, personal
+             cosmetics
+             face
+             woman—health and hygiene
+             toilet
+             hygiene
+             complexion
+             personal beauty
+             beauty
+           pianoforte—instruction and study
+         head
+           skull
+             skeleton
+             bones
+             head
+             cranium
+           brain
+             craniology
+             head
+             somatology
+             nervous system
+         work
+         tools
+           hardware
+             building
+         wood
+           building materials
+             engineering
+             architecture
+             structural materials
+             building—materials
+             engine works—materials
+           footprints, fossil
+             paleontology
+             ichnology
+           bark
+             wood
+             trees
+             lenticels
+             botany—anatomy
+           timber
+             wood
+             building materials
+             lumber trade
+             trees
+             lumber
+           trees
+             footprints, fossil
+             timber
+             tree planting
+             landscape
+             agriculture
+             botany
+             dendrology
+             arboriculture
+[('head', 3), ('wood', 3), ('trees', 3)]
+DIFF HAMMER: expected: useful_arts, predicted: 
+----------------------------------------
+         emperors
+           monarchy
+             executive power
+             state, the
+             constitutional history
+             political science
+             democracy
+             sovereigns
+           kings and rulers
+             despotism
+             emperors
+             queens
+             courts and courtiers
+             regency
+             history
+             monarchs
+             rulers
+             royalty
+             sovereigns
+           rulers
+             kings and rulers
+             emperors
+             gt. brit.—queens
+             queens
+           sovereigns
+             monarchy
+             kings and rulers
+             emperors
+             roman emperors
+             queens
+         death
+           biology
+             natural history
+             evolution
+             life
+             science
+             epigenesis
+           life
+             biology
+           mortality
+             death
+             vital statistics
+             death—causes
+             population
+             burial statistics
+             death rate
+             mortuary statistics
+           eschatology
+             theology
+             future life
+             immortality
+           future life
+             heaven
+             soul
+             eschatology
+             immortality
+             purgatory
+             death
+             future punishment
+             resurrection
+             elysium
+             retribution
+             hades
+             eternal life
+         war
+           neutrality, armed
+             peace
+             war
+           peace
+             neutrality, armed
+             arbitration, international
+             war
+             social sciences
+             disarmament
+             international law and relations
+             ethics
+           hostages
+             war
+           social sciences
+             civilization
+             sociology
+             economics
+             sciences, social
+           military art and science
+             soldiers
+             armies
+             naval art and science
+             war
+             strategy
+             drill and minor tactics
+             military power
+             military science
+             army
+             fighting
+           competition, international
+             colonies
+             tariff
+             colonization
+             international competition
+           international law and relations
+             neutrality, armed
+             consular law
+             naturalization
+             diplomacy
+             peace
+             natural law
+             arbitration, international
+             war
+             hostages
+             commerce
+             disarmament
+             political science
+             maritime law
+             diplomatie and consular service
+             pirates
+             public law
+             nations, law of
+             law, international
+             international relations
+             law of nations
+           ethics
+             civilization
+             life
+             natural law
+             theology
+             conduct of life
+             virtue
+             philosophy
+             duty
+             ethology
+             ethics, practical
+             moral philosophy
+             philosophy, moral
+             morals
+             science, moral
+             deontology
+           hostilities
+             war, declaration of
+             war
+             war, maritime (international law)
+           wars
+             military history
+             war
+             naval history
+           fighting
+             fencing
+             naval art and science
+             tournaments
+             boxing
+             war
+             bull-fights
+             military art and science
+             gladiators
+             dueling
+         founding
+           iron-founding
+             founding
+             cast-iron
+             casting
+           pattern-making
+             iron-founding
+             founding
+           metal-work
+             decoration and ornament
+             goldsmithing
+             brass-founding
+             metals—coloring
+             bronze
+             silversmithing
+             metal industries
+           brass-founding
+             founding
+           cast-iron
+             iron-founding
+             iron
+             pig-iron
+           bronze
+             founding
+             tin
+           moulding (metal)
+             founding
+           molding (metal)
+             founding
+           casting
+             iron-founding
+             founding
+             plaster casts
+             steel castings
+           foundry practice
+             pattern-making
+             founding
+         swedes
+           scandinavians
+         polishing
+           grinding and polishing
+             polishing
+         polishes
+           varnish and varnishing
+             wood finishing
+             japanning
+             stains and staining
+             lacquer and lacquering
+             painting, industrial
+           furniture
+             decoration and ornament
+             art, decorative
+             woodwork
+             domestic economy
+             upholstery
+             house decoration
+             interior decoration
+         turks
+         church
+           theology
+             religion
+             god
+             christianity
+             creation
+[('war', 9), ('founding', 9), ('emperors', 4)]
+DIFF RUSSIA: expected: history, predicted: 
+----------------------------------------
+classifier=SubjectsTaxonomy, taxonomy=TaxonomyLCSH, depth=2
+Accuracy: 0% = 0 / 15
