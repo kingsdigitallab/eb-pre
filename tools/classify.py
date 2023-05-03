@@ -19,9 +19,11 @@ def test_classifier(ClassifierClass):
     ret = {
         'tested': 0,
         'correct': 0,
+        'classifier': None,
     }
 
     classifier = ClassifierClass()
+    ret['classifier'] = classifier
 
     for sample in Samples.read_all():
         print('-'*40)
@@ -30,10 +32,13 @@ def test_classifier(ClassifierClass):
         predicted = classifier.classify(data)
         expected = sample['domain'].lower().strip()
         ret['tested'] += 1
+        status = 'SAME'
         if expected == predicted:
             ret['correct'] += 1
         else:
-            print(f'{sample["heading"]}: expected: {expected}, predicted: {predicted}')
+            status = 'DIFF'
+
+        print(f'{status} {sample["heading"]}: expected: {expected}, predicted: {predicted}')
 
         if sample['domain'] not in settings.DOMAINS:
             print(f'Domain not found in index: {sample["domain"]}')
@@ -42,7 +47,13 @@ def test_classifier(ClassifierClass):
 
 
 # from helpers.classifiers.test import Test as Classifier
-from helpers.classifiers.subjects_taxonomy import SubjectsTaxonomy as Classifier
+# from helpers.classifiers.subjects_taxonomy import SubjectsTaxonomy as Classifier
 # from helpers.classifiers.title_taxonomy import TitleTaxonomy as Classifier
+from helpers.classifiers.semantic_search import SemanticSearch as Classifier
+from datetime import datetime
+print(f'{Classifier.__name__} - {datetime.now().ctime()}')
+print('='*40)
 res = test_classifier(Classifier)
-print(f'{Classifier.__name__} - Accuracy: {int(res["correct"] / res["tested"] * 100)}% = {res["correct"]} / {res["tested"]}')
+print('-'*40)
+print(res['classifier'].get_params_str())
+print(f'Accuracy: {int(res["correct"] / res["tested"] * 100)}% = {res["correct"]} / {res["tested"]}')

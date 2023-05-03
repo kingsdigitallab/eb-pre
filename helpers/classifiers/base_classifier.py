@@ -25,3 +25,11 @@ class BaseClassifier:
     def get_query(self, edition):
         return f'edition=={edition}'
 
+    def get_params(self):
+        ret = {
+            'classifier': self.__class__.__name__,
+        }
+        return ret
+
+    def get_params_str(self):
+        return ', '.join([f'{p}={v}' for p, v in self.get_params().items()])

@@ -1,6 +1,7 @@
+from .base_classifier import BaseClassifier
 from ..taxonomies import TaxonomyLCSH, TaxonomyFastTopical
 
-class TitleTaxonomy:
+class TitleTaxonomy(BaseClassifier):
 
     def __init__(self):
         self.taxonomy = TaxonomyFastTopical()

@@ -142,3 +142,10 @@ if 0:
     # print(samples.df.columns)
 
     index.query().column
+
+if 0:
+    # Manually CORRECT missing title in PAINTING entry
+    # res = index.query('title == ""')
+    # eb07/XML/p16/kp-eb0716-069301-5876-v1.xml
+    index.update('eb07/XML/p16/kp-eb0716-069301-5876-v1.xml', 'title', 'PAINTING')
+    index.save()

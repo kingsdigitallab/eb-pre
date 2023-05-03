@@ -1,0 +1,35 @@
+SemanticSearch - Wed May  3 12:35:28 2023
+========================================
+----------------------------------------
+SAME MEDICAL JURISPRUDENCE: expected: medicine, predicted: medicine
+----------------------------------------
+DIFF PHYSIOLOGY: expected: medicine, predicted: natural_history
+----------------------------------------
+SAME HISTORY: expected: history, predicted: history
+----------------------------------------
+SAME ROMAN HISTORY: expected: history, predicted: history
+----------------------------------------
+SAME MECHANICS: expected: natural_philosophy, predicted: natural_philosophy
+----------------------------------------
+SAME OPTICS: expected: natural_philosophy, predicted: natural_philosophy
+----------------------------------------
+SAME SCULPTURE: expected: fine_arts, predicted: fine_arts
+----------------------------------------
+SAME PAINTING: expected: fine_arts, predicted: fine_arts
+----------------------------------------
+SAME ARCHITECT: expected: useful_arts, predicted: useful_arts
+----------------------------------------
+SAME COTTON MANUFACTURE: expected: useful_arts, predicted: useful_arts
+----------------------------------------
+SAME PHYSICAL GEOGRAPHY: expected: natural_history, predicted: natural_history
+----------------------------------------
+SAME BOTANY: expected: natural_history, predicted: natural_history
+----------------------------------------
+SAME HYPOCHONDRIASIS: expected: medicine, predicted: medicine
+----------------------------------------
+SAME HAMMER: expected: useful_arts, predicted: useful_arts
+----------------------------------------
+SAME RUSSIA: expected: history, predicted: history
+----------------------------------------
+classifier=SemanticSearch, speed=fast-learn
+Accuracy: 93% = 14 / 15

@@ -26,12 +26,19 @@ class SemanticSearch(BaseClassifier):
         # {domain_string: {'scores': [], 'aids': []}, ...}
         self.domain_results = None
 
+    def get_params(self):
+        ret = super().get_params()
+        options = self.get_options()
+        for k in ['speed']:
+            ret[k] = options[k]
+        return ret
+
     def get_options(self):
         return dict(
             embedding_model='doc2vec',
             # embedding_model='universal-sentence-encoder', # POOR results
             # embedding_model='distiluse-base-multilingual-cased', # decent results, promotes short entries
-            speed='learn',
+            speed='fast-learn',
             embedding_batch_size=12,  # 32
             use_embedding_model_tokenizer=True,
             workers=12,
