@@ -1,0 +1,50 @@
+ZeroShot - Wed May  3 13:03:24 2023
+========================================
+----------------------------------------
+medicine, health, body
+SAME MEDICAL JURISPRUDENCE: expected: medicine, predicted: medicine
+----------------------------------------
+arts, painting, sculpture, engraving, dance, sing
+DIFF PHYSIOLOGY: expected: medicine, predicted: fine_arts
+----------------------------------------
+engineer, craft, manufacturing, machinery, architecture, tool
+DIFF HISTORY: expected: history, predicted: useful_arts
+----------------------------------------
+arts, painting, sculpture, engraving, dance, sing
+DIFF ROMAN HISTORY: expected: history, predicted: fine_arts
+----------------------------------------
+engineer, craft, manufacturing, machinery, architecture, tool
+DIFF MECHANICS: expected: natural_philosophy, predicted: useful_arts
+----------------------------------------
+engineer, craft, manufacturing, machinery, architecture, tool
+DIFF OPTICS: expected: natural_philosophy, predicted: useful_arts
+----------------------------------------
+arts, painting, sculpture, engraving, dance, sing
+SAME SCULPTURE: expected: fine_arts, predicted: fine_arts
+----------------------------------------
+arts, painting, sculpture, engraving, dance, sing
+SAME PAINTING: expected: fine_arts, predicted: fine_arts
+----------------------------------------
+engineer, craft, manufacturing, machinery, architecture, tool
+SAME ARCHITECT: expected: useful_arts, predicted: useful_arts
+----------------------------------------
+engineer, craft, manufacturing, machinery, architecture, tool
+SAME COTTON MANUFACTURE: expected: useful_arts, predicted: useful_arts
+----------------------------------------
+engineer, craft, manufacturing, machinery, architecture, tool
+DIFF PHYSICAL GEOGRAPHY: expected: natural_history, predicted: useful_arts
+----------------------------------------
+meteorology, mineralogy, botany, zoology
+SAME BOTANY: expected: natural_history, predicted: natural_history
+----------------------------------------
+medicine, health, body
+SAME HYPOCHONDRIASIS: expected: medicine, predicted: medicine
+----------------------------------------
+engineer, craft, manufacturing, machinery, architecture, tool
+SAME HAMMER: expected: useful_arts, predicted: useful_arts
+----------------------------------------
+meteorology, mineralogy, botany, zoology
+DIFF RUSSIA: expected: history, predicted: natural_history
+----------------------------------------
+classifier=ZeroShot
+Accuracy: 53% = 8 / 15

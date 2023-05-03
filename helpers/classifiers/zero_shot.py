@@ -1,7 +1,9 @@
 from txtai.pipeline import Labels
 from helpers import settings
+from helpers.classifiers.base_classifier import BaseClassifier
 
-class ZeroShot:
+
+class ZeroShot(BaseClassifier):
     '''
     txtai zero-shot classifier
     https://github.com/neuml/txtai/blob/master/examples/07_Apply_labels_with_zero_shot_classification.ipynb
