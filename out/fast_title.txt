@@ -1,0 +1,143 @@
+TitleTaxonomy - Wed May  3 13:41:35 2023
+========================================
+----------------------------------------
+   medical jurisprudence
+     forensic sciences
+       science
+     medicine
+       human biology
+         biology
+           life sciences
+             science
+[('science', 2), ('life sciences', 2), ('medical jurisprudence', 1)]
+DIFF MEDICAL JURISPRUDENCE: expected: medicine, predicted: 
+----------------------------------------
+   physiology
+     biology
+       life sciences
+         science
+[('physiology', 1), ('biology', 1), ('life sciences', 1)]
+DIFF PHYSIOLOGY: expected: medicine, predicted: 
+----------------------------------------
+   history
+[('history', 1)]
+DIFF HISTORY: expected: history, predicted: 
+----------------------------------------
+	WARNING: nearest concept to roman history -> romans--history
+   romans--history
+[('romans--history', 1)]
+DIFF ROMAN HISTORY: expected: history, predicted: 
+----------------------------------------
+   mechanics
+     physics
+       physical sciences
+         science
+[('mechanics', 1), ('physics', 1), ('physical sciences', 1)]
+DIFF MECHANICS: expected: natural_philosophy, predicted: 
+----------------------------------------
+   optics
+     physics
+       physical sciences
+         science
+[('optics', 1), ('physics', 1), ('physical sciences', 1)]
+DIFF OPTICS: expected: natural_philosophy, predicted: 
+----------------------------------------
+   sculpture
+     art, primitive
+       arts, occidental
+         humanities
+           erudition
+             civilization
+             intellectual life
+[('sculpture', 1), ('art, primitive', 1), ('arts, occidental', 1)]
+DIFF SCULPTURE: expected: fine_arts, predicted: 
+----------------------------------------
+   painting
+     graphic design (graphic arts)
+       visual communication
+         communication
+           sociology
+             social sciences
+       art, primitive
+         arts, occidental
+           humanities
+             erudition
+[('painting', 1), ('graphic design (graphic arts)', 1), ('visual communication', 1)]
+DIFF PAINTING: expected: fine_arts, predicted: 
+----------------------------------------
+	WARNING: nearest concept to architect -> architects
+   architects
+     professional employees
+       employees
+         persons
+[('architects', 1), ('professional employees', 1), ('employees', 1)]
+DIFF ARCHITECT: expected: useful_arts, predicted: 
+----------------------------------------
+   cotton manufacture
+     textile industry
+       manufacturing industries
+         industries
+           political economy
+             social sciences
+[('cotton manufacture', 1), ('textile industry', 1), ('manufacturing industries', 1)]
+DIFF COTTON MANUFACTURE: expected: useful_arts, predicted: 
+----------------------------------------
+   physical geography
+     geography
+       earth sciences
+         physical sciences
+           science
+         environmental sciences
+       cosmography
+         cosmology
+           astronomy
+             physical sciences
+           deism
+           metaphysics
+             philosophy
+       world history
+         annals
+[('physical sciences', 2), ('science', 2), ('physical geography', 1)]
+DIFF PHYSICAL GEOGRAPHY: expected: natural_history, predicted: 
+----------------------------------------
+   botany
+     natural history
+       science
+     biology
+       life sciences
+[('science', 2), ('botany', 1), ('natural history', 1)]
+DIFF BOTANY: expected: natural_history, predicted: 
+----------------------------------------
+   vapours (disease)
+     anxiety disorders
+       neuroses
+         psychology, pathological
+           neurology
+             medicine
+[('vapours (disease)', 1), ('anxiety disorders', 1), ('neuroses', 1)]
+DIFF HYPOCHONDRIASIS: expected: medicine, predicted: 
+----------------------------------------
+	WARNING: nearest concept to hammer -> hammers
+   hammers
+     tools
+       household utensils
+         wood furniture
+           decorative arts
+             art, primitive
+           design, decorative
+             art, primitive
+             decorative arts
+           house furnishings
+             home economics, rural--equipment and supplies
+       hardware
+         ferrous metal industries
+           metal trade
+[('decorative arts', 2), ('art, primitive', 2), ('metal trade', 2)]
+DIFF HAMMER: expected: useful_arts, predicted: 
+----------------------------------------
+   russia
+[('russia', 1)]
+DIFF RUSSIA: expected: history, predicted: 
+----------------------------------------
+classifier=TitleTaxonomy, taxonomy=TaxonomyFastTopical, depth=5
+Accuracy: 0% = 0 / 15

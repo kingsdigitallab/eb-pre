@@ -7,7 +7,13 @@ class TitleTaxonomy(BaseClassifier):
         self.taxonomy = TaxonomyFastTopical()
         # self.taxonomy = TaxonomyLCSH()
         self.max_levels = 5
-    
+
+    def get_params(self):
+        ret = super().get_params()
+        ret['taxonomy'] = self.taxonomy.__class__.__name__
+        ret['depth'] = self.max_levels
+        return ret
+
     def classify(self, entry):
         ret = ''
 

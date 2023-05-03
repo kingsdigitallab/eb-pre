@@ -74,7 +74,7 @@ class Taxonomy:
             terms_count = Counter()
         if expanded is None:
             expanded = []
-        
+
         terms_count.update(termids)
         
         if levels_left:
@@ -84,9 +84,13 @@ class Taxonomy:
                 if term not in expanded:
                     expanded.append(term)
                     parents = self.get_parents(term)
+                    print('  ' * (5 - levels_left), self.get_concept(term))
                     parent_labels = [self.get_concept(p) for p in parents]
-                    print(f'\t{levels_left}, {self.get_concept(term)} < {parent_labels}')
+                    # print(f'\t{levels_left}, {self.get_concept(term)} < {parent_labels}')
                     self.count_parent_terms(parents, levels_left, terms_count, expanded)
+        else:
+            for term in termids:
+                print('  ' + ('  ' * (5 - levels_left)), self.get_concept(term))
 
         return terms_count
 
