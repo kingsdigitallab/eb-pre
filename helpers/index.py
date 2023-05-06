@@ -32,7 +32,7 @@ class Index:
             ret = ret.query(q)
         # print(f'{len(ret)} entries for query = {q}')
         return ret
-
+    
     def create(self):
         """Indexes the title and edition of all articles in the corpus.
         And saves the index as a json file."""

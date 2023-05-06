@@ -12,6 +12,13 @@ index = Index()
 index.load_or_create()
 # index.create()
 
+if 1:
+    from helpers.classifiers.semantic_search import SemanticSearch
+    semsearch = SemanticSearch()
+    model = semsearch.load_model(7)
+    print(model.get_num_topics())
+
+
 if 0:
     entries = index.query()
     import pandas as pd
