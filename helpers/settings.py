@@ -6,7 +6,6 @@ def get_path_from_top_directory(directory_name):
         raise Exception(f'"{ret}" is not a directory')
     return ret
 
-SUBCORPUS = ['kp-eb0901-\d+-\d+-\d+']
 # sociology?, economy?, philosophy? Under history
 DOMAINS = {
     'medicine': {
@@ -17,12 +16,12 @@ DOMAINS = {
     'history': {
         'name': 'History',
         'name_modern': ['history', 'mythology', 'legend', 'religion', 'politics', 'war'],
-        'desc': '"the art of imitating visible form by means of solid substances, such as marble, wood, or metals".',
+        'desc': 'Includes biblical history of the earth and growth of society under "Civil History". See also entries on countries, like RUSSIA--these are generally histories.',
     },
     'natural_philosophy': {
         'name': 'Natural Philosophy',
         'name_modern': ['physics', 'mechanics', 'optics', 'astronomy', 'magnetism', 'electricity'],
-        'desc': '',
+        'desc': 'Similar to Physics. "NATURAL PHILOSOPHY is commonly defined to be that branch of knowledge which considers the powers and properties of natural bodies, and their mutual actions on one another. This term serves to indicate, not one, but a cluster of sciences. Those generally comprehended under it are the following, viz. 1. Mechanics; 2. Hydrostatics; 3. Optics; 4. Astronomy; 5. Magnetism; 6. Electricity." (kp-eb0715-8829-0740-01)',
     },
     'natural_history': {
         'name': 'Natural History',

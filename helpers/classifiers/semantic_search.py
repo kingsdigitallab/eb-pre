@@ -137,21 +137,3 @@ class SemanticSearch(BaseClassifier):
         query_hash = re.sub(r'\W+', r'_', query)
         return f'{query_hash}-{self.max_docs}-{options["embedding_model"]}-{options["speed"]}-{options["use_embedding_model_tokenizer"]}.t2v'
 
-
-        # num_topics = model.get_num_topics()
-        # print(len(documents), num_topics)
-        #
-        # res = model.get_topics(min(num_topics, 10))
-        # for i in range(len(res[0])):
-        #     print(res[0][i][:8])
-        #
-        # documents, document_scores, document_ids = model.search_documents_by_keywords(
-        #     keywords=[settings.DOMAINS[0]['name_modern']],
-        #     num_docs=20
-        # )
-        # for doc, score, doc_id in zip(documents, document_scores, document_ids):
-        #     print(f"Document: {doc_id}, Score: {score}")
-        #     print("-----------")
-        #     print(doc[:300])
-        #     print("-----------")
-        #     print()
