@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/itemsjs@latest/dist/itemsjs.min.js"></script>
+    <!-- https://github.com/itemsapi/itemsjs/blob/master/docs/minisearch-integration.md -->
+    <script src="https://cdn.jsdelivr.net/npm/minisearch@6.1.0/dist/umd/index.min.js"></script>
     <style>
       .hidden {
         display: none;
@@ -16,7 +18,7 @@
         font-weight: bold;
       }
       .tag-tei {
-        margin-left: 1em;
+        margin-right: 1em;
       }
     </style>
   </head>
@@ -43,7 +45,7 @@
             </label>
           </div>
         </form>
-        <div class="column">
+        <div class="column is-6">
           <table class="table">
             <thead>
               <tr>
@@ -56,36 +58,49 @@
               <template v-for="item in items">
                 <tr>
                   <td>
-                    <a target="_blank" :href="'https://raw.githubusercontent.com/TU-plogan/kp-editions/main/' + getTextPathFromId(item.index)">{{item.title}}</a>
                     <span class="tag is-link is-light tag-tei">
                       <a target="_blank" :href="'https://raw.githubusercontent.com/TU-plogan/kp-editions/main/' + item.index">TEI</a>
                     </span>
+                    <a @click.prevent.default="onClickEntryTitle(item)" target="_blank" :href="getTextUrlFromItem(item)">{{item.title}}</a>
                   </td>
                   <td>[{{item.edition}}:{{item.volume}}:{{item.page}}]</td>
                   <td>{{item.chars}}</td>
                 </tr>
                 <tr>
-                  <td colspan="5">{{ getStringFromLabels(item) }}</td>
+                  <td colspan="5">
+                    {{ item['semantic_search-label'] }}
+                    {{ (item['semantic_search-score'] || 0.0).toLocaleString(undefined, { minimumFractionDigits: 2 }) }}
+                    <br>
+                    {{ getStringFromLabels(item) }}
+                  </td>
                 </tr>
               </template>
             </tbody>
           </table>
+        </div>
+        <div class="column is-3">
+          <h2 class="title is-4">{{ entry.item?.title }}</h2>
+          <div v-html="entry.content">Content</div>
         </div>
       </div>
     </div>
   </section>
   </body>
   <script>
+    const useMiniSearch = true;
     const { createApp } = Vue
 
     createApp({
       data() {
         return {
-          message: 'Hello Vue!',
           items: [],
           query: '',
           facets: {},
-          pagination: {}
+          pagination: {},
+          entry: {
+            item: null,
+            content: 'BODY'
+          }
         }
       },
       mounted() {
@@ -94,11 +109,30 @@
           .then(json => {
             this.entries = json.data
 
+            let searchableFields = ['title', 'index', 'labels']
+
+            if (useMiniSearch) {
+              // https://lucaong.github.io/minisearch/classes/_minisearch_.minisearch.html
+              this.miniSearch = new MiniSearch({
+                idField: 'index',
+                fields: searchableFields,
+                storeFields: searchableFields
+              })
+
+              this.miniSearch.addAll(this.entries)
+            }
+
             this.itemsjs = itemsjs(this.entries, {
+              native_search_enabled: !useMiniSearch,
+              custom_id_field: 'index',
               sortings: {
                 name_asc: {
                   field: 'title',
                   order: 'asc'
+                },
+                score_desc: {
+                  field: 'semantic_search-score',
+                  order: 'desc'
                 }
               },
               aggregations: {
@@ -111,16 +145,20 @@
                   title: 'Volume',
                   size: 10
                 }, */
+                'semantic_search-label': {
+                  title: 'Domain',
+                  size: 10
+                },
                 labels: {
                   title: 'Terms',
                   size: 10
                 },
-                title: {
-                  title: 'Title',
-                  size: 10
-                },
+                // title: {
+                //   title: 'Title',
+                //   size: 10
+                // },
               },
-              searchableFields: ['title', 'index', 'labels']
+              searchableFields: searchableFields
             });
 
             /**
@@ -153,23 +191,48 @@
           // let ret = []
           return [...new Set(item.labels)].join(', ')
         },
+        getTextUrlFromItem(item) {
+          return 'https://raw.githubusercontent.com/TU-plogan/kp-editions/main/' + this.getTextPathFromId(item.index);
+        },
         onOptionChanged() {
           this.$nextTick(() => {
             console.log('changed')
             this.search()
           })
         },
+        onClickEntryTitle(item) {
+          this.entry.item = item
+          fetch(this.getTextUrlFromItem(item))
+          .then(response => response.text())
+          .then(content => { 
+            this.entry.content = content.replace(/^.+?\+====+\+/s, '')
+          })
+        },
         search() {
           let options = {
             per_page: 100,
-            sort: 'name_asc',
+            // sort: 'name_asc',
             filters: this.filters
           }
-          if (this.query.includes(':')) {
-            options.filters_query = this.query
+          if (useMiniSearch) {
+            if (this.query) {
+              const search_results = this.miniSearch.search(
+                this.query,
+                { boost: { title: 2 } }
+              )
+              options.ids = search_results.map(v => v.index)
+            } else {
+              options.ids = this.entries.map(v => v.index)
+            }
           } else {
-            options.query = this.query
+            if (this.query.includes(':')) {
+              options.filters_query = this.query
+            } else {
+              options.query = this.query
+            }
           }
+          options.sort = 'score_desc';
+
           let res = this.itemsjs.search(options)
           // console.log(res)
           this.items = res.data.items

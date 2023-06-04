@@ -12,7 +12,7 @@ class SemanticSearch(BaseClassifier):
     method:
         . train one embedding & topic model on each edition
         . use top2vec to search for all possible classes/domains
-        . return the class/domain where the entries has the highest score
+        . return the class/domain where the entry has the highest score
     '''
 
     def __init__(self):
@@ -35,22 +35,30 @@ class SemanticSearch(BaseClassifier):
 
     def get_options(self):
         return dict(
-            embedding_model='doc2vec',
             # embedding_model='universal-sentence-encoder', # POOR results
             # embedding_model='distiluse-base-multilingual-cased', # decent results, promotes short entries
+            # To try
+            # embedding_model='universal-sentence-encoder-large', # ?
+            # all-MiniLM-L6-v2
+            # paraphrase-multilingual-MiniLM-L12-v2
+            embedding_model='doc2vec',
             speed='fast-learn',
+            # speed='deep-learn',
             embedding_batch_size=12,  # 32
             use_embedding_model_tokenizer=True,
             workers=12,
             document_ids=[],
-            documents=[]
+            documents=[],
+            keep_documents=False,
+            # False by default, which may mean long docs are truncated
+            split_documents=True,
         )
 
     def before_classify(self, entry):
 
         edition = entry["edition"]
         options = self.get_options()
-        top2vec_domains_path = self.get_file_path(f'domains_edition_{edition}_{options["speed"]}.json')
+        top2vec_domains_path = self.get_file_path(f'{self.get_model_filename(edition)}_domains.json')
 
         if top2vec_domains_path.exists():
             self.domain_results = json.loads(top2vec_domains_path.read_text())
@@ -59,7 +67,11 @@ class SemanticSearch(BaseClassifier):
             model = self.load_model(edition)
 
             for domain_key, domain_def in settings.DOMAINS.items():
-                res = model.search_documents_by_keywords(domain_def['name_modern'], 10000, return_documents=False)
+                res = model.search_documents_by_keywords(
+                    domain_def['name_modern'],
+                    10000,
+                    return_documents=False
+                )
 
                 self.domain_results[domain_key] = {
                     'scores': res[0].tolist(),
@@ -68,26 +80,49 @@ class SemanticSearch(BaseClassifier):
 
             top2vec_domains_path.write_text(json.dumps(self.domain_results))
 
-    def classify(self, entry):
-        ret = 'history'
+    def classify(self, entry, scores=None):
+        ret = ''
 
         idx = None
         self.before_classify(entry)
-        best = {
-            'score': 0,
-            'domain': '',
-        }
+
+        domain_scores = []
         for domain_key, results in self.domain_results.items():
             try:
                 idx = results['aids'].index(entry['aid'])
                 score = results['scores'][idx]
-                if score > best['score']:
-                    best['domain'] = domain_key
-                    best['score'] = score
             except ValueError:
-                pass
+                score = 0
+            domain_scores.append([domain_key, score])
 
-        return best['domain']
+        domain_scores = sorted(domain_scores, key=lambda ds: ds[1], reverse=True)
+
+        if domain_scores[0][1] > 0:
+            ret = domain_scores[0][0]
+
+        if scores is not None:
+            scores.extend(domain_scores)
+
+        if 0:
+            for idx in [0, 1, -1]:
+                print(f'  {domain_scores[idx]}')
+
+        return ret
+        # best = {
+        #     'score': 0,
+        #     'domain': '',
+        # }
+        # for domain_key, results in self.domain_results.items():
+        #     try:
+        #         idx = results['aids'].index(entry['aid'])
+        #         score = results['scores'][idx]
+        #         if score > best['score']:
+        #             best['domain'] = domain_key
+        #             best['score'] = score
+        #     except ValueError:
+        #         pass
+        #
+        # return best['domain']
 
     def load_model(self, edition):
         model_path = self.get_model_path(edition)
@@ -135,5 +170,5 @@ class SemanticSearch(BaseClassifier):
         options = self.get_options()
         query = self.get_query(edition)
         query_hash = re.sub(r'\W+', r'_', query)
-        return f'{query_hash}-{self.max_docs}-{options["embedding_model"]}-{options["speed"]}-{options["use_embedding_model_tokenizer"]}.t2v'
+        return f'{query_hash}-{self.max_docs}-{options["embedding_model"]}-{options["speed"]}-TK{int(options["use_embedding_model_tokenizer"])}-SD{int(options["split_documents"])}.t2v'
 

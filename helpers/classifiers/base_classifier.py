@@ -11,10 +11,14 @@ class BaseClassifier:
 
     @classmethod
     def get_file_path(cls, filename=None):
-        folder = Path(settings.DATA_PATH, re.sub(r'(\B[A-Z])', r'_\1', cls.__name__).lower())
+        folder = Path(settings.DATA_PATH, cls.get_class_key())
         if not folder.exists():
             folder.mkdir()
         return Path(folder, filename)
+
+    @classmethod
+    def get_class_key(cls):
+        return re.sub(r'(\B[A-Z])', r'_\1', cls.__name__).lower()
 
     def classify(self, entry):
         raise Exception('Not implemented')
