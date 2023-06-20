@@ -37,3 +37,14 @@ class BaseClassifier:
 
     def get_params_str(self):
         return ', '.join([f'{p}={v}' for p, v in self.get_params().items()])
+
+    @classmethod
+    def sentencizer(cls, doc):
+        # returns the list of sentences extracted from the given doc
+        # method: split around . and ;
+        # but don't split around . if preceded by uppercase letter (e.g. MR.)
+        return [
+            p.strip() 
+            for p
+            in re.split(r'(?:[^A-Z])\.|;|\?|!', doc)
+        ]

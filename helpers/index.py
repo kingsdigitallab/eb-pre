@@ -84,6 +84,9 @@ class Index:
     def update(self, aid, column, value):
         self.df.at[aid, column] = value
 
+    def get_row(self, aid):
+        return self.df.loc[aid].to_dict()
+
     def get_dict_from_entry(self, entry):
         ret = entry.to_dict()
         return ret

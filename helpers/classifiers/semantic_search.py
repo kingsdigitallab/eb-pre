@@ -34,7 +34,9 @@ class SemanticSearch(BaseClassifier):
         return ret
 
     def get_options(self):
-        return dict(
+        ret = dict(
+            # https://top2vec.readthedocs.io/en/stable/api.html?highlight=use_embedding_model_tokenizer
+
             # embedding_model='universal-sentence-encoder', # POOR results
             # embedding_model='distiluse-base-multilingual-cased', # decent results, promotes short entries
             # To try
@@ -42,17 +44,71 @@ class SemanticSearch(BaseClassifier):
             # all-MiniLM-L6-v2
             # paraphrase-multilingual-MiniLM-L12-v2
             embedding_model='doc2vec',
-            speed='fast-learn',
-            # speed='deep-learn',
-            embedding_batch_size=12,  # 32
+            # deep-learn doesn' seem worth it on this corpus: takes ~7 hours and not much difference
+            # speed='deep-learn'|'learn'|'deep-learn',
+            speed='learn',
+            # 
             use_embedding_model_tokenizer=True,
+            # default 50. Ignore all words with freq < min_count
+            # Lowering this will increase the vocabulary & model size
+            # 50 -> 25 : files larger by a quarter
+            # / doesn't seem to make a large difference in results...
+            min_count=30,
+            # https://radimrehurek.com/gensim/models/phrases.html
+            # Captures 2-grams if True (default is False)
+            # + v. interesting word neighbours results
+            # +/- Impact on knn docs isn't significant: some noise, but also better capture multiple meanings
+            # - Increases size of files by a 3rd
+            ngram_vocab=True,
+            # False by default, which may mean long docs are truncated
+            # If True => doc vector = avg(chunks vectors)
+            split_documents=True,
+            # default = sequential
+            document_chunker = 'sequential',
+            # comment to use the default 100 char sequential chunker with 0.5 overlap instead
+            # if defined, chunks = sentences
+            # + might classify slightly better
+            # / no major diffierence in word & doc nearest neighbours
+            sentencizer=self.sentencizer,
+
+            # TOPIC
+            # default = 0.1; min cosine distance to keep topics apart
+            # increase to get less topics
+            topic_merge_delta=0.4,
+
+            # if True the content of the document is part of the model
+            keep_documents=False,
+
+            # Don't affect model 
+            embedding_batch_size=32,  # 32
             workers=12,
             document_ids=[],
             documents=[],
-            keep_documents=False,
-            # False by default, which may mean long docs are truncated
-            split_documents=True,
         )
+
+        if ret.get('sentencizer', None):
+            ret['document_chunker'] = 'sentence'
+        
+        return ret
+
+    def get_model_filename(self, edition):
+        options = self.get_options()
+
+        parts = [
+            ['', self.get_class_key()],
+            ['', re.sub(r'\W+', r'_', self.get_query(edition))],
+            ['', options["embedding_model"]],
+            ['', options["speed"]],
+            ['mc', options["min_count"]],
+            ['ng', int(options["ngram_vocab"])],
+            ['tm', options['topic_merge_delta']],
+            ['ch', options['document_chunker']]
+        ]
+
+        return '-'.join([
+            (f'{k}_{v}' if k else v)
+            for k, v in parts
+        ]) + '.tv2'
 
     def before_classify(self, entry):
 
@@ -132,9 +188,41 @@ class SemanticSearch(BaseClassifier):
                 self.model = Top2Vec.load(model_path)
             else:
                 self.model = self.train(edition)
+                self.convert_model_to_json(edition)
             self.model_path = model_path
 
         return self.model
+
+    def convert_model_to_json(self, edition):
+        model = self.load_model(edition)
+        # ops:
+        # . label <-> vector
+        res = {}
+        if 1:
+            vectors = model.word_vectors.tolist()
+            res = {
+                f'{label}': vectors[idx]
+                for label, idx
+                in model.word_indexes.items()
+            }
+            print(f'{len(vectors)} word vectors')
+        if 1:
+            from helpers.index import Index
+            index = Index()
+            index.load()
+
+            vectors = model.document_vectors.tolist()
+            res = res | {
+                f'{index.get_row(label)["title"]}': vectors[idx]
+                for label, idx
+                in model.doc_id2index.items()
+            }
+            print(f'{len(vectors)} document vectors')
+        print(f'{len(res)} vectors')
+        # path_json = Path(settings.DATA_PATH, 'semantic_search', f'edition_{edition}-')
+        json_path = Path(str(self.get_model_path(edition)) + '.json')
+        json_path.write_text(json.dumps(res))
+        print(f'Written {json_path}')
 
     def train(self, edition):
         from top2vec import Top2Vec
@@ -166,9 +254,4 @@ class SemanticSearch(BaseClassifier):
 
         return model
 
-    def get_model_filename(self, edition):
-        options = self.get_options()
-        query = self.get_query(edition)
-        query_hash = re.sub(r'\W+', r'_', query)
-        return f'{query_hash}-{self.max_docs}-{options["embedding_model"]}-{options["speed"]}-TK{int(options["use_embedding_model_tokenizer"])}-SD{int(options["split_documents"])}.t2v'
 

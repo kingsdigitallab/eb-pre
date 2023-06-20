@@ -1,0 +1,231 @@
+/*
+TODO
+
+S switch ed 7 & 9
+S back button
+S optimisations
+    WIP doc2vec params
+    . replace numbers with NUMBER?
+    . vector qunatisation
+        0.4231737554073334
+C param for number of results
+C load progress bar
+
+DONE show density
+DONE link to entry
+DONE sync URL: query
+DONE FE loads corpus index
+DONE FE load two indices & runs two searches in //
+DONE click results -> search
+DONE indicate entry size 
+
+WONT BE create two indices (b/c more modular & efficient)
+WONT FE merges auto-complete index
+*/
+
+const { createApp } = Vue
+
+class VectorIndex {
+
+    constructor() {
+        this.vs = {}
+    }
+
+    findNearestVectors(v, type='any') {
+        // 100k vectors with 500 dims takes 0.6s on single thread 2022 i7 CPU
+        let ret = null
+        if (type == 'documents') {
+            ret = Object.values(this.vs).filter(v => v.label !== v.label.toLowerCase())
+        } else if (type == 'words') {
+            ret = Object.values(this.vs).filter(v => v.label == v.label.toLowerCase())
+        }
+        if (!ret) {
+            ret = Object.values(this.vs)
+        }
+        for (let av of ret) {
+            av.similarity = this.computeSimilarity(v, av)
+        }
+        ret.sort((v1, v2) => v2.similarity - v1.similarity)
+
+        return ret
+    }
+
+    computeSimilarity(v1, v2) {
+        let ret = 0
+
+        for (let i = 0; i < v1.length; i++) {
+            ret += v1[i] * v2[i]
+        }
+
+        return ret / this.computeVectorLength(v1) / this.computeVectorLength(v2)
+    }
+
+    computeVectorLength(v) {
+        let ret = 0
+        for (let c of v) {
+            ret += c*c
+        }
+        return Math.sqrt(ret)
+    }
+
+    getVectors() {
+        let dims = 500
+        let maxLength = 10
+        let vectorCount = 100000
+        let ret = []
+        for (let i = 0; i < vectorCount; i++) {
+            let v = []
+            for (let d = 0; d < dims; d++) {
+                v.push(Math.random() * maxLength)
+            }
+            ret.push(v)
+        }
+        return ret
+    }
+
+    async loadVectors(edition=7, speed='fast-learn') {
+        let vs = null
+        await fetch(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_50-ng_1-tm_0.1-ch_sequential.tv2.json`)
+        // await fetch(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_50-ng_0-tm_0.1-ch_sequential.tv2.json`)
+            .then(response => response.json())
+            .then(json => {
+                this.vs = json
+            });
+
+        for (let [k, v] of Object.entries(this.vs)) {
+            v.label = k
+        }
+
+        return this.vs
+    }
+
+    getVectorFromLabel(label) {
+        return this.vs[label]
+    }
+
+    async testSimilarity() {
+        // let vs = getVectors()
+
+        let vs = await this.loadVectors()
+
+        // let v1 = vs[0]
+
+        let v1 = this.getVectorFromLabel('medicine')
+
+        let t0 = new Date()
+    //    for (let v of vs) {
+    //        let d = computeSimilarity(v1, v)
+    //        // console.log(d)
+    //    }
+
+        this.findNearestVectors(v1, vs)
+
+        let t1 = new Date()
+        console.log(t1 - t0)
+
+        for (let i = 0; i < 30; i++) {
+            console.log(vs[i].label)
+        }
+    }
+
+}
+// testSimilarity()
+
+createApp({
+    data() {
+      return {
+        edition: 7,
+        speed: 'fast-learn',
+
+        query: '',
+        limit: 25,
+
+        items: {
+            'documents': [],
+            'words': []
+        },
+        suggestions: ['a', 'bb'],
+      }
+    },
+    async mounted() {
+        this.setSelectionFromAddressBar()
+        this.index = new VectorIndex()
+        await this.index.loadVectors(this.edition, this.speed)
+        await this.loadCorpusIndex()
+        this.suggestions = Object.keys(this.index.vs).sort()
+        this.search()
+    },
+    computed: {
+        density() {
+            ret = 0
+            for (item of this.items.documents) {
+                ret += this.titlesEntry[item.label].mtld
+            }
+            if (ret > 0) {
+                ret /= this.items.documents.length
+            }
+            return ret.toFixed(2);
+        }
+    },
+    methods: {
+      onSubmitForm() {
+        this.search()
+      },
+      onClickItem(item) {
+        this.query = item.label
+        this.search()
+      },
+      async loadCorpusIndex() {
+        await fetch("../data/index.json")
+          .then(response => response.json())
+          .then(json => {
+            this.corpusIndex = json.data
+            this.titlesEntry = {}
+            for (let entry of this.corpusIndex) {
+                this.titlesEntry[entry.title] = entry
+            }
+          })
+      },
+      getItemLength(item) {
+        return this.titlesEntry[item.label].chars
+      },
+      getTextUrlFromItem(item) {
+        return 'https://raw.githubusercontent.com/TU-plogan/kp-editions/main/' + this.getTextPathFromId(this.titlesEntry[item.label].index);
+      },
+      getTextPathFromId(aid) {
+        return aid.replace('xml', 'txt').replace('XML', 'TXT')
+      },
+      search() {
+        let v = this.index.getVectorFromLabel(this.query)
+        if (v) {
+            this.items = {
+                words: this.index.findNearestVectors(v, 'words').slice(0, this.limit),
+                documents: this.index.findNearestVectors(v, 'documents').slice(0, this.limit),
+            }
+        } else {
+            this.items.words = []
+            this.items.documents = []
+        }
+        console.log(`${this.query} done`)
+        this.setAddressBarFromSelection()
+      },
+      setAddressBarFromSelection() {
+        // ?p1.so=&p1.co=&p2.so=...
+        // let searchParams = new URLSearchParams(window.location.search)
+        let searchParams = "";
+
+        searchParams += `q=${this.query}`
+        searchParams += `&l=${this.limit}`
+
+        let newRelativePathQuery =
+          window.location.pathname + "?" + searchParams;
+        history.pushState(null, "", newRelativePathQuery);
+      },
+      async setSelectionFromAddressBar() {
+        let searchParams = new URLSearchParams(window.location.search);
+
+        this.query = searchParams.get('q', '') || ''
+        this.limit = parseInt(searchParams.get('l', '10') || '10')
+      },
+    }
+  }).mount('#semsearch')

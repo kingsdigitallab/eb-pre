@@ -12,7 +12,29 @@ index = Index()
 index.load_or_create()
 # index.create()
 
-if 1:
+if 0:
+    from helpers.classifiers.base_classifier import BaseClassifier
+    from helpers.corpus import Corpus
+    corpus = Corpus()
+    doc = corpus.read_body('eb07/TXT/a3/kp-eb0703-072101-4934-v1.xml')
+    doc = '''
+    It has been conjectured by Goguet, that the obelisks of Egypt were intended to serve the purpose of gnomons; and this conjecture acquires some probability from their needle-shaped form, and the narrowness of their bases relatively to their heights. It has however been proved by MM. Jollois and Devilliers, in their description of Thebes, that the obelisks were connected with the walls of temples and palaces; a disposition which rendered them entirely unfit for the purposes of astronomical observation. 
+    '''
+    print('\n'.join(BaseClassifier.sentencizer(doc)[:10]))
+
+if 0:
+    from helpers.classifiers.semantic_search import SemanticSearch
+
+    semsearch = SemanticSearch()
+    semsearch.convert_model_to_json(7)
+
+if 0:
+    from helpers.taxonomies import TaxonomyWikidata
+
+    wiki = TaxonomyWikidata()
+    wiki.prepare()
+
+if 0:
     from helpers.classifiers.semantic_search import SemanticSearch
     semsearch = SemanticSearch()
     model = semsearch.load_model(7)

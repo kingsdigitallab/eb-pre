@@ -1,5 +1,12 @@
+import io
+import sys
+from bz2 import BZ2Decompressor
 from collections import Counter
+from json import JSONDecodeError
 from pathlib import Path
+
+from tqdm import tqdm
+
 from helpers import settings
 import sqlite3
 import difflib
@@ -210,3 +217,104 @@ class TaxonomyFastTopical(Taxonomy):
         # print(len(self.related.keys()))
 
         # exit()
+
+class TaxonomyWikidata():
+
+    prefix = 'wd:'
+
+    def __init__(self):
+        super().__init__()
+        self.wiki_dump_path = Path(settings.DATA_PATH, 'taxonomies', 'wikidata', 'latest-all.json.bz2')
+        self.wiki_dump_path = Path('/home/jeff/Downloads/latest-all.84sXzZzR.json.bz2.part')
+        self.wiki_export_path = Path(settings.DATA_PATH, 'taxonomies', 'wikidata', 'wiki.json')
+        self.buffer_size = 1000000
+        self.line_idx = 0
+
+    def prepare(self):
+        self.line_idx = 0
+
+        decompressor = BZ2Decompressor()
+        with open(str(self.wiki_dump_path), 'rb') as compressed:
+            compressed.seek(0, io.SEEK_END)
+            with tqdm(total=compressed.tell()) as pbar:
+                compressed.seek(0, 0)
+                with open(str(self.wiki_export_path), 'wt') as exported:
+                    exported.write('{\n')
+
+                    fully_read = False
+                    leave = False
+                    decompressed = ''
+                    while not leave:
+                        compressed_chunk = compressed.read(self.buffer_size)
+                        pbar.update(self.buffer_size)
+
+                        # Can be empty (even before the stream is exhausted):
+                        decompressed_chunk = decompressor.decompress(compressed_chunk)
+                        if decompressed_chunk:
+                            decompressed += decompressed_chunk.decode()
+                            new_lines = decompressed.splitlines()
+                            decompressed = new_lines[-1]
+                            for line in new_lines[:-1]:
+                                leave = self.prepare_line(line, exported)
+                        if len(compressed_chunk) < self.buffer_size:
+                            fully_read = True
+                            # Reached EOF
+                            break
+
+                    exported.write('\n}\n')
+
+    def prepare_line(self, line, exported):
+        '''
+        https://www.wikidata.org/wiki/Q638
+        type: item
+        id: Q638
+        labels.en.value: music
+        claims.P31.0.mainsnak.datavalue.value.id: Q...
+
+
+        instance of (P31): *type of arts, specialty
+        subclass of (P279): *performing arts, entertainment, time-based art
+
+        :param line:
+        :return:
+        '''
+        ret = False
+        if line.startswith('{'):
+            self.line_idx += 1
+            line = line.rstrip('\n, ').strip()
+            try:
+                entity = json.loads(line)
+            except JSONDecodeError:
+                self.log_error(f'wrong json line {self.line_idx}')
+                return ret
+
+            if self.line_idx > 1:
+                exported.write(',\n')
+
+            entity_data = [
+                self.get_value_from_dict(entity, 'labels.en.value')
+            ]
+
+            for prop_id in ['P31', 'P279']:
+                obj_ids = []
+                for obj in (self.get_value_from_dict(entity, f'claims.{prop_id}') or []):
+                    obj_id = self.get_value_from_dict(obj, 'mainsnak.datavalue.value.id')
+                    if obj_id:
+                        obj_ids.append(obj_id)
+                entity_data.append(obj_ids)
+
+            exported.write(f'{json.dumps(entity["id"])}:' + json.dumps(entity_data))
+        # if self.line_idx > 5:
+        #     ret = True
+        return ret
+
+    def get_value_from_dict(self, dic, dotted_path):
+        ret = dic
+        for key in dotted_path.split('.'):
+            ret = ret.get(key, None)
+            if ret is None:
+                break
+        return ret
+
+    def log_error(self, message):
+        print(message, file=sys.stderr)

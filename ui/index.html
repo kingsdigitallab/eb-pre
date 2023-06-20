@@ -28,6 +28,12 @@
       <h1 class="title">
         Search ({{ pagination.total }})
       </h1>
+      <p>
+        Density: {{ this.density }}
+        <button class="button" @click="onClickDensity()">
+          Compute
+        </button>
+      </p>
       <div class="columns">
         <form class="column is-3" @submit.prevent.default="onSubmitForm()">
           <div class="panel">
@@ -68,8 +74,10 @@
                 </tr>
                 <tr>
                   <td colspan="5">
-                    {{ item['semantic_search-label'] }}
-                    {{ (item['semantic_search-score'] || 0.0).toLocaleString(undefined, { minimumFractionDigits: 2 }) }}
+                    domain: {{ item['semantic_search-label'] }}
+                    ({{ (item['semantic_search-score'] || 0.0).toLocaleString(undefined, { minimumFractionDigits: 2 }) }})
+                    | 
+                    density: {{ item['mtld'].toFixed(2) }}
                     <br>
                     {{ getStringFromLabels(item) }}
                   </td>
@@ -80,7 +88,7 @@
         </div>
         <div class="column is-3">
           <h2 class="title is-4">{{ entry.item?.title }}</h2>
-          <div v-html="entry.content">Content</div>
+          <div v-html="entry.content"></div>
         </div>
       </div>
     </div>
@@ -89,6 +97,7 @@
   <script>
     const useMiniSearch = true;
     const { createApp } = Vue
+    const column_domain = 'semantic_search-label';
 
     createApp({
       data() {
@@ -97,10 +106,12 @@
           query: '',
           facets: {},
           pagination: {},
+          // selected entry
           entry: {
             item: null,
             content: 'BODY'
-          }
+          },
+          density: 0
         }
       },
       mounted() {
@@ -149,6 +160,10 @@
                   title: 'Domain',
                   size: 10
                 },
+                'in_x': {
+                  title: '"In X"',
+                  size: 20
+                },
                 labels: {
                   title: 'Terms',
                   size: 10
@@ -196,7 +211,7 @@
         },
         onOptionChanged() {
           this.$nextTick(() => {
-            console.log('changed')
+            // console.log('changed')
             this.search()
           })
         },
@@ -209,8 +224,15 @@
           })
         },
         search() {
+          let res = this._search()
+          this.items = res.data.items
+          this.facets = res.data.aggregations
+          this.pagination = res.pagination
+          this.density = 0
+        },
+        _search(perPage=100) {
           let options = {
-            per_page: 100,
+            per_page: perPage,
             // sort: 'name_asc',
             filters: this.filters
           }
@@ -231,17 +253,24 @@
               options.query = this.query
             }
           }
-          options.sort = 'score_desc';
+          if (this.filters[column_domain]) {
+            options.sort = 'score_desc';
+          }
 
-          let res = this.itemsjs.search(options)
+          return this.itemsjs.search(options)
           // console.log(res)
-          this.items = res.data.items
-          this.facets = res.data.aggregations
-          this.pagination = res.pagination
           // console.log(this.items)
         },
         getTextPathFromId(aid) {
           return aid.replace('xml', 'txt').replace('XML', 'TXT')
+        },
+        onClickDensity() {
+          let ret = 0
+          let res = this._search(100000)
+          for (item of res.data.items) {
+            ret += item.mtld
+          }
+          this.density = (ret / res.data.items.length).toFixed(2)
         }
       }
     }).mount('#search')
