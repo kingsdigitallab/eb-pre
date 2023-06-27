@@ -139,6 +139,7 @@ createApp({
 
         query: '',
         limit: 25,
+        minLength: 0,
 
         items: {
             'documents': [],
@@ -157,7 +158,7 @@ createApp({
     },
     computed: {
         density() {
-            ret = 0
+            let ret = 0
             for (item of this.items.documents) {
                 ret += this.titlesEntry[item.label].mtld
             }
@@ -200,7 +201,7 @@ createApp({
         if (v) {
             this.items = {
                 words: this.index.findNearestVectors(v, 'words').slice(0, this.limit),
-                documents: this.index.findNearestVectors(v, 'documents').slice(0, this.limit),
+                documents: this.filterNearestDocVectorsByLength(this.index.findNearestVectors(v, 'documents')),
             }
         } else {
             this.items.words = []
@@ -209,6 +210,17 @@ createApp({
         console.log(`${this.query} done`)
         this.setAddressBarFromSelection()
       },
+      filterNearestDocVectorsByLength(vs) {
+        let ret = []
+        for (let v of vs) {
+            if (this.getItemLength(v) > this.minLength) {
+                console.log(v.label, this.getItemLength(v))
+                ret.push(v)
+                if (ret.length >= this.limit) break;
+            }
+        }
+        return ret
+      },
       setAddressBarFromSelection() {
         // ?p1.so=&p1.co=&p2.so=...
         // let searchParams = new URLSearchParams(window.location.search)
@@ -216,6 +228,7 @@ createApp({
 
         searchParams += `q=${this.query}`
         searchParams += `&l=${this.limit}`
+        searchParams += `&ml=${this.minLength}`
 
         let newRelativePathQuery =
           window.location.pathname + "?" + searchParams;
@@ -226,6 +239,7 @@ createApp({
 
         this.query = searchParams.get('q', '') || ''
         this.limit = parseInt(searchParams.get('l', '10') || '10')
+        this.minLength = parseInt(searchParams.get('ml', '0') || '0')
       },
     }
   }).mount('#semsearch')

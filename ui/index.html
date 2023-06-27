@@ -25,15 +25,19 @@
   <body>
   <section class="section">
     <div class="container" id="search">
-      <h1 class="title">
-        Search ({{ pagination.total }})
+      <h1>
+        <span class="title">Search ({{ pagination.total }})</span>        
+        <span style="float:right">
+          <template v-if="this.density">
+            Density: {{ this.density }}
+          </template>
+          <template v-else>
+            <button class="button" @click="onClickDensity()">
+              Compute linguistic density
+            </button>
+          </template>
+        </span>
       </h1>
-      <p>
-        Density: {{ this.density }}
-        <button class="button" @click="onClickDensity()">
-          Compute
-        </button>
-      </p>
       <div class="columns">
         <form class="column is-3" @submit.prevent.default="onSubmitForm()">
           <div class="panel">
@@ -43,10 +47,23 @@
               </div>
             </div>
           </div>
+          <div class="panel">
+            <p class="panel-heading">Minimum length</p>
+            <div class="panel-block">
+              <div class="select">
+                <select v-model="minLength" @change="onOptionChanged">
+                  <option value="0">No minimum</option>
+                  <option value="1000">1,000 characters</option>
+                  <option value="10000">10,000 chars</option>
+                  <option value="100000">100,000 chars</option>
+                </select>
+              </div>
+            </div>
+          </div>
           <div v-for="facet in facets" class="panel">
             <p class="panel-heading">{{ facet.title }}</p>
             <label v-for="option in facet.buckets" :class="{'panel-block': 1, 'is-active': option.selected}">
-              <input v-model="option.selected" @change="onOptionChanged" type="checkbox" class="input hidden">
+              <input v-model="option.selected" @change="onOptionChanged(facet, option)" type="checkbox" class="input hidden">
               {{ option.key }} ({{ option.doc_count }})
             </label>
           </div>
@@ -104,6 +121,7 @@
         return {
           items: [],
           query: '',
+          minLength: 0,
           facets: {},
           pagination: {},
           // selected entry
@@ -160,13 +178,13 @@
                   title: 'Domain',
                   size: 10
                 },
-                'in_x': {
-                  title: '"In X"',
-                  size: 20
-                },
                 labels: {
                   title: 'Terms',
                   size: 10
+                },
+                'in_x': {
+                  title: '"In X"',
+                  size: 20
                 },
                 // title: {
                 //   title: 'Title',
@@ -209,7 +227,11 @@
         getTextUrlFromItem(item) {
           return 'https://raw.githubusercontent.com/TU-plogan/kp-editions/main/' + this.getTextPathFromId(item.index);
         },
-        onOptionChanged() {
+        onOptionChanged(facet, option) {
+          if (facet && facet.name !== 'labels' && option && option.selected) {
+            facet.buckets.forEach(o => o.selected = (o === option))
+          }
+
           this.$nextTick(() => {
             // console.log('changed')
             this.search()
@@ -240,11 +262,14 @@
             if (this.query) {
               const search_results = this.miniSearch.search(
                 this.query,
-                { boost: { title: 2 } }
+                { 
+                  boost: { title: 2 } ,
+                  filter: (v) => v.chars > this.minLength
+                }
               )
               options.ids = search_results.map(v => v.index)
             } else {
-              options.ids = this.entries.map(v => v.index)
+              options.ids = this.entries.filter((v) => v.chars > this.minLength).map(v => v.index)
             }
           } else {
             if (this.query.includes(':')) {
@@ -257,9 +282,8 @@
             options.sort = 'score_desc';
           }
 
-          return this.itemsjs.search(options)
-          // console.log(res)
-          // console.log(this.items)
+          let ret = this.itemsjs.search(options)
+          return ret
         },
         getTextPathFromId(aid) {
           return aid.replace('xml', 'txt').replace('XML', 'TXT')
@@ -271,7 +295,7 @@
             ret += item.mtld
           }
           this.density = (ret / res.data.items.length).toFixed(2)
-        }
+        },
       }
     }).mount('#search')
   </script>
