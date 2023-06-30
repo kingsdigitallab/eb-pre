@@ -96,7 +96,7 @@ class VectorIndex {
     async loadVectors(edition=7, speed='fast-learn') {
         let vs = null
         console.log('embeddings - download')
-        await fetch(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_50-ng_1-tm_0.1-ch_sequential-de_4.tv2.json`)
+        await fetch(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_50-ng_1-tm_0.1-ch_sequential-de_2.tv2.json`)
         // await fetch(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_50-ng_0-tm_0.1-ch_sequential.tv2.json`)
             .then(response => response.json())
             .then(json => {
