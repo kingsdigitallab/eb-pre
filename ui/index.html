@@ -26,40 +26,47 @@
   <section class="section">
     <div class="container" id="search">
       <h1>
-        <span class="title">Search ({{ pagination.total }})</span>        
+        <span class="title">Search ({{ pagination.total }} entries)</span>        
         <span style="float:right">
           <template v-if="this.density">
-            Density: {{ this.density }}
+            Lexical Diversity: {{ this.density }}
           </template>
           <template v-else>
             <button class="button" @click="onClickDensity()">
-              Compute linguistic density
+              Compute Lexical Diversity
             </button>
           </template>
         </span>
       </h1>
+      <p>
+        <em>
+          Exploratory proof of concept based on the digitisation of the 7th and 9th editions of the Encyclopedia Britannica produced by the <a href="https://tu-plogan.github.io/source/c_about.html">Nineteenth-Century Knowledge Project</a> led by Peter M. Logan.
+        </em>
+        <br><br>
+      </p>
       <div class="columns">
         <form class="column is-3" @submit.prevent.default="onSubmitForm()">
           <div class="panel">
+            <p class="panel-heading">Heading or Subject</p>
             <div class="panel-block">
               <div class="control">
                 <input class="input is-primary" type="search" v-model="query">
               </div>
             </div>
           </div>
-          <div class="panel">
-            <p class="panel-heading">Minimum length</p>
-            <div class="panel-block">
-              <div class="select">
-                <select v-model="minLength" @change="onOptionChanged">
-                  <option value="0">No minimum</option>
-                  <option value="1000">1,000 characters</option>
-                  <option value="10000">10,000 chars</option>
-                  <option value="100000">100,000 chars</option>
-                </select>
+            <div class="panel">
+              <p class="panel-heading">Minimum length</p>
+              <div class="panel-block">
+                <div class="select">
+                  <select v-model="minLength" @change="onOptionChanged">
+                    <option value="0">No minimum</option>
+                    <option value="1000">1,000 characters</option>
+                    <option value="10000">10,000 chars</option>
+                    <option value="100000">100,000 chars</option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
           <div v-for="facet in facets" class="panel">
             <p class="panel-heading">{{ facet.title }}</p>
             <label v-for="option in facet.buckets" :class="{'panel-block': 1, 'is-active': option.selected}">
@@ -94,7 +101,7 @@
                     domain: {{ item['semantic_search-label'] }}
                     ({{ (item['semantic_search-score'] || 0.0).toLocaleString(undefined, { minimumFractionDigits: 2 }) }})
                     | 
-                    density: {{ item['mtld'].toFixed(2) }}
+                    diversity: {{ item['mtld'].toFixed(2) }}
                     <br>
                     {{ getStringFromLabels(item) }}
                   </td>
@@ -145,7 +152,7 @@
               this.miniSearch = new MiniSearch({
                 idField: 'index',
                 fields: searchableFields,
-                storeFields: searchableFields
+                storeFields: searchableFields.concat(['chars'])
               })
 
               this.miniSearch.addAll(this.entries)
