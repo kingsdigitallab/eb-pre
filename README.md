@@ -1,4 +1,4 @@
-Experimental proof of concept based on the dataset produced by the the Nineteenth-Century Knowledge Project https://tu-plogan.github.io/source/c_about.html led by Peter M. Logan.
+Experimental proof of concept based on the dataset produced by the [Nineteenth-Century Knowledge Project](https://tu-plogan.github.io/source/c_about.html) led by Peter M. Logan.
 
 # Modules
 
