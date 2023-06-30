@@ -31,6 +31,16 @@ class VectorIndex {
         this.vs = {}
     }
 
+    get_size(type='any') {
+        let ret = []
+        if (type == 'documents') {
+            ret = Object.values(this.vs).filter(v => v.label !== v.label.toLowerCase())
+        } else if (type == 'words') {
+            ret = Object.values(this.vs).filter(v => v.label == v.label.toLowerCase())
+        }
+        return ret.length
+    }
+
     findNearestVectors(v, type='any', precision=20) {
         // 100k vectors with 500 dims takes 0.6s on single thread 2022 i7 CPU
         let ret = null
@@ -166,6 +176,11 @@ createApp({
             'documents': [],
             'words': []
         },
+        stats: {
+            ngrams_count: 0,
+            entries_count: 0
+        },
+
         suggestions: ['a', 'bb'],
       }
     },
@@ -173,6 +188,10 @@ createApp({
         this.setSelectionFromAddressBar()
         this.index = new VectorIndex()
         await this.index.loadVectors(this.edition, this.speed)
+
+        this.stats.ngrams_count = this.index.get_size('words')
+        this.stats.entries_count = this.index.get_size('documents')
+
         await this.loadCorpusIndex()
         this.suggestions = Object.keys(this.index.vs).sort()
         this.search()
@@ -187,7 +206,7 @@ createApp({
                 ret /= this.items.documents.length
             }
             return ret.toFixed(2);
-        }
+        },
     },
     methods: {
       onSubmitForm() {
