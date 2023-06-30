@@ -1,29 +1,16 @@
-https://github.com/TU-plogan/kp-editions
-
-feasibility:
-
-FAST on titles (but need good algo; and not inductive nor aligned to historical domains)
-SEMSEARCH on body (only tested on samples)
+Experimental proof of concept based on the dataset produced by the the Nineteenth-Century Knowledge Project https://tu-plogan.github.io/source/c_about.html led by Peter M. Logan.
 
 # Modules
 
-* domain classifers
-* domain vocabularies
-* corpus reader
-* index
-* linguistic processor
+TODO
 
 # Notebooks
 
-* create_index
-* 
-* group_from_subject_terms
-* group_from_entry_body
-* correlate
-
--> data/index.json
+TODO
 
 # Setup
+
+TODO
 
 * clone https://github.com/TU-plogan/kp-editions
 * symlink that repo as a subdirectory kp-editions
@@ -49,7 +36,3 @@ https://github.com/itemsapi/itemsjs
 https://github.com/neuml/txtai
 https://github.com/ddangelov/Top2Vec
 
-## data processing
-
-https://rdflib.readthedocs.io/en/stable/index.html
-https://pandas.pydata.org/pandas-docs/stable/index.html

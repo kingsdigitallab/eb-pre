@@ -31,7 +31,7 @@ class VectorIndex {
         this.vs = {}
     }
 
-    findNearestVectors(v, type='any') {
+    findNearestVectors(v, type='any', precision=20) {
         // 100k vectors with 500 dims takes 0.6s on single thread 2022 i7 CPU
         let ret = null
         if (type == 'documents') {
@@ -43,17 +43,27 @@ class VectorIndex {
             ret = Object.values(this.vs)
         }
         for (let av of ret) {
-            av.similarity = this.computeSimilarity(v, av)
+            av.similarity = this.computeSimilarity(v, av, precision)
         }
         ret.sort((v1, v2) => v2.similarity - v1.similarity)
 
         return ret
     }
 
-    computeSimilarity(v1, v2) {
+    computeSimilarity(v1, v2, precision) {
         let ret = 0
 
+        if (precision < 20) {
+            v1 = v1.slice()
+            v2 = v2.slice()
+        }
+
         for (let i = 0; i < v1.length; i++) {
+            if (precision < 20) {
+                v1[i] = v1[i].toFixed(precision)
+                v2[i] = v2[i].toFixed(precision)
+            }
+
             ret += v1[i] * v2[i]
         }
 
@@ -85,13 +95,22 @@ class VectorIndex {
 
     async loadVectors(edition=7, speed='fast-learn') {
         let vs = null
-        await fetch(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_50-ng_1-tm_0.1-ch_sequential.tv2.json`)
+        console.log('embeddings - download')
+        await fetch(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_50-ng_1-tm_0.1-ch_sequential-de_4.tv2.json`)
         // await fetch(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_50-ng_0-tm_0.1-ch_sequential.tv2.json`)
             .then(response => response.json())
             .then(json => {
                 this.vs = json
             });
 
+        // console.log('embedding - quantise')
+        // for (let [k, v] of Object.entries(this.vs)) {
+        //     for (let i = 0; i < v.length; i++) {
+        //         v[i] = v[i].toFixed(1)
+        //     }
+        // }
+
+        console.log('embeddings - add labels')
         for (let [k, v] of Object.entries(this.vs)) {
             v.label = k
         }
@@ -136,6 +155,8 @@ createApp({
       return {
         edition: 7,
         speed: 'fast-learn',
+
+        precision: 20,
 
         query: '',
         limit: 25,
@@ -200,8 +221,8 @@ createApp({
         let v = this.index.getVectorFromLabel(this.query)
         if (v) {
             this.items = {
-                words: this.index.findNearestVectors(v, 'words').slice(0, this.limit),
-                documents: this.filterNearestDocVectorsByLength(this.index.findNearestVectors(v, 'documents')),
+                words: this.index.findNearestVectors(v, 'words', this.precision).slice(0, this.limit),
+                documents: this.filterNearestDocVectorsByLength(this.index.findNearestVectors(v, 'documents', this.precision)),
             }
         } else {
             this.items.words = []
@@ -214,7 +235,7 @@ createApp({
         let ret = []
         for (let v of vs) {
             if (this.getItemLength(v) > this.minLength) {
-                console.log(v.label, this.getItemLength(v))
+                // console.log(v.label, this.getItemLength(v))
                 ret.push(v)
                 if (ret.length >= this.limit) break;
             }

@@ -53,7 +53,7 @@ class SemanticSearch(BaseClassifier):
             # Lowering this will increase the vocabulary & model size
             # 50 -> 25 : files larger by a quarter
             # / doesn't seem to make a large difference in results...
-            min_count=30,
+            min_count=40,
             # https://radimrehurek.com/gensim/models/phrases.html
             # Captures 2-grams if True (default is False)
             # + v. interesting word neighbours results
@@ -102,7 +102,7 @@ class SemanticSearch(BaseClassifier):
             ['mc', options["min_count"]],
             ['ng', int(options["ngram_vocab"])],
             ['tm', options['topic_merge_delta']],
-            ['ch', options['document_chunker']]
+            ['ch', options['document_chunker']],
         ]
 
         return '-'.join([
@@ -237,7 +237,7 @@ class SemanticSearch(BaseClassifier):
         # max_docs = 1000
         query = self.get_query(edition)
 
-        options = self.get_options()
+        options = self.get_options().copy()
         for aid in tqdm(index.query(query).index):
             body = corpus.read_body(aid)
             if len(body) > 10:
