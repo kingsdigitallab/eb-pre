@@ -6,8 +6,6 @@ S back button
 S optimisations
     WIP doc2vec params
     . replace numbers with NUMBER?
-    . vector qunatisation
-        0.4231737554073334
 C param for number of results
 C load progress bar
 
@@ -24,6 +22,14 @@ WONT FE merges auto-complete index
 */
 
 const { createApp } = Vue
+
+function expandURL(relativeURL) {
+  let ret = relativeURL
+  if (!(location.hostname === "localhost" || location.hostname === "127.0.0.1")) {
+    ret = "https://raw.githubusercontent.com/kingsdigitallab/eb-pre/main/docs/" + relativeURL
+  }
+  return ret
+}
 
 class VectorIndex {
 
@@ -106,7 +112,7 @@ class VectorIndex {
     async loadVectors(edition=7, speed='learn') {
         let vs = null
         console.log('embeddings - download')
-        await fetch(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_40-ng_1-tm_0.5-ch_sentence-de_2.tv2.json`)
+        await fetch(expandURL(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_40-ng_1-tm_0.5-ch_sentence-de_2.tv2.json`))
         // await fetch(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_50-ng_0-tm_0.1-ch_sequential.tv2.json`)
             .then(response => response.json())
             .then(json => {
@@ -217,7 +223,7 @@ createApp({
         this.search()
       },
       async loadCorpusIndex() {
-        await fetch("../data/index.json")
+        await fetch(expandURL("../data/index.json"))
           .then(response => response.json())
           .then(json => {
             this.corpusIndex = json.data
