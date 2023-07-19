@@ -49,6 +49,8 @@ def test_classifier(ClassifierClass):
 def classify_corpus(ClassifierClass, edition=7):
     classifier = ClassifierClass()
 
+    print(classifier.get_model_filename(7))
+
     for aid, entry in tqdm(index.query(f'edition == {edition}').iterrows()):
         entry = index.get_dict_from_entry(entry)
         entry['aid'] = aid
@@ -67,7 +69,7 @@ def classify_corpus(ClassifierClass, edition=7):
 # from helpers.classifiers.guided_topics import GuidedTopics as Classifier
 from helpers.classifiers.semantic_search import SemanticSearch as Classifier
 from datetime import datetime
-if 1:
+if 0:
     print(f'{Classifier.__name__} - {datetime.now().ctime()}')
     print('='*40)
     res = test_classifier(Classifier)

@@ -45,7 +45,7 @@ class SemanticSearch(BaseClassifier):
             # paraphrase-multilingual-MiniLM-L12-v2
             embedding_model='doc2vec',
             # deep-learn doesn' seem worth it on this corpus: takes ~7 hours and not much difference
-            # speed='deep-learn'|'learn'|'deep-learn',
+            # speed='fast-learn'|'learn'|'deep-learn',
             speed='learn',
             # 
             use_embedding_model_tokenizer=True,
@@ -74,7 +74,7 @@ class SemanticSearch(BaseClassifier):
             # TOPIC
             # default = 0.1; min cosine distance to keep topics apart
             # increase to get less topics
-            topic_merge_delta=0.4,
+            topic_merge_delta=0.5,
 
             # if True the content of the document is part of the model
             keep_documents=False,

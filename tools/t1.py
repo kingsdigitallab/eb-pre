@@ -12,7 +12,42 @@ index = Index()
 index.load_or_create()
 # index.create()
 
+if 1:
+    from helpers.classifiers.semantic_search import SemanticSearch
+    semsearch = SemanticSearch()
+    model = semsearch.load_model(7)
+    print(model.get_num_topics())
+
+    topic_words, word_scores, topic_nums = model.get_topics()
+    for i, words in enumerate(topic_words):
+        print(i, words[:10])
+
+
 if 0:
+    ''' 7th edition, 0.5 top2vec topics
+
+0 ['baptismal name' 'ellichpoor long' 'puts stop' 'much stress' 'throw off'
+ 'throw down' 'plastered over' 'novi testamenti' 'pulled off'
+ 'provincially called']
+1 ['county' 'counties' 'parish' 'barony' 'borough' 'galway' 'burgh' 'antrim'
+ 'forfar' 'longford']
+2 ['arsenal' 'dock' 'storehouses' 'stores' 'victualling' 'docks' 'naval'
+ 'wharf' 'yard' 'ships']
+3 ['lunar' 'epact' 'moon' 'epacts' 'intercalary' 'moons' 'intercalation'
+ 'solar' 'cycle' 'sidereal']
+4 ['deceased' 'sepulchres' 'funeral' 'corpse' 'interment' 'dead' 'burial'
+ 'tombs' 'catacombs' 'person deceased']
+5 ['admiral' 'squadron' 'nelson' 'commander' 'fleet' 'admirals' 'commodore'
+ 'command' 'rodney' 'admiral vernon']
+6 ['ohio' 'pennsylvania' 'maryland' 'tennessee' 'columbia' 'alleghany'
+ 'kentucky' 'mississippi' 'alabama' 'illinois']
+7 ['lens' 'focal' 'refracting' 'lenses' 'refracted' 'achromatic' 'glasses'
+ 'focus' 'optical' 'magnifying']
+8 ['wins' 'cards' 'player' 'ace' 'card' 'game' 'tricks' 'played' 'dice'
+ 'winning']
+9 ['hygrometer' 'thermometer' 'atmosphere' 'evaporation' 'humidity'
+ 'temperature' 'barometer' 'centesimal' 'vapour' 'temperatures']
+    '''
     from helpers.classifiers.base_classifier import BaseClassifier
     from helpers.corpus import Corpus
     corpus = Corpus()
