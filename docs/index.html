@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Entry search</title>
+    <title>Keyword search</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/itemsjs@latest/dist/itemsjs.min.js"></script>
@@ -26,7 +26,7 @@
   <section class="section">
     <div class="container" id="search">
       <h1>
-        <span class="title">Search ({{ pagination.total }} entries)</span>        
+        <span class="title">Keyword Search ({{ pagination.total }} entries)</span>        
         <span style="float:right">
           <template v-if="this.density">
             Lexical Diversity: {{ this.density }}
@@ -134,7 +134,7 @@
           // selected entry
           entry: {
             item: null,
-            content: 'Click on a heading in the results to see the content of the entry.'
+            content: 'Click on an entry heading in the results to show its content here.'
           },
           density: 0
         }

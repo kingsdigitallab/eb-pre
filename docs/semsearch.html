@@ -21,6 +21,10 @@
       .panel-heading {
         font-size: 1.1em;
       }
+      .results > div {
+        display: inline-block;
+        width: 100%;
+      }
     </style>
   </head>
   <body>
@@ -76,8 +80,8 @@
               </div>
             </div>
           </form>
-          <div class="column is-5" class="results">
-            <h2 class="title is-4">Nearest documents</h2>
+          <div class="column is-5 results">
+            <h2 class="title is-4">Nearest entries</h2>
             <div v-for="(item, idx) in items.documents">
               <a href="#" @click.prevent.default="onClickItem(item)">{{idx + 1}}. {{ item.label }}</a>
               <span style="float: right;"> 
@@ -86,7 +90,7 @@
               </span>
             </div>
           </div>
-          <div class="column is-5" class="results">
+          <div class="column is-5 results">
             <h2 class="title is-4">Nearest words</h2>
             <div v-for="(item, idx) in items.words">
               <a href="#" @click.prevent.default="onClickItem(item)">{{idx + 1}}. {{ item.label }}</a>
