@@ -47,7 +47,7 @@ class Corpus:
         xml = Path(self.path, aid).read_text()
         root = ET.fromstring(xml)
         ret = {
-            'title': self.clean_title(root.findall(f'.//{TEI_NAMESPACE}title[@level="a"]')[0].text or 'UNNAMED ENTRY'),
+            'title': self.clean_title(root.findall(f'.//{TEI_NAMESPACE}title[@level="a"]')[0].text or settings.UNNAMED_ENTRY),
             'terms': self.get_terms_from_dom(root)
         }
         return ret

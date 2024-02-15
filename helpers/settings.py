@@ -57,6 +57,8 @@ CORPUS_PATH = Path(DATA_PATH, Path('kp-editions'))
 INDEX_PATH = Path(DATA_PATH, Path('index.json'))
 SAMPLES_PATH = Path(DATA_PATH, Path('kp_sample_entries.csv'))
 
+UNNAMED_ENTRY = 'UNNAMED ENTRY'
+
 CUSTOM_SAMPLES = [
     {
         'heading': 'HYPOCHONDRIASIS',
