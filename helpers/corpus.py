@@ -28,18 +28,26 @@ class Corpus:
 
     def decode_id(self, aid):
         # eb07/TXT/a3/kp-eb0703-024907-8798-v1.txt
-        ret = re.search(r'kp-eb(?P<edition>\d\d)(?P<volume>\d\d)-(?P<page>\d\d\d\d)\d\d-', aid)
-        ret = {
-            k: int(re.sub(f'^0+', f'', v))
-            for k, v in ret.groupdict().items()
-        }
+        ret = None
+        
+        if '/XML' not in aid:
+            print(f'WARNING: .xml file found outside /XML path ({aid})')
+        else:        
+            ret = re.search(r'kp-eb(?P<edition>\d\d)(?P<volume>\d\d)-(?P<page>\d\d\d\d)\d\d-', aid)
+            if not ret:
+                print(f'WARNING: entry file name doesn\'t match expected pattern ({aid})')
+            else:
+                ret = {
+                    k: int(re.sub(f'^0+', f'', v))
+                    for k, v in ret.groupdict().items()
+                }
         return ret
 
     def read_metadata(self, aid):
         xml = Path(self.path, aid).read_text()
         root = ET.fromstring(xml)
         ret = {
-            'title': self.clean_title(root.findall(f'.//{TEI_NAMESPACE}title[@level="a"]')[0].text),
+            'title': self.clean_title(root.findall(f'.//{TEI_NAMESPACE}title[@level="a"]')[0].text or 'UNNAMED ENTRY'),
             'terms': self.get_terms_from_dom(root)
         }
         return ret

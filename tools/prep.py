@@ -30,10 +30,10 @@ def index_linguistic_properties(query=None):
 
     index.save()
 
-if 0:
+if 1:
     index_linguistic_properties()
 
-if 1:
+if 0:
     import re
     from helpers.samples import Samples
 

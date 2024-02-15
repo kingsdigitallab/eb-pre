@@ -37,34 +37,53 @@ class Index:
         """Indexes the title and edition of all articles in the corpus.
         And saves the index as a json file."""
         ids = list(self.corpus.read_ids())
-        titles = len(ids) * [None]
-        editions = len(ids) * [None]
-        volumes = len(ids) * [None]
-        pages = len(ids) * [None]
-        labels = len(ids) * [None]
-        refs = len(ids) * [None]
 
-        # TODO: use list of dictionary instead
-        for i, aid in tqdm(enumerate(ids)):
-            parts = self.corpus.decode_id(aid)
-            # print(parts)
-            editions[i] = parts['edition']
-            volumes[i] = parts['volume']
-            pages[i] = parts['page']
+        index = []
 
-            parts = self.corpus.read_metadata(aid)
-            titles[i] = parts['title']
-            labels[i] = [t['label'] for t in parts['terms']]
-            refs[i] = [t['ref'] for t in parts['terms']]
+        rows = []
+        if 1:
+            for i, aid in tqdm(enumerate(ids)):
+                parts = self.corpus.decode_id(aid)
+                if parts:
+                    row = parts.copy()
+                    row.update(self.corpus.read_metadata(aid))
+                    row['labels'] = [t['label'] for t in row['terms']]
+                    row['refs'] = [t['ref'] for t in row['terms']]
+                    del row['terms']
+                    rows.append(row)
+                    index.append(aid)
+                
+            self.df = pd.DataFrame(rows, index=index)
 
-        self.df = pd.DataFrame({
-            'edition': editions,
-            'volume': volumes,
-            'page': pages,
-            'title': titles,
-            'labels': labels,
-            'refs': refs,
-        }, index=ids)
+        else:
+            titles = len(ids) * [None]
+            editions = len(ids) * [None]
+            volumes = len(ids) * [None]
+            pages = len(ids) * [None]
+            labels = len(ids) * [None]
+            refs = len(ids) * [None]
+
+            # TODO: use list of dictionary instead
+            for i, aid in tqdm(enumerate(ids)):
+                parts = self.corpus.decode_id(aid)
+                # print(parts)
+                editions[i] = parts['edition']
+                volumes[i] = parts['volume']
+                pages[i] = parts['page']
+
+                parts = self.corpus.read_metadata(aid)
+                titles[i] = parts['title']
+                labels[i] = [t['label'] for t in parts['terms']]
+                refs[i] = [t['ref'] for t in parts['terms']]
+
+            self.df = pd.DataFrame({
+                'edition': editions,
+                'volume': volumes,
+                'page': pages,
+                'title': titles,
+                'labels': labels,
+                'refs': refs,
+            }, index=ids)
 
         # print(self.df.head(3))
 
