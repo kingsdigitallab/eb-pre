@@ -57,19 +57,34 @@
               </div>
             </div>
           </div>
-            <div class="panel">
-              <p class="panel-heading">Minimum length</p>
-              <div class="panel-block">
-                <div class="select">
-                  <select v-model="minLength" @change="onOptionChanged">
-                    <option value="0">No minimum</option>
-                    <option value="1000">1,000 characters</option>
-                    <option value="10000">10,000 chars</option>
-                    <option value="100000">100,000 chars</option>
-                  </select>
-                </div>
+          <div class="panel">
+            <p class="panel-heading">Minimum length</p>
+            <div class="panel-block">
+              <div class="select">
+                <select v-model="minLength" @change="onOptionChanged">
+                  <option value="0">No minimum</option>
+                  <option value="1000">1,000 characters</option>
+                  <option value="10000">10,000 chars</option>
+                  <option value="100000">100,000 chars</option>
+                  <option value="1000000">1,000,000 chars</option>
+                </select>
               </div>
             </div>
+          </div>
+          <div class="panel">
+            <p class="panel-heading">Maximum length</p>
+            <div class="panel-block">
+              <div class="select">
+                <select v-model="maxLength" @change="onOptionChanged">
+                  <option value="0">No maximum</option>
+                  <option value="1000">1,000 characters</option>
+                  <option value="10000">10,000 chars</option>
+                  <option value="100000">100,000 chars</option>
+                  <option value="1000000">1,000,000 chars</option>
+                </select>
+              </div>
+            </div>
+          </div>
           <div v-for="facet in facets" class="panel">
             <p class="panel-heading">{{ facet.title }}</p>
             <label v-for="option in facet.buckets" :class="{'panel-block': 1, 'is-active': option.selected}">
@@ -140,6 +155,7 @@
           items: [],
           query: '',
           minLength: 0,
+          maxLength: 0,
           facets: {},
           pagination: {},
           // selected entry
@@ -282,12 +298,12 @@
                 this.query,
                 { 
                   boost: { title: 2 } ,
-                  filter: (v) => v.chars > this.minLength
+                  filter: (v) => (v.chars > this.minLength) && ((this.maxLength == 0) || (v.chars < this.maxLength))
                 }
               )
               options.ids = search_results.map(v => v.index)
             } else {
-              options.ids = this.entries.filter((v) => v.chars > this.minLength).map(v => v.index)
+              options.ids = this.entries.filter((v) => ((v.chars > this.minLength) && ((this.maxLength == 0) || (v.chars < this.maxLength)))).map(v => v.index)
             }
           } else {
             if (this.query.includes(':')) {
