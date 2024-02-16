@@ -177,6 +177,7 @@ createApp({
         query: '',
         limit: 25,
         minLength: 0,
+        maxLength: 0,
 
         items: {
             'documents': [],
@@ -259,7 +260,8 @@ createApp({
       filterNearestDocVectorsByLength(vs) {
         let ret = []
         for (let v of vs) {
-            if (this.getItemLength(v) > this.minLength) {
+            let len = this.getItemLength(v)
+            if (len > this.minLength && (this.maxLength == 0 || len < this.maxLength)) {
                 // console.log(v.label, this.getItemLength(v))
                 ret.push(v)
                 if (ret.length >= this.limit) break;
@@ -275,6 +277,7 @@ createApp({
         searchParams += `q=${this.query}`
         searchParams += `&l=${this.limit}`
         searchParams += `&ml=${this.minLength}`
+        searchParams += `&xl=${this.maxLength}`
 
         let newRelativePathQuery =
           window.location.pathname + "?" + searchParams;
@@ -286,6 +289,7 @@ createApp({
         this.query = searchParams.get('q', '') || ''
         this.limit = parseInt(searchParams.get('l', '10') || '10')
         this.minLength = parseInt(searchParams.get('ml', '0') || '0')
+        this.maxLength = parseInt(searchParams.get('xl', '0') || '0')
       },
     }
   }).mount('#semsearch')

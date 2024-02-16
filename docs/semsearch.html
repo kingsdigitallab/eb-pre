@@ -64,6 +64,21 @@
                     <option value="1000">1,000 characters</option>
                     <option value="10000">10,000 chars</option>
                     <option value="100000">100,000 chars</option>
+                    <option value="1000000">1,000,000 chars</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="panel">
+              <p class="panel-heading">Maximum length</p>
+              <div class="panel-block">
+                <div class="select">
+                  <select v-model="maxLength" @change="search()">
+                    <option value="0">No maximum</option>
+                    <option value="1000">1,000 characters</option>
+                    <option value="10000">10,000 chars</option>
+                    <option value="100000">100,000 chars</option>
+                    <option value="1000000">1,000,000 chars</option>
                   </select>
                 </div>
               </div>
