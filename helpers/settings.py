@@ -11,16 +11,17 @@ DOMAINS = {
     'medicine': {
         'name': 'Medicine',
         'path': 'eb09/XML/m15/kp-eb0915-079401-0825-v1.xml', # not in 7!
-        'name_modern': ['medicine', 'health', 'body'],
+        'name_modern': ['medicine', 'medical', 'health'],
         'fast': ['medicine', 'human biology'],
         'desc': '',
     },
     'history': {
         'name': 'History',
         'path': 'eb07/XML_V2/h11/kp-eb0711-046904-5192-v2.xml',
-        'name_modern': ['history', 'mythology', 'legend', 'religion', 'politics', 'war'],
+        'name_modern': ['history', 'mythology', 'legend', 'religion', 'society', 'war', 'biography'],
         'fast': ['history'],
         'desc': 'Includes biblical history of the earth and growth of society under "Civil History". See also entries on countries, like RUSSIA--these are generally histories.',
+        # See 7.History: But that which chiefly merits the name of history, and which is here considered as such, is an account of the principal transactions of mankind since the beginning of the world; and this is naturally divided into two parts, civil and ecclesiastical
     },
     'natural_philosophy': {
         'name': 'Natural Philosophy',
@@ -32,21 +33,22 @@ DOMAINS = {
     'natural_history': {
         'name': 'Natural History',
         'path': 'eb07/XML_V2/n15/kp-eb0715-073804-8803-v2.xml',
-        'name_modern': ['meteorology', 'mineralogy', 'botany', 'zoology'],
+        'name_modern': ['meteorology', 'hydrography', 'mineralogy', 'botany', 'zoology'],
         'fast': ['biology', 'life science', 'earth sciences', 'natural history'],
         'desc': 'that part of natural knowledge which teaches us to distinguish and describe the objects of nature; to examine their appearance, structure, properties, and uses; and to collect, preserve, and arrange them',
+        # See 7.History: "to this day the descriptions of plants, animals, and minerals, are called by the general name of Natural History"
     },
     'useful_arts': {
         'name': 'Useful Arts',
         'path': 'eb09/XML/a2/kp-eb0902-063601-0697-v1.xml', # !! = "art" = Useful + Fine Arts
-        'name_modern': ['engineer', 'craft', 'manufacturing', 'machinery', 'architecture', 'tool'],
+        'name_modern': ['textile', 'machinery', 'manufacture', 'engineering'],
         'fast': ['hardware', 'industries'],
         'desc': '"Useful Arts" is also called "Civil Engineering, Arts, and Manufactures"',
     },
     'fine_arts': {
         'name': 'Fine Arts',
         'path': 'eb09/XML/f9/kp-eb0909-019401-0203-v1.xml', # not in 7!
-        'name_modern': ['poetry', 'painting', 'sculpture', 'engraving', 'dance', 'sing', 'music'],
+        'name_modern': ['poetry', 'painting', 'sculpture', 'engraving', 'dance', 'music'],
         'fast': [''],
         'desc': '"the art of imitating visible form by means of solid substances, such as marble, wood, or metals"',
     },
