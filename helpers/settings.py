@@ -33,7 +33,7 @@ DOMAINS = {
     'natural_history': {
         'name': 'Natural History',
         'path': 'eb07/XML_V2/n15/kp-eb0715-073804-8803-v2.xml',
-        'name_modern': ['meteorology', 'hydrography', 'mineralogy', 'botany', 'zoology'],
+        'name_modern': ['meteorology', 'mineralogy', 'botany', 'zoology'], # 'hydrography': not enough occurrences
         'fast': ['biology', 'life science', 'earth sciences', 'natural history'],
         'desc': 'that part of natural knowledge which teaches us to distinguish and describe the objects of nature; to examine their appearance, structure, properties, and uses; and to collect, preserve, and arrange them',
         # See 7.History: "to this day the descriptions of plants, animals, and minerals, are called by the general name of Natural History"
@@ -41,7 +41,8 @@ DOMAINS = {
     'useful_arts': {
         'name': 'Useful Arts',
         'path': 'eb09/XML/a2/kp-eb0902-063601-0697-v1.xml', # !! = "art" = Useful + Fine Arts
-        'name_modern': ['textile', 'machinery', 'manufacture', 'engineering'],
+        # engineering only 62 times in ed7 => construction instead
+        'name_modern': ['goods', 'cotton', 'machinery', 'manufacture', 'construction'], # textile does not appear in edition 7 => cotton & goods
         'fast': ['hardware', 'industries'],
         'desc': '"Useful Arts" is also called "Civil Engineering, Arts, and Manufactures"',
     },

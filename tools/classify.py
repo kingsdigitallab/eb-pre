@@ -28,6 +28,11 @@ def test_classifier(ClassifierClass):
     for sample in Samples.read_all():
         print('-'*40)
 
+        if 'eb07' in sample['path']:
+            sample['path'] = sample['path'].replace('eb07/XML/', 'eb07/XML_v2/').replace('-v1.', '-v2.').replace('eb07/XML_V2/', 'eb07/XML_v2/')
+        else:
+            continue
+
         data = corpus.read_body_and_metadata(sample['path'])
         predicted = classifier.classify(data)
         expected = sample['domain'].lower().strip()
