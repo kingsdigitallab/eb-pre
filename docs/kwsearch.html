@@ -327,6 +327,8 @@
           }
           if (this.filters[column_domain]) {
             options.sort = 'score_desc';
+          } else {
+            options.sort = 'name_asc';
           }
 
           let ret = this.itemsjs.search(options)
