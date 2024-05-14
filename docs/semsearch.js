@@ -235,7 +235,7 @@ createApp({
           })
       },
       getItemLength(item) {
-        return this.titlesEntry[item.label].chars
+        return this.titlesEntry[item.label].words
       },
       getTextUrlFromItem(item) {
         return 'https://raw.githubusercontent.com/TU-plogan/kp-editions/main/' + this.getTextPathFromId(this.titlesEntry[item.label].index);
