@@ -114,7 +114,7 @@ class SemanticSearch(BaseClassifier):
 
         edition = entry["edition"]
         options = self.get_options()
-        top2vec_domains_path = self.get_file_path(f'{self.get_model_filename(edition)}_domains.json')
+        top2vec_domains_path = self.get_file_path(f'{settings.DOMAINS_SET}/{self.get_model_filename(edition)}_domains.json')
 
         if top2vec_domains_path.exists():
             self.domain_results = json.loads(top2vec_domains_path.read_text())

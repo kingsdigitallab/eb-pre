@@ -109,7 +109,7 @@ class VectorIndex {
         return ret
     }
 
-    async loadVectors(edition=7, speed='learn') {
+    async loadVectors(edition=7, speed='learn', domainSet='2023') {
         let vs = null
         console.log('embeddings - download')
         await fetch(expandURL(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_40-ng_1-tm_0.5-ch_sentence-de_2.tv2.json`))
@@ -189,19 +189,15 @@ createApp({
         },
 
         suggestions: ['a', 'bb'],
-      }
+        status: 'loading',
+        domainSets: ['2024-07-09', '2023'],
+        // domainSet: '2024-07-09',
+        domainSet: '2023',
+    }
     },
     async mounted() {
         this.setSelectionFromAddressBar()
-        this.index = new VectorIndex()
-        await this.index.loadVectors(this.edition, this.speed)
-
-        this.stats.ngrams_count = this.index.get_size('words')
-        this.stats.entries_count = this.index.get_size('documents')
-
-        await this.loadCorpusIndex()
-        this.suggestions = Object.keys(this.index.vs).sort()
-        this.search()
+        await this.loadDatasets()
     },
     computed: {
         density() {
@@ -224,7 +220,7 @@ createApp({
         this.search()
       },
       async loadCorpusIndex() {
-        await fetch(expandURL("../data/index.json"))
+        await fetch(expandURL(`../data/${this.domainSet}/index.json`))
           .then(response => response.json())
           .then(json => {
             this.corpusIndex = json.data
@@ -291,5 +287,21 @@ createApp({
         this.minLength = parseInt(searchParams.get('ml', '0') || '0')
         this.maxLength = parseInt(searchParams.get('xl', '0') || '0')
       },
-    }
-  }).mount('#semsearch')
+      async loadDatasets() {
+        this.status = 'loading'
+        this.index = new VectorIndex()
+        await this.index.loadVectors(this.edition, this.speed, this.domainSet)
+
+        this.stats.ngrams_count = this.index.get_size('words')
+        this.stats.entries_count = this.index.get_size('documents')
+
+        await this.loadCorpusIndex()
+        this.suggestions = Object.keys(this.index.vs).sort()
+        this.search()
+        this.status = 'loaded'
+      },
+      async onDomainSetChanged() {
+        await this.loadDatasets()
+      }
+    },
+}).mount('#semsearch')

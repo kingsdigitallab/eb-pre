@@ -95,9 +95,22 @@
               {{ option.key }} ({{ option.doc_count }})
             </label>
           </div>
+          <div class="panel">
+            <p class="panel-heading">Domains definitions</p>
+            <div class="panel-block">
+              <div class="select">
+                <select v-model="domainSet" @change="onDomainSetChanged">
+                  <option v-for="aSet in domainSets">{{aSet}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </form>
         <div class="column is-6">
-          <table class="table">
+          <p v-if="status=='loading'">
+            Loading dataset, please wait...
+          </p>
+          <table class="table" v-if="status=='loaded'">
             <thead>
               <tr>
                 <td>Title</td>
@@ -167,85 +180,14 @@
             item: null,
             content: 'Click on an entry heading in the results to show its content here.'
           },
-          density: 0
+          density: 0,
+          domainSets: ['2024-07-09', '2023'],
+          domainSet: '2024-07-09',
+          status: 'loading',
         }
       },
       mounted() {
-        fetch(expandURL("../data/index.json"))
-          .then(response => response.json())
-          .then(json => {
-            this.entries = json.data
-
-            let searchableFields = ['title', 'index', 'labels']
-
-            let suggestions = new Set()
-            for (let entry of this.entries) {
-              suggestions.add(entry.title)
-              for (let label of entry.labels) {
-                suggestions.add(label)
-              }
-            }
-            this.suggestions = Array.from(suggestions).sort()
-
-            if (useMiniSearch) {
-              // https://lucaong.github.io/minisearch/classes/_minisearch_.minisearch.html
-              this.miniSearch = new MiniSearch({
-                idField: 'index',
-                fields: searchableFields,
-                storeFields: searchableFields.concat(['words'])
-              })
-
-              this.miniSearch.addAll(this.entries)
-            }
-
-            this.itemsjs = itemsjs(this.entries, {
-              native_search_enabled: !useMiniSearch,
-              custom_id_field: 'index',
-              sortings: {
-                name_asc: {
-                  field: 'title',
-                  order: 'asc'
-                },
-                score_desc: {
-                  field: 'semantic_search-score',
-                  order: 'desc'
-                }
-              },
-              aggregations: {
-                edition: {
-                  title: 'Edition',
-                  size: 10,
-                  // conjunction: false
-                },
-                /* volume: {
-                  title: 'Volume',
-                  size: 10
-                }, */
-                'semantic_search-label': {
-                  title: 'Domain',
-                  size: 10
-                },
-                labels: {
-                  title: 'Subject terms',
-                  size: 10
-                },
-                'in_x': {
-                  title: '"In X"',
-                  size: 20
-                },
-                // title: {
-                //   title: 'Title',
-                //   size: 10
-                // },
-              },
-              searchableFields: searchableFields
-            });
-
-            /**
-            * get filtered list of movies
-            */
-            this.search()
-          });
+        this.loadDatasets()
       },
       computed: {
         filters() {
@@ -345,6 +287,85 @@
           }
           this.density = (ret / res.data.items.length).toFixed(2)
         },
+        onDomainSetChanged() {
+          this.loadDatasets()
+        },
+        loadDatasets() {
+          this.status = 'loading'
+          fetch(expandURL(`../data/${this.domainSet}/index.json`))
+          .then(response => response.json())
+          .then(json => {
+            this.entries = json.data
+
+            let searchableFields = ['title', 'index', 'labels']
+
+            let suggestions = new Set()
+            for (let entry of this.entries) {
+              suggestions.add(entry.title)
+              for (let label of entry.labels) {
+                suggestions.add(label)
+              }
+            }
+            this.suggestions = Array.from(suggestions).sort()
+
+            if (useMiniSearch) {
+              // https://lucaong.github.io/minisearch/classes/_minisearch_.minisearch.html
+              this.miniSearch = new MiniSearch({
+                idField: 'index',
+                fields: searchableFields,
+                storeFields: searchableFields.concat(['words'])
+              })
+
+              this.miniSearch.addAll(this.entries)
+            }
+
+            this.itemsjs = itemsjs(this.entries, {
+              native_search_enabled: !useMiniSearch,
+              custom_id_field: 'index',
+              sortings: {
+                name_asc: {
+                  field: 'title',
+                  order: 'asc'
+                },
+                score_desc: {
+                  field: 'semantic_search-score',
+                  order: 'desc'
+                }
+              },
+              aggregations: {
+                edition: {
+                  title: 'Edition',
+                  size: 10,
+                  // conjunction: false
+                },
+                /* volume: {
+                  title: 'Volume',
+                  size: 10
+                }, */
+                'semantic_search-label': {
+                  title: 'Domain',
+                  size: 10
+                },
+                labels: {
+                  title: 'Subject terms',
+                  size: 10
+                },
+                'in_x': {
+                  title: '"In X"',
+                  size: 20
+                },
+                // title: {
+                //   title: 'Title',
+                //   size: 10
+                // },
+              },
+              searchableFields: searchableFields
+            });
+
+            this.search()
+            this.status = 'loaded';
+          });
+        }
       }
     }).mount('#search')
   </script>

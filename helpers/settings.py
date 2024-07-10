@@ -7,57 +7,105 @@ def get_path_from_top_directory(directory_name):
     return ret
 
 # sociology?, economy?, philosophy? Under history
-DOMAINS = {
-    'medicine': {
-        'name': 'Medicine',
-        'path': 'eb09/XML/m15/kp-eb0915-079401-0825-v1.xml', # not in 7!
-        'name_modern': ['medicine', 'medical', 'health'],
-        'fast': ['medicine', 'human biology'],
-        'desc': '',
+DOMAINS_SETS = {
+    '2024-07-09': {
+        'sacred_history': {
+            'name': 'Sacred History',
+            'name_modern': ['ecclesiastical history', 'divine', 'SACRED', 'scriptures', 'superstition'],
+        },
+        'civil_history': {
+            'name': 'Civil History',
+            'name_modern': ['annals', 'civilization', 'died', 'historian', 'wars'],
+        },
+        'natural_history': {
+            'name': 'Natural History',
+            'name_modern': [
+                'astronomer', 'chemists', 'geographers', 'geologists', 'NATURAL HISTORY', 
+                'monsters', 'wonders',
+                'city', 'inhabitants', 'mountains', 'river'
+            ],
+        },
+        'useful_arts': {
+            'name': 'Useful Arts',
+            'name_modern': ['DAIRY', 'engineers', 'FURNACE', 'handicraft', 'hydrostatics', 'masonry', 'mills', 'roads', 'SEAMANSHIP', 'ware', 'WEAVING'],
+        },
+        'theology': {
+            'name': 'Theology',
+            'name_modern': ['DIVINATION', 'SUPERSTITION', 'THEOLOGY'],
+        },
+        'philosophy': {
+            'name': 'Philosophy',
+            'name_modern': ['ETHICS', 'induction', 'laws', 'logic', 'GRAMMAR', 'MEMORY'],
+        },
+        'natural_philosophy': {
+            'name': 'Natural Philosophy',
+            'name_modern': [
+                'ARITHMETIC', 'ASTRONOMY', 'ELECTRICITY', 'GEOMETRY', 'mechanics', 'OPTICS', 'POLITICAL ECONOMY',
+                'BOTANY', 'CHEMISTRY', 'medicine', 'METEOROLOGY', 'PHYSICS', 'PHYSIOLOGY', 'ZOOLOGY'
+            ],
+        },
+        'fine_arts': {
+            'name': 'Fine Arts',
+            'name_modern': ['ARCHITECT', 'DANCE', 'DRAMA', 'ENGRAVING', 'MUSIC', 'PAINTING', 'POETRY', 'SCULPTURE'],
+        },
     },
-    'history': {
-        'name': 'History',
-        'path': 'eb07/XML_V2/h11/kp-eb0711-046904-5192-v2.xml',
-        'name_modern': ['history', 'mythology', 'legend', 'religion', 'society', 'war', 'biography'],
-        'fast': ['history'],
-        'desc': 'Includes biblical history of the earth and growth of society under "Civil History". See also entries on countries, like RUSSIA--these are generally histories.',
-        # See 7.History: But that which chiefly merits the name of history, and which is here considered as such, is an account of the principal transactions of mankind since the beginning of the world; and this is naturally divided into two parts, civil and ecclesiastical
-    },
-    'natural_philosophy': {
-        'name': 'Natural Philosophy',
-        'path': 'eb07/XML_V2/n15/kp-eb0715-074001-8829-v2.xml',
-        'name_modern': ['physics', 'mechanics', 'optics', 'astronomy', 'magnetism', 'electricity'],
-        'fast': ['physics'],
-        'desc': 'Similar to Physics. "NATURAL PHILOSOPHY is commonly defined to be that branch of knowledge which considers the powers and properties of natural bodies, and their mutual actions on one another. This term serves to indicate, not one, but a cluster of sciences. Those generally comprehended under it are the following, viz. 1. Mechanics; 2. Hydrostatics; 3. Optics; 4. Astronomy; 5. Magnetism; 6. Electricity." (kp-eb0715-8829-0740-01)',
-    },
-    'natural_history': {
-        'name': 'Natural History',
-        'path': 'eb07/XML_V2/n15/kp-eb0715-073804-8803-v2.xml',
-        'name_modern': ['meteorology', 'mineralogy', 'botany', 'zoology'], # 'hydrography': not enough occurrences
-        'fast': ['biology', 'life science', 'earth sciences', 'natural history'],
-        'desc': 'that part of natural knowledge which teaches us to distinguish and describe the objects of nature; to examine their appearance, structure, properties, and uses; and to collect, preserve, and arrange them',
-        # See 7.History: "to this day the descriptions of plants, animals, and minerals, are called by the general name of Natural History"
-    },
-    'useful_arts': {
-        'name': 'Useful Arts',
-        'path': 'eb09/XML/a2/kp-eb0902-063601-0697-v1.xml', # !! = "art" = Useful + Fine Arts
-        # engineering only 62 times in ed7 => construction instead
-        'name_modern': ['goods', 'cotton', 'machinery', 'manufacture', 'construction'], # textile does not appear in edition 7 => cotton & goods
-        'fast': ['hardware', 'industries'],
-        'desc': '"Useful Arts" is also called "Civil Engineering, Arts, and Manufactures"',
-    },
-    'fine_arts': {
-        'name': 'Fine Arts',
-        'path': 'eb09/XML/f9/kp-eb0909-019401-0203-v1.xml', # not in 7!
-        'name_modern': ['poetry', 'painting', 'sculpture', 'engraving', 'dance', 'music'],
-        'fast': [''],
-        'desc': '"the art of imitating visible form by means of solid substances, such as marble, wood, or metals"',
-    },
+    '2023': {
+        'medicine': {
+            'name': 'Medicine',
+            'path': 'eb09/XML/m15/kp-eb0915-079401-0825-v1.xml', # not in 7!
+            'name_modern': ['medicine', 'medical', 'health'],
+            'fast': ['medicine', 'human biology'],
+            'desc': '',
+        },
+        'history': {
+            'name': 'History',
+            'path': 'eb07/XML_V2/h11/kp-eb0711-046904-5192-v2.xml',
+            'name_modern': ['history', 'mythology', 'legend', 'religion', 'society', 'war', 'biography'],
+            'fast': ['history'],
+            'desc': 'Includes biblical history of the earth and growth of society under "Civil History". See also entries on countries, like RUSSIA--these are generally histories.',
+            # See 7.History: But that which chiefly merits the name of history, and which is here considered as such, is an account of the principal transactions of mankind since the beginning of the world; and this is naturally divided into two parts, civil and ecclesiastical
+        },
+        'natural_philosophy': {
+            'name': 'Natural Philosophy',
+            'path': 'eb07/XML_V2/n15/kp-eb0715-074001-8829-v2.xml',
+            'name_modern': ['physics', 'mechanics', 'optics', 'astronomy', 'magnetism', 'electricity'],
+            'fast': ['physics'],
+            'desc': 'Similar to Physics. "NATURAL PHILOSOPHY is commonly defined to be that branch of knowledge which considers the powers and properties of natural bodies, and their mutual actions on one another. This term serves to indicate, not one, but a cluster of sciences. Those generally comprehended under it are the following, viz. 1. Mechanics; 2. Hydrostatics; 3. Optics; 4. Astronomy; 5. Magnetism; 6. Electricity." (kp-eb0715-8829-0740-01)',
+        },
+        'natural_history': {
+            'name': 'Natural History',
+            'path': 'eb07/XML_V2/n15/kp-eb0715-073804-8803-v2.xml',
+            'name_modern': ['meteorology', 'mineralogy', 'botany', 'zoology'], # 'hydrography': not enough occurrences
+            'fast': ['biology', 'life science', 'earth sciences', 'natural history'],
+            'desc': 'that part of natural knowledge which teaches us to distinguish and describe the objects of nature; to examine their appearance, structure, properties, and uses; and to collect, preserve, and arrange them',
+            # See 7.History: "to this day the descriptions of plants, animals, and minerals, are called by the general name of Natural History"
+        },
+        'useful_arts': {
+            'name': 'Useful Arts',
+            'path': 'eb09/XML/a2/kp-eb0902-063601-0697-v1.xml', # !! = "art" = Useful + Fine Arts
+            # engineering only 62 times in ed7 => construction instead
+            'name_modern': ['goods', 'cotton', 'machinery', 'manufacture', 'construction'], # textile does not appear in edition 7 => cotton & goods
+            'fast': ['hardware', 'industries'],
+            'desc': '"Useful Arts" is also called "Civil Engineering, Arts, and Manufactures"',
+        },
+        'fine_arts': {
+            'name': 'Fine Arts',
+            'path': 'eb09/XML/f9/kp-eb0909-019401-0203-v1.xml', # not in 7!
+            'name_modern': ['poetry', 'painting', 'sculpture', 'engraving', 'dance', 'music'],
+            'fast': [''],
+            'desc': '"the art of imitating visible form by means of solid substances, such as marble, wood, or metals"',
+        },
+    }
 }
+
+# DOMAINS_SET = '2023'
+DOMAINS_SET = '2024-07-09'
+DOMAINS = DOMAINS_SETS[DOMAINS_SET]
+
 
 DATA_PATH = get_path_from_top_directory('data')
 CORPUS_PATH = Path(DATA_PATH, Path('kp-editions'))
-INDEX_PATH = Path(DATA_PATH, Path('index.json'))
+INDEX_PATH = Path(DATA_PATH, DOMAINS_SET, Path('index.json'))
 SAMPLES_PATH = Path(DATA_PATH, Path('kp_sample_entries.csv'))
 
 UNNAMED_ENTRY = 'UNNAMED ENTRY'

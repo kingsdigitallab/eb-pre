@@ -97,24 +97,39 @@
                 </div>
               </div>
             </div>
+            <div class="panel" v-if="0">
+              <p class="panel-heading">Domains definitions</p>
+              <div class="panel-block">
+                <div class="select">
+                  <select v-model="domainSet" @change="onDomainSetChanged">
+                    <option v-for="aSet in domainSets">{{aSet}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>  
           </form>
-          <div class="column is-5 results">
-            <h2 class="title is-4">Nearest entries</h2>
-            <div v-for="(item, idx) in items.documents">
-              <a href="#" @click.prevent.default="onClickItem(item)">{{idx + 1}}. {{ item.label }}</a>
-              <span style="float: right;"> 
-                ({{ Number(getItemLength(item)).toLocaleString() }}) 
-                <a target="_blank" :href="getTextUrlFromItem(item)"> [TEXT]</a>
-              </span>
+          <div v-if="status=='loading'">
+            <p>Loading dataset, please wait...</p>
+          </div>
+          <template v-else>
+            <div class="column is-5 results">
+              <h2 class="title is-4">Nearest entries</h2>
+              <div v-for="(item, idx) in items.documents">
+                <a href="#" @click.prevent.default="onClickItem(item)">{{idx + 1}}. {{ item.label }}</a>
+                <span style="float: right;"> 
+                  ({{ Number(getItemLength(item)).toLocaleString() }}) 
+                  <a target="_blank" :href="getTextUrlFromItem(item)"> [TEXT]</a>
+                </span>
+              </div>
+            </div>
+            <div class="column is-5 results">
+              <h2 class="title is-4">Nearest words</h2>
+              <div v-for="(item, idx) in items.words">
+                <a href="#" @click.prevent.default="onClickItem(item)">{{idx + 1}}. {{ item.label }}</a>
+              </div>
             </div>
           </div>
-          <div class="column is-5 results">
-            <h2 class="title is-4">Nearest words</h2>
-            <div v-for="(item, idx) in items.words">
-              <a href="#" @click.prevent.default="onClickItem(item)">{{idx + 1}}. {{ item.label }}</a>
-            </div>
-          </div>
-        </div>
+        </template>
       </div>
     </section>
   </body>
