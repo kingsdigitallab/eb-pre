@@ -11,3 +11,4 @@ __pycache__/
 .idea
 /kp-editions
 /tmp
+node_modules

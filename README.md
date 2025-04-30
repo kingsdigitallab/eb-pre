@@ -9,7 +9,7 @@ To reproduce the POC from this repository and the corpus.
 ### get the code & data
 1. create a new folder poc
 2. clone this repository into poc/eb-pre
-3. clone the Encyclopedia repository in a separate folder poc/kp-editions
+3. clone [the Encyclopedia repository](https://github.com/TU-plogan/kp-editions) in a separate folder poc/kp-editions 
 
 ### link the data into the code base
 
@@ -18,15 +18,18 @@ To reproduce the POC from this repository and the corpus.
 
 And remove superseded copies of the encyclopedia entries:
 
-6. `rm -rf kp-editions/eb07/TXT/ kp-editions/eb07/XML/`
+6. `rm -rf kp-editions/eb07/TXT_*/ kp-editions/eb07/XML_*/`
 
-## create & active the python environment
+Note that as of 2025Q2, eb07/TXT and /XML will always contain the latest version. Other TXT_* and XML_* folders should be ignored. 
+However for eb09, the latest (and only) version is currently in TXT_v1 and XML_v1.
+
+## create & activate the python environment
 
 7. `cd poc/eb-pre`
 8. `python3 -m venv venv`
 9. `source venv/bin/activate`
 10. `pip install -U pip`
-11. `pip install build/requirements.txt`
+11. `pip install -r build/requirements.txt`
 
 ## (re-)index the entries with linguistic properties
 
