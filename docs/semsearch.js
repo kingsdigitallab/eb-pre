@@ -109,7 +109,7 @@ class VectorIndex {
         return ret
     }
 
-    async loadVectors(edition=7, speed='learn', domainSet='2023') {
+    async loadVectors(edition=7, speed='learn', domainSet='unspecified') {
         let vs = null
         console.log('embeddings - download')
         await fetch(expandURL(`../data/semantic_search/semantic_search-edition_${edition}-doc2vec-${speed}-mc_40-ng_1-tm_0.5-ch_sentence-de_2.tv2.json`))
@@ -190,9 +190,10 @@ createApp({
 
         suggestions: ['a', 'bb'],
         status: 'loading',
-        domainSets: ['2024-07-09', '2023'],
+        domainSets: ['2025-04-30', '2024-07-09', '2023'],
         // domainSet: '2024-07-09',
-        domainSet: '2023',
+        // domainSet: '2023',
+        domainSet: '2025-04-30',
     }
     },
     async mounted() {

@@ -8,6 +8,51 @@ def get_path_from_top_directory(directory_name):
 
 # sociology?, economy?, philosophy? Under history
 DOMAINS_SETS = {
+    # Received 2025-04-14
+    '2025-04-30': {
+        # Memory
+        'sacred_history': {
+            'name': 'Sacred History',
+            'name_modern': ['ecclesiastical history', 'divine', 'SACRED', 'scriptures'],
+        },
+        'civil_history': {
+            'name': 'Civil History',
+            'name_modern': ['civilization', 'CHRONICLE', 'died', 'historian', 'kingdom', 'wars'],
+        },
+        'natural_history': {
+            'name': 'Natural History',
+            'name_modern': [
+                'astronomer', 'chemists', 'geographers', 'geologists', 'NATURAL HISTORY', 
+                'monsters', 'wonders',
+                'city', 'inhabitants', 'mountains', 'river'
+            ],
+        },
+        'useful_arts': {
+            'name': 'Useful Arts',
+            'name_modern': ['DAIRY', 'engineers', 'FURNACE', 'handicraft', 'masonry', 'mills', 'roads', 'SEAMANSHIP', 'ware', 'WEAVING'],
+        },
+        # Reason
+        'theology': {
+            'name': 'Theology',
+            'name_modern': ['creator', 'DIVINATION', 'ETERNITY', 'revelation', 'SUPERSTITION', 'THEOLOGY'],
+        },
+        'philosophy': {
+            'name': 'Philosophy',
+            'name_modern': ['ETHICS', 'induction', 'LEGISLATION', 'logic', 'GRAMMAR', 'PERCEPTION', 'PHILOLOGY'],
+        },
+        'natural_philosophy': {
+            'name': 'Natural Philosophy',
+            'name_modern': [
+                'ALGEBRA', 'ARITHMETIC', 'ASTRONOMY', 'ELECTRICITY', 'GEOMETRY', 'OPTICS', 'POLITICAL ECONOMY', 'MAGNETISM', 'QUANTITY', 'STATICS',
+                'BOTANY', 'CHEMISTRY', 'METEOROLOGY', 'PHYSIC, PRACTICE OF', 'PHYSIOLOGY', 'ZOOLOGY'
+            ],
+        },
+        # Imagination
+        'fine_arts': {
+            'name': 'Fine Arts',
+            'name_modern': ['ARCHITECT', 'DANCE', 'DRAMA', 'ENGRAVING', 'MUSIC', 'PAINTING', 'POETRY', 'SCULPTURE'],
+        },
+    },
     '2024-07-09': {
         'sacred_history': {
             'name': 'Sacred History',
@@ -99,7 +144,8 @@ DOMAINS_SETS = {
 }
 
 # DOMAINS_SET = '2023'
-DOMAINS_SET = '2024-07-09'
+# DOMAINS_SET = '2024-07-09'
+DOMAINS_SET = '2025-04-30'
 DOMAINS = DOMAINS_SETS[DOMAINS_SET]
 
 
