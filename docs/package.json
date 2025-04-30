@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "bulma": "^0.9.4",
+    "itemsjs": "^2.1.25",
+    "minisearch": "^6.3.0",
+    "vue": "^3.5.13"
+  }
+}
