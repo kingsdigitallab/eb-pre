@@ -16,6 +16,7 @@ class SemanticSearch(BaseClassifier):
     '''
 
     def __init__(self):
+        self.index = None
         # maximum number of documents to train on (for testing purpose); -1: no limit
         self.max_docs = -1
         # the loaded/trained top2vec model
@@ -111,23 +112,43 @@ class SemanticSearch(BaseClassifier):
         ]) + '.tv2'
 
     def before_classify(self, entry):
+        '''       
+        Compute self.domain_results, a dictionnary mapping a domain_key to a 
+        {'scores': [], 'aids': []}
+        where scores[i] is the similarity of item aids[i] 
+        in the embedding model with the domain with key domain_key.
 
+        The dictionnary is saved to a json file.
+
+        If the file already exists self.domain_results is read from it 
+        rather than computer.
+        '''
         edition = entry["edition"]
         options = self.get_options()
         top2vec_domains_path = self.get_file_path(f'{settings.DOMAINS_SET}/{self.get_model_filename(edition)}_domains.json')
 
+        print(f'before_classify: {top2vec_domains_path}')
         if top2vec_domains_path.exists():
+            print(f'  exists')
             self.domain_results = json.loads(top2vec_domains_path.read_text())
         else:
+            print(f'  create')
             self.domain_results = {}
             model = self.load_model(edition)
 
+            # print(f'  indexing...')
+            # model.index_document_vectors()
+
+            print(f'  searches...')
+
+            if 0:
+                for seeds in [['SACRED'], ['sacred'], ['sacred', 'SACRED'], ['sacred', 'sacred']]:
+                # for seeds in [['sacred', 'sacred']]:
+                    res = self.search_documents_by_seeds(model, seeds)
+                exit()
+
             for domain_key, domain_def in settings.DOMAINS.items():
-                res = model.search_documents_by_keywords(
-                    domain_def['name_modern'],
-                    10000,
-                    return_documents=False
-                )
+                res = self.search_documents_by_seeds(model, domain_def['name_modern'])
 
                 self.domain_results[domain_key] = {
                     'scores': res[0].tolist(),
@@ -136,7 +157,71 @@ class SemanticSearch(BaseClassifier):
 
             top2vec_domains_path.write_text(json.dumps(self.domain_results))
 
+    def get_index(self):
+        if not self.index:
+            from helpers.index import Index
+            index = Index()
+            index.load()
+            self.index = index
+        
+        return self.index
+
+    def search_documents_by_seeds(self, model, seeds, edition=7):
+        # TODO: avoid calling private methods
+
+        vectors = model._words2word_vectors([s for s in seeds if s == s.lower()]).tolist()
+
+        index = self.get_index()
+        for seed in seeds:
+            if seed != seed.lower():
+                query = f'title == "{seed}" and edition == {edition}'
+                entries = index.query(query)
+
+                if len(entries) != 1:
+                    raise Exception(f'Query title = {seed} and edition = {edition} in index did not return a single row ({len(entries)})')
+
+                aid = entries.index[0]
+                try:
+                    doc_idx = model.doc_id2index[aid]
+                except KeyError:
+                    raise Exception(f'Document with id = {aid} is in the index but not in the model (Query title = {seed} and edition = {edition})')
+                vectors.append(model.document_vectors[doc_idx])
+                
+        vector = model._get_combined_vec(vectors, [])
+        
+        res = model.search_documents_by_vector(
+            vector,
+            10000,
+            return_documents=False
+        )
+
+        # print(f'seeds: {seeds}')
+        # print(res[0][:10])
+
+        return res
+
+    def search_documents_by_seeds_old(self, model, seeds):
+        res = model.search_documents_by_keywords(
+            seeds,
+            10000,
+            return_documents=False
+        )
+
+        print(f'seeds: {seeds}')
+        print(res[0][:10])
+
+        return res
+
     def classify(self, entry, scores=None):
+        '''
+        Returns the key of the domain 
+        which has the highest similarity score 
+        to the given entry.
+
+        If scores is an optional list that will be extended
+        with [key, score] for each domain.
+        Sorted by score (high to low).
+        '''
         ret = ''
 
         idx = None
@@ -164,25 +249,11 @@ class SemanticSearch(BaseClassifier):
                 print(f'  {domain_scores[idx]}')
 
         return ret
-        # best = {
-        #     'score': 0,
-        #     'domain': '',
-        # }
-        # for domain_key, results in self.domain_results.items():
-        #     try:
-        #         idx = results['aids'].index(entry['aid'])
-        #         score = results['scores'][idx]
-        #         if score > best['score']:
-        #             best['domain'] = domain_key
-        #             best['score'] = score
-        #     except ValueError:
-        #         pass
-        #
-        # return best['domain']
 
     def load_model(self, edition):
         model_path = self.get_model_path(edition)
         if self.model_path != model_path:
+            print(f'Load model {model_path}...')
             if model_path.exists():
                 from top2vec import Top2Vec
                 self.model = Top2Vec.load(model_path)
@@ -190,6 +261,13 @@ class SemanticSearch(BaseClassifier):
                 self.model = self.train(edition)
                 self.convert_model_to_json(edition)
             self.model_path = model_path
+
+
+        if 1:
+            index = self.get_index()
+            entries = index.query(f'edition == {edition}')
+            print(f'Documents in model: {len(self.model.doc_id2index)}, documents in index: {len(entries)}')
+            exit()
 
         return self.model
 

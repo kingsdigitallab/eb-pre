@@ -110,3 +110,4 @@ class Index:
     def get_dict_from_entry(self, entry):
         ret = entry.to_dict()
         return ret
+
