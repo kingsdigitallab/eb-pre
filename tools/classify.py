@@ -54,9 +54,15 @@ def test_classifier(ClassifierClass):
 def classify_corpus(ClassifierClass, edition=7):
     classifier = ClassifierClass()
 
-    print(classifier.get_model_filename(7))
+    print(f'Classifier model: {classifier.get_model_filename(edition)}; type: {classifier.get_class_key()}')
 
-    for aid, entry in tqdm(index.query(f'edition == {edition}').iterrows()):
+    classifier.before_classify(edition=edition)
+
+    entries = index.query(f'edition == {edition}')
+
+    print(f'Classifying {len(entries)} entries from edition {edition} into domains...')
+    
+    for aid, entry in tqdm(entries.iterrows(), total=len(entries)):
         entry = index.get_dict_from_entry(entry)
         entry['aid'] = aid
         scores = []
@@ -65,6 +71,7 @@ def classify_corpus(ClassifierClass, edition=7):
         index.update(aid, f'{ClassifierClass.get_class_key()}-label', scores[0][0])
         index.update(aid, f'{ClassifierClass.get_class_key()}-score', scores[0][1])
 
+    print(f'WRITE assigned domains back to the index {index.get_path()}')
     index.save()
 
 # from helpers.classifiers.test import Test as Classifier

@@ -34,7 +34,7 @@ However for eb09, the latest (and only) version is currently in TXT_v1 and XML_v
 ## (re-)index the entries with linguistic properties
 
 12. `cd poc/eb-pre/tools`
-13. `rm ../data/index.json`
+13. `rm ../data/DOMAINS_SET/index.json` # see value for DOMAINS_SET in settings.py
 14. `python prep.py`
 
 ## (re-)create the embeddings
@@ -46,7 +46,7 @@ However for eb09, the latest (and only) version is currently in TXT_v1 and XML_v
 
 ## launch & visit the web application
 
-19. `cd poc/eb-pre`
+19. `cd poc/eb-pre/docs`
 20. `npm ci`
 21. `python3 -m http.server 8000`
 22. visit the following URL with your browser: http://localhost:8000/docs/

@@ -22,10 +22,14 @@ class Index:
         self.corpus = Corpus()
         self.df = None
 
+    def get_path(self):
+        return settings.INDEX_PATH
+
     def load(self):
         self.df = None
-        if settings.INDEX_PATH.exists():
-            self.df = pd.read_json(settings.INDEX_PATH.read_text(), orient='table')
+        path = self.get_path()
+        if path.exists():
+            self.df = pd.read_json(path, orient='table')
 
     def query(self, q=None):
         ret = self.df

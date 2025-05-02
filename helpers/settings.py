@@ -50,7 +50,7 @@ DOMAINS_SETS = {
         # Imagination
         'fine_arts': {
             'name': 'Fine Arts',
-            'name_modern': ['ARCHITECT', 'DANCE', 'DRAMA', 'ENGRAVING', 'MUSIC', 'PAINTING', 'POETRY', 'SCULPTURE'],
+            'name_modern': ['ARCHITECT', 'DANCE, or Dancing', 'DRAMA', 'ENGRAVING', 'MUSIC', 'PAINTING', 'POETRY', 'SCULPTURE'],
         },
     },
     '2024-07-09': {
@@ -91,7 +91,7 @@ DOMAINS_SETS = {
         },
         'fine_arts': {
             'name': 'Fine Arts',
-            'name_modern': ['ARCHITECT', 'DANCE', 'DRAMA', 'ENGRAVING', 'MUSIC', 'PAINTING', 'POETRY', 'SCULPTURE'],
+            'name_modern': ['ARCHITECT', 'DANCE, or Dancing', 'DRAMA', 'ENGRAVING', 'MUSIC', 'PAINTING', 'POETRY', 'SCULPTURE'],
         },
     },
     '2023': {

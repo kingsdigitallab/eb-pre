@@ -79,11 +79,13 @@ class Corpus:
 
     def read_body(self, aid):
         ret = ''
-        path = str(aid).replace('XML', 'TXT').replace('.xml', '.txt')
-        path = Path(self.path, path)
-        if path.exists():
-            ret = path.read_text()
-            # remove the header
-            ret = re.sub(r'(?s)^.*===\+\s*', r'', ret)
+        for suffix in ['', 'm']:
+            path = str(aid).replace('XML', 'TXT').replace(suffix + '.xml', '.txt')
+            path = Path(self.path, path)
+            if path.exists():
+                ret = path.read_text()
+                # remove the header
+                ret = re.sub(r'(?s)^.*===\+\s*', r'', ret)
+                break
 
         return ret

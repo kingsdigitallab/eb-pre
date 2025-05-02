@@ -111,7 +111,7 @@ class SemanticSearch(BaseClassifier):
             for k, v in parts
         ]) + '.tv2'
 
-    def before_classify(self, entry):
+    def before_classify(self, edition=7):
         '''       
         Compute self.domain_results, a dictionnary mapping a domain_key to a 
         {'scores': [], 'aids': []}
@@ -123,29 +123,24 @@ class SemanticSearch(BaseClassifier):
         If the file already exists self.domain_results is read from it 
         rather than computer.
         '''
-        edition = entry["edition"]
+        # edition = entry["edition"]
         options = self.get_options()
         top2vec_domains_path = self.get_file_path(f'{settings.DOMAINS_SET}/{self.get_model_filename(edition)}_domains.json')
 
-        print(f'before_classify: {top2vec_domains_path}')
+        # print(f'before_classify: {top2vec_domains_path}')
         if top2vec_domains_path.exists():
-            print(f'  exists')
+            print(f'READ domains neighbours from {top2vec_domains_path}')
             self.domain_results = json.loads(top2vec_domains_path.read_text())
         else:
-            print(f'  create')
+            print(f'COMPUTE domains neighbours...')
             self.domain_results = {}
             model = self.load_model(edition)
 
-            # print(f'  indexing...')
-            # model.index_document_vectors()
-
-            print(f'  searches...')
-
-            if 0:
-                for seeds in [['SACRED'], ['sacred'], ['sacred', 'SACRED'], ['sacred', 'sacred']]:
-                # for seeds in [['sacred', 'sacred']]:
-                    res = self.search_documents_by_seeds(model, seeds)
-                exit()
+            # if 0:
+            #     for seeds in [['SACRED'], ['sacred'], ['sacred', 'SACRED'], ['sacred', 'sacred']]:
+            #     # for seeds in [['sacred', 'sacred']]:
+            #         res = self.search_documents_by_seeds(model, seeds)
+            #     exit()
 
             for domain_key, domain_def in settings.DOMAINS.items():
                 res = self.search_documents_by_seeds(model, domain_def['name_modern'])
@@ -154,6 +149,8 @@ class SemanticSearch(BaseClassifier):
                     'scores': res[0].tolist(),
                     'aids': res[1].tolist(),
                 }
+
+            print(f'WRITTEN domains neighbours into {top2vec_domains_path}')
 
             top2vec_domains_path.write_text(json.dumps(self.domain_results))
 
@@ -218,14 +215,13 @@ class SemanticSearch(BaseClassifier):
         which has the highest similarity score 
         to the given entry.
 
-        If scores is an optional list that will be extended
+        scores arg is an optional list that will be extended
         with [key, score] for each domain.
         Sorted by score (high to low).
         '''
         ret = ''
 
         idx = None
-        self.before_classify(entry)
 
         domain_scores = []
         for domain_key, results in self.domain_results.items():
@@ -251,10 +247,17 @@ class SemanticSearch(BaseClassifier):
         return ret
 
     def load_model(self, edition):
+        '''
+        Load the embeding model.
+        Or train it if it doesn't already exist.
+        '''
+        if 0:
+            self.model = self.train(edition)
+
         model_path = self.get_model_path(edition)
         if self.model_path != model_path:
-            print(f'Load model {model_path}...')
             if model_path.exists():
+                print(f'Load model {model_path}...')
                 from top2vec import Top2Vec
                 self.model = Top2Vec.load(model_path)
             else:
@@ -262,14 +265,19 @@ class SemanticSearch(BaseClassifier):
                 self.convert_model_to_json(edition)
             self.model_path = model_path
 
-
-        if 1:
-            index = self.get_index()
-            entries = index.query(f'edition == {edition}')
-            print(f'Documents in model: {len(self.model.doc_id2index)}, documents in index: {len(entries)}')
-            exit()
+        self.check_all_docs_in_model(edition)
 
         return self.model
+
+    def check_all_docs_in_model(self, edition):
+        # check that all docs in index are in the model
+        model_qt = len(self.model.doc_id2index)
+        index = self.get_index()
+        entries = index.query(f'edition == {edition}')
+        index_qt = len(entries)
+        if (index_qt != model_qt):
+            # raise Exception(f'Documents in model: {len(self.model.doc_id2index)} <> documents in index: {len(entries)}')
+            print(f'Documents in model: {len(self.model.doc_id2index)} <> documents in index: {len(entries)}')
 
     def convert_model_to_json(self, edition):
         model = self.load_model(edition)
@@ -321,8 +329,13 @@ class SemanticSearch(BaseClassifier):
             if len(body) > 10:
                 options['documents'].append(body.lower())
                 options['document_ids'].append(aid)
+            else:
+                print(aid, len(body), index.get_row(aid))
             if max_docs > -1 and len(options['documents']) > max_docs:
                 break
+
+        print(f'Training model on {len(options['document_ids'])} documents.')
+        # exit()
 
         model = Top2Vec(
             **options

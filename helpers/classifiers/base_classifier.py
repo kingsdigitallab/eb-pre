@@ -20,6 +20,9 @@ class BaseClassifier:
     def get_class_key(cls):
         return re.sub(r'(\B[A-Z])', r'_\1', cls.__name__).lower()
 
+    def before_classify(self, edition):
+        pass
+
     def classify(self, entry):
         raise Exception('Not implemented')
 
@@ -48,3 +51,5 @@ class BaseClassifier:
             for p
             in re.split(r'(?:[^A-Z])\.|;|\?|!', doc)
         ]
+
+    
