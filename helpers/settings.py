@@ -53,7 +53,7 @@ DOMAINS_SETS = {
             'name_modern': ['ARCHITECT', 'DANCE, or Dancing', 'DRAMA', 'ENGRAVING', 'MUSIC', 'PAINTING', 'POETRY', 'SCULPTURE'],
         },
     },
-    '2024-07-09': {
+    '2024-07-09-fixed': {
         'sacred_history': {
             'name': 'Sacred History',
             'name_modern': ['ecclesiastical history', 'divine', 'SACRED', 'scriptures', 'superstition'],
@@ -92,6 +92,47 @@ DOMAINS_SETS = {
         'fine_arts': {
             'name': 'Fine Arts',
             'name_modern': ['ARCHITECT', 'DANCE, or Dancing', 'DRAMA', 'ENGRAVING', 'MUSIC', 'PAINTING', 'POETRY', 'SCULPTURE'],
+        },
+    },
+    '2024-07-09-bugged': {
+        'sacred_history': {
+            'name': 'Sacred History',
+            'name_modern': ['ecclesiastical history', 'divine', 'sacred', 'scriptures', 'superstition'],
+        },
+        'civil_history': {
+            'name': 'Civil History',
+            'name_modern': ['annals', 'civilization', 'died', 'historian', 'wars'],
+        },
+        'natural_history': {
+            'name': 'Natural History',
+            'name_modern': [
+                'astronomer', 'chemists', 'geographers', 'geologists', 'natural history', 
+                'monsters', 'wonders',
+                'city', 'inhabitants', 'mountains', 'river'
+            ],
+        },
+        'useful_arts': {
+            'name': 'Useful Arts',
+            'name_modern': ['dairy', 'engineers', 'furnace', 'handicraft', 'hydrostatics', 'masonry', 'mills', 'roads', 'seamanship', 'ware', 'weaving'],
+        },
+        'theology': {
+            'name': 'Theology',
+            'name_modern': ['divination', 'superstition', 'theology'],
+        },
+        'philosophy': {
+            'name': 'Philosophy',
+            'name_modern': ['ethics', 'induction', 'laws', 'logic', 'grammar', 'memory'],
+        },
+        'natural_philosophy': {
+            'name': 'Natural Philosophy',
+            'name_modern': [
+                'arithmetic', 'astronomy', 'electricity', 'geometry', 'mechanics', 'optics', 'political economy',
+                'botany', 'chemistry', 'medicine', 'meteorology', 'physics', 'physiology', 'zoology'
+            ],
+        },
+        'fine_arts': {
+            'name': 'Fine Arts',
+            'name_modern': ['architect', 'dance', 'drama', 'engraving', 'music', 'painting', 'poetry', 'sculpture'],
         },
     },
     '2023': {
@@ -144,7 +185,9 @@ DOMAINS_SETS = {
 }
 
 # DOMAINS_SET = '2023'
-# DOMAINS_SET = '2024-07-09'
+# DOMAINS_SET = '2024-07-09' # becomes '2024-07-09-bugged'
+# DOMAINS_SET = '2024-07-09-bugged'
+# DOMAINS_SET = '2024-07-09-fixed'
 DOMAINS_SET = '2025-04-30'
 DOMAINS = DOMAINS_SETS[DOMAINS_SET]
 
