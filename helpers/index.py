@@ -98,6 +98,7 @@ class Index:
 
     def save(self):
         """Saves the index in a json file."""
+        settings.INDEX_PATH.parent.mkdir(exist_ok=True)
         settings.INDEX_PATH.write_text(self.df.to_json(orient='table'))
 
     def load_or_create(self):

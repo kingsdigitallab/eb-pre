@@ -8,6 +8,53 @@ def get_path_from_top_directory(directory_name):
 
 # sociology?, economy?, philosophy? Under history
 DOMAINS_SETS = {
+    '2025-06-05': {
+        # Memory
+        'sacred_history': {
+            'name': 'Sacred History',
+            'name_modern': ['ecclesiastical', 'prophet', 'SACRED'],
+        },
+        'civil_history': {
+            'name': 'Civil History',
+            'name_modern': ['antiquities', 'civilization', 'CHRONICLE', 'historian', 'MEMOIRS', 'STATISTICS'],
+        },
+        'natural_history': {
+            'name': 'Natural History',
+            'name_modern': ['ANIMAL KINGDOM', 'BOTANY', 'celestial', 'METEOR', 'monsters', 'MINERALOGY',
+                            'NATURAL HISTORY',
+                            'PHYSICAL GEOGRAPHY', 'wonders'],
+        },
+        'useful_arts': {
+            'name': 'Useful Arts',
+            'name_modern': ['FORGE', 'GLASS', 'goldsmith', 'handicraft', 'LAPIDARY', 'manufacture', 'masonry', 'mills',
+                            'skins',
+                            'WEAVING'],
+        },
+        # Reason
+        'theology': {
+            'name': 'Theology',
+            'name_modern': ['demons', 'DIVINATION', 'religion', 'SUPERSTITION', 'THEOLOGY'],
+        },
+        'philosophy': {
+            'name': 'Philosophy',
+            'name_modern': ['ETHICS', 'GRAMMAR', 'ideas', 'INDUCTION', 'LEGISLATION', 'logic', 'MEMORY', 'PRINTING',
+                            'PROPOSITION',
+                            'RHETORIC', 'SOUL', 'syllogism', 'WRITING'],
+        },
+        'natural_philosophy': {
+            'name': 'Natural Philosophy',
+            'name_modern': ['ARITHMETIC', 'ASTRONOMY', 'DYNAMICS', 'ELECTRICITY', 'GEOMETRY', 'OPTICS', 'PNEUMATICS',
+                            'POLITICAL ECONOMY', 'PROBABILITY', 'STATICS', 'anatomy',
+                            'ANGLING, or the art of fishing with rod and line', 'ATMOSPHERE', 'BOTANY', 'CHEMISTRY',
+                            'COSMOLOGY', 'HORSEMANSHIP', 'HYDRODYNAMICS', 'METEOROLOGY', 'MINERALOGY', 'ORNITHOLOGY',
+                            'PHYSIC, PRACTICE OF', 'PHYSIOLOGY', 'veterinary medicine'],
+        },
+        # Imagination
+        'fine_arts': {
+            'name': 'Fine Arts',
+            'name_modern': ['ARCHITECT', 'DRAMA', 'ENGRAVING', 'MUSIC', 'novel', 'PAINTING', 'POETRY', 'SCULPTURE'],
+        },
+    },
     # Received 2025-04-14
     '2025-04-30': {
         # Memory
@@ -188,7 +235,8 @@ DOMAINS_SETS = {
 # DOMAINS_SET = '2024-07-09' # becomes '2024-07-09-bugged'
 # DOMAINS_SET = '2024-07-09-bugged'
 # DOMAINS_SET = '2024-07-09-fixed'
-DOMAINS_SET = '2025-04-30'
+# DOMAINS_SET = '2025-04-30'
+DOMAINS_SET = '2025-06-05'
 DOMAINS = DOMAINS_SETS[DOMAINS_SET]
 
 

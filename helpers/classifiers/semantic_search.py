@@ -175,7 +175,8 @@ class SemanticSearch(BaseClassifier):
                 entries = index.query(query)
 
                 if len(entries) != 1:
-                    raise Exception(f'Query title = {seed} and edition = {edition} in index did not return a single row ({len(entries)})')
+                    entries_indexes = ", ".join(entries.index.tolist())
+                    raise Exception(f'Query title = {seed} and edition = {edition} in index did not return a single row. ({len(entries)} matches, {entries_indexes})')
 
                 aid = entries.index[0]
                 try:

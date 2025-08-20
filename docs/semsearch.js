@@ -190,10 +190,10 @@ createApp({
 
         suggestions: ['a', 'bb'],
         status: 'loading',
-        domainSets: ['2025-04-30', '2024-07-09-fixed', '2024-07-09-bugged', '2023'],
+        domainSets: ['2025-06-05', '2025-04-30', '2024-07-09-fixed', '2024-07-09-bugged', '2023'],
         // domainSet: '2024-07-09',
         // domainSet: '2023',
-        domainSet: '2025-04-30',
+        domainSet: '2025-06-05',
     }
     },
     async mounted() {

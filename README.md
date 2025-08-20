@@ -37,7 +37,7 @@ However for eb09, the latest (and only) version is currently in TXT_v1 and XML_v
 13. `rm ../data/DOMAINS_SET/index.json` # see value for DOMAINS_SET in settings.py
 14. `python prep.py`
 
-## (re-)create the embeddings
+## (re-)create the embeddings and classify entries into domains
 
 15. `cd poc/eb-pre/tools`
 16. `rm ../data/semantic_search/*`
