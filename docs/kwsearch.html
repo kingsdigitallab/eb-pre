@@ -279,7 +279,8 @@
           return ret
         },
         getTextPathFromId(aid) {
-          return aid.replace('.xml', '.txt').replace('/XML', '/TXT').replace('m.txt', '.txt')
+          return aid.replace('.xml', '.txt').replace('/XML', '/TXT')
+          //.replace('m.txt', '.txt')
         },
         onClickDensity() {
           let ret = 0
