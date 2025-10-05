@@ -250,7 +250,7 @@
             filters: this.filters
           }
           if (useMiniSearch) {
-            if (this.query) {
+            if (this.query.trim()) {
               const search_results = this.miniSearch.search(
                 this.query,
                 { 
@@ -269,10 +269,12 @@
               options.query = this.query
             }
           }
-          if (this.filters[column_domain]) {
-            options.sort = 'score_desc';
-          } else {
-            options.sort = 'name_asc';
+          if (!this.query.trim()) {
+            if (this.filters[column_domain]) {
+              options.sort = 'score_desc';
+            } else {
+              options.sort = 'name_asc';
+            }
           }
 
           let ret = this.itemsjs.search(options)
