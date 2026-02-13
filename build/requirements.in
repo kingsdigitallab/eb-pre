@@ -3,6 +3,6 @@
 # pip-compile build/requirements.in > build/requirements.txt
 # pip-sync build/requirements.txt
 tqdm
-lexicalrichness
-intel-tensorflow==2.12.0
-top2vec[sentence_encoders]
+lexicalrichness==0.5.0
+# intel-tensorflow==2.12.0
+top2vec[sentence_encoders]==1.0.29

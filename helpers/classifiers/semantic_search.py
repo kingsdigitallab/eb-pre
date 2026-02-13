@@ -335,7 +335,7 @@ class SemanticSearch(BaseClassifier):
             if max_docs > -1 and len(options['documents']) > max_docs:
                 break
 
-        print(f'Training model on {len(options['document_ids'])} documents.')
+        print(f'Training model on {len(options["document_ids"])} documents.')
         # exit()
 
         model = Top2Vec(

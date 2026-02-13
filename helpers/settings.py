@@ -41,8 +41,9 @@ DOMAINS_SETS = {
                             'PROPOSITION',
                             'RHETORIC', 'SOUL', 'syllogism', 'WRITING'],
         },
-        'natural_philosophy': {
-            'name': 'Natural Philosophy',
+        # 2026-02-13: renamed from natural_philosophy
+        'natural_science': {
+            'name': 'Natural Science',
             'name_modern': ['ARITHMETIC', 'ASTRONOMY', 'DYNAMICS', 'ELECTRICITY', 'GEOMETRY', 'OPTICS', 'PNEUMATICS',
                             'POLITICAL ECONOMY', 'PROBABILITY', 'STATICS', 'anatomy',
                             'ANGLING, or the art of fishing with rod and line', 'ATMOSPHERE', 'BOTANY', 'CHEMISTRY',

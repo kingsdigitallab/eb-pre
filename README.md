@@ -48,5 +48,6 @@ However for eb09, the latest (and only) version is currently in TXT_v1 and XML_v
 
 19. `cd poc/eb-pre/docs`
 20. `npm ci`
-21. `python3 -m http.server 8000`
-22. visit the following URL with your browser: http://localhost:8000/docs/
+21. `cd ..`
+22. `python3 -m http.server 8000`
+23. visit the following URL with your browser: http://localhost:8000/docs/

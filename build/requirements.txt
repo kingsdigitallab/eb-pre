@@ -58,7 +58,7 @@ h5py==3.8.0
     # via
     #   intel-tensorflow
     #   tensorflow
-hdbscan==0.8.29
+#hdbscan==0.8.29
     # via top2vec
 idna==3.4
     # via requests
@@ -134,7 +134,7 @@ opt-einsum==3.3.0
     #   intel-tensorflow
     #   jax
     #   tensorflow
-packaging==23.1
+#packaging==23.1
     # via
     #   intel-tensorflow
     #   matplotlib
