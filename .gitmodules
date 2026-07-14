@@ -1,0 +1,3 @@
+[submodule "data/kp-editions"]
+	path = data/kp-editions
+	url = https://github.com/TU-plogan/kp-editions.git
