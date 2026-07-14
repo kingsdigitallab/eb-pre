@@ -1,0 +1,13 @@
+services:
+  dev:
+    build:
+      context: ./build
+      dockerfile: Dockerfile
+    image: eb-pre-dev
+    volumes:
+      # Mount the parent directory (where docker-compose.yml is) to /app
+      - .:/app
+    working_dir: /app
+    entrypoint: /bin/bash /app/build/startup.sh
+    stdin_open: true
+    tty: true

@@ -7,8 +7,17 @@ __pycache__/
 *.so
 
 /venv
-/data
+# /data
 .idea
-/kp-editions
+# /kp-editions
 /tmp
 node_modules
+kp-editions.zip
+lcsh1910.db
+kp_sample_entries.csv
+KP_sample_entries.csv
+*.bk*
+*.zip
+.vscode/
+bk
+*.old
