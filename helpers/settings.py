@@ -6,8 +6,56 @@ def get_path_from_top_directory(directory_name):
         raise Exception(f'"{ret}" is not a directory')
     return ret
 
-# sociology?, economy?, philosophy? Under history
 DOMAINS_SETS = {
+   '2026-07-13': {
+        'sacred_history': {
+            'name': 'Sacred History',
+            'name_modern': ['ecclesiastical', 'prophet', 'SACRED'],
+        },
+        # 2026-07-13 pl: remove "historian", "STATISTICS"; add "ANNALS, "biography"
+        'civil_history': {
+            'name': 'Civil History',
+            'name_modern': ['ANNALS', 'antiquities', 'biography', 'civilization', 'CHRONICLE', 'MEMOIRS', 'reputation'],
+        },
+        # 2026-07-13 pl: add 'MAMMALIA', 'OCEAN', 'POLAR SEAS', 'STATISTICS'; remove 'BOTANY', 'MINERALOGY'
+        'natural_history': {
+            'name': 'Natural History',
+            'name_modern': ['ANIMAL KINGDOM', 'celestial', 'MAMMALIA', 'METEOR', 'monsters', 
+                            'NATURAL HISTORY', 'OCEAN', 'PHYSICAL GEOGRAPHY', 'POLAR SEAS', 'STATISTICS', 'wonders'],
+        },
+        # 2026-07-13 pl: add 'COTTON MANUFACTURE', 'SILK', 'TAN', 'WOOL, AND ITS MANUFACTURES'; 
+        # remove 'manufacture; change 'goldsmith' to 'GOLDSMITH', 'masonry' to 'MASONRY', 'mills' to 'MILL'
+        'useful_arts': {
+            'name': 'Useful Arts',
+            'name_modern': ['COTTON MANUFACTURE', 'FORGE', 'GLASS', 'GOLDSMITH', 'handicraft',
+            'LAPIDARY', 'MASONRY', 'MILL', 'SILK', 'skins', 'TAN', 'WEAVING', 'WOOL, AND ITS MANUFACTURES'],
+        },
+        # Reason
+        'theology': {
+            'name': 'Theology',
+            'name_modern': ['demons', 'DIVINATION', 'religion', 'SUPERSTITION', 'THEOLOGY'],
+        },
+        'philosophy': {
+            'name': 'Philosophy',
+            'name_modern': ['ETHICS', 'GRAMMAR', 'ideas', 'INDUCTION', 'LEGISLATION', 'logic', 'MEMORY', 'PRINTING',
+                            'PROPOSITION',
+                            'RHETORIC', 'SOUL', 'syllogism', 'WRITING'],
+        },
+        # 2026-02-13: renamed from natural_philosophy
+        'natural_science': {
+            'name': 'Natural Science',
+            'name_modern': ['anatomy', 'ANGLING, or the art of fishing with rod and line', 'ARITHMETIC', 'ASTRONOMY', 
+            'ATMOSPHERE', 'BOTANY', 'CHEMISTRY', 'COSMOLOGY', 'DYNAMICS', 'ELECTRICITY',
+            'GEOMETRY', 'HORSEMANSHIP', 'HYDRODYNAMICS', 'METEOROLOGY', 'MINERALOGY','OPTICS', 'ORNITHOLOGY',
+            'PHYSIC, PRACTICE OF', 'PHYSIOLOGY', 'PNEUMATICS', 'POLITICAL ECONOMY', 'PROBABILITY', 'STATICS',
+            'veterinary medicine'],
+        },
+        # Imagination
+        'fine_arts': {
+            'name': 'Fine Arts',
+            'name_modern': ['ARCHITECT', 'DRAMA', 'ENGRAVING', 'MUSIC', 'novel', 'PAINTING', 'POETRY', 'SCULPTURE'],
+        },
+    },
     # add the word "reputation" to the seed words for the domain civil_history
     '2025-10-29': {
         'sacred_history': {
@@ -284,7 +332,7 @@ DOMAINS_SETS = {
 # DOMAINS_SET = '2024-07-09-bugged'
 # DOMAINS_SET = '2024-07-09-fixed'
 # DOMAINS_SET = '2025-04-30'
-DOMAINS_SET = '2025-10-29'
+DOMAINS_SET = '2026-07-13'
 DOMAINS = DOMAINS_SETS[DOMAINS_SET]
 
 
