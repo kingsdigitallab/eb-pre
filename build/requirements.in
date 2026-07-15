@@ -1,8 +1,18 @@
 # pip uninstall -y -r <(pip freeze)
 # pip install pip-tools
+pip-tools==7.5.3
 # pip-compile build/requirements.in > build/requirements.txt
 # pip-sync build/requirements.txt
-tqdm
+
+tqdm==4.68.4
 lexicalrichness==0.5.0
 # intel-tensorflow==2.12.0
-top2vec[sentence_encoders]==1.0.29
+
+## Erroneously downgraded in Feb 2026, which made the .tv2 model file unloadable
+# top2vec[sentence_encoders]==1.0.29
+## top2vec 1.0.36 used up to 2025; its [sentence_encoders]/[sentence_transformers]
+## extras are not expanded by pip-compile, and it imports torch unconditionally
+## (top2vec/embedding.py), so pin CPU torch directly from the PyTorch index.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.12.1+cpu
+top2vec==1.0.36
