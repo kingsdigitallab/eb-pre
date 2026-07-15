@@ -252,9 +252,6 @@ class SemanticSearch(BaseClassifier):
         Load the embeding model.
         Or train it if it doesn't already exist.
         '''
-        if 0:
-            self.model = self.train(edition)
-
         model_path = self.get_model_path(edition)
         if self.model_path != model_path:
             if model_path.exists():
@@ -262,6 +259,7 @@ class SemanticSearch(BaseClassifier):
                 from top2vec import Top2Vec
                 self.model = Top2Vec.load(model_path)
             else:
+                print(f'Train model... (Not found at {model_path})')
                 self.model = self.train(edition)
                 self.convert_model_to_json(edition)
             self.model_path = model_path
