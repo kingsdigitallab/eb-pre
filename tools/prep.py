@@ -9,7 +9,6 @@ sys.path.append(str(project_path))
 
 from helpers.index import Index
 index = Index()
-index.load_or_create()
 
 def index_linguistic_properties(query=None):
     '''
@@ -30,11 +29,12 @@ def index_linguistic_properties(query=None):
 
     index.save()
 
+index.load_or_create()
+
 if 1:
     index_linguistic_properties()
 
 if 0:
-    import re
     from helpers.samples import Samples
 
     samples = Samples()
