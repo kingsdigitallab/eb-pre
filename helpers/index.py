@@ -29,6 +29,7 @@ class Index:
         self.df = None
         path = self.get_path()
         if path.exists():
+            print(f'LOAD index from {path} into pandas dataframe')
             self.df = pd.read_json(path, orient='table')
 
     def query(self, q=None):
@@ -42,6 +43,11 @@ class Index:
         """Indexes the title and edition of all articles in the corpus.
         And saves the index as a json file."""
         ids = list(self.corpus.read_ids())
+
+        print(f'CREATE index from {len(ids)} entries')
+        if len(ids) < 1:
+            print('ERROR: no encyclopedia entries found')
+            exit(1)
 
         index = []
 
