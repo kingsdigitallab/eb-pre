@@ -1,4 +1,4 @@
-[Experimental prototypes](https://kingsdigitallab.github.io/eb-pre/) based on the dataset produced by the [Nineteenth-Century Knowledge Project](https://tu-plogan.github.io/source/c_about.html) led by Peter M. Logan.
+[Experimental prototypes](https://kingsdigitallab.github.io/eb-pre/) based on [the TEI corpus](https://github.com/TU-plogan/kp-editions/tree/b476dc7ad2dadc1201e43f7dd4a053f7251d1b99) produced by the [Nineteenth-Century Knowledge Project](https://tu-plogan.github.io/source/c_about.html) led by Peter M. Logan.
 
 [Introduction to this prototype on KDL website](https://kdl.kcl.ac.uk/projects/encyclopedia-britannica-exploratory-prototypes/)
 
@@ -20,7 +20,7 @@ To run tools, you first need to enter the development environment:
 
 `bash activate.sh`
 
-# Data files and constructions
+# Data files
 
 | ID   | Name   | Size | Format  | Produced from                  | Produced by                          | Path |
 | :--- | :---   | :--- | :---    | :---                           | :---                                 | :--- |
