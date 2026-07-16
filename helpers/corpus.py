@@ -23,6 +23,7 @@ class Corpus:
         ret = [
             str(Path(p).relative_to(path))
             for p in path.glob('**/*.xml')
+            if '/XML/' in str(p)
         ]
         return ret
 
@@ -30,8 +31,8 @@ class Corpus:
         # eb07/TXT/a3/kp-eb0703-024907-8798-v1.txt
         ret = None
         
-        if '/XML' not in aid:
-            print(f'WARNING: .xml file found outside /XML path ({aid})')
+        if '/XML/' not in aid:
+            print(f'WARNING: .xml file found outside /XML/ path ({aid})')
         else:        
             ret = re.search(r'kp-eb(?P<edition>\d\d)(?P<volume>\d\d)-(?P<page>\d\d\d\d)\d\d-', aid)
             if not ret:
