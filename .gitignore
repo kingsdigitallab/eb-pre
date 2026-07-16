@@ -21,3 +21,4 @@ KP_sample_entries.csv
 .vscode/
 bk
 *.old
+data/models
