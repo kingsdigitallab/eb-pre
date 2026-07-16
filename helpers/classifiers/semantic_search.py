@@ -150,9 +150,9 @@ class SemanticSearch(BaseClassifier):
                     'aids': res[1].tolist(),
                 }
 
-            print(f'WRITTEN domains neighbours into {top2vec_domains_path}')
-
+            top2vec_domains_path.parent.mkdir(parents=True, exist_ok=True)
             top2vec_domains_path.write_text(json.dumps(self.domain_results))
+            print(f'WRITTEN domains neighbours into {top2vec_domains_path}')
 
     def get_index(self):
         if not self.index:
