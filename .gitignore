@@ -22,3 +22,6 @@ KP_sample_entries.csv
 bk
 *.old
 data/models
+# intermediary model files, too large for github or web delivery; but quantised model is committed
+data/semantic_search/semantic_search-edition_7-doc2vec-learn-mc_40-ng_1-tm_0.5-ch_sentence.tv2
+data/semantic_search/semantic_search-edition_7-doc2vec-learn-mc_40-ng_1-tm_0.5-ch_sentence.tv2.json
