@@ -7,6 +7,7 @@ def get_path_from_top_directory(directory_name):
     return ret
 
 DOMAINS_SETS = {
+   '2026-07-16': '2026-07-13',
    '2026-07-13': {
         'sacred_history': {
             'name': 'Sacred History',
@@ -327,11 +328,11 @@ DOMAINS_SETS = {
     }
 }
 
-# DOMAINS_SET = '2023'
-# DOMAINS_SET = '2024-07-09' # becomes '2024-07-09-bugged'
-# DOMAINS_SET = '2024-07-09-bugged'
-# DOMAINS_SET = '2024-07-09-fixed'
-# DOMAINS_SET = '2025-04-30'
+# expand aliases
+for k, v in DOMAINS_SETS.items():
+    if isinstance(v, str):
+        DOMAINS_SETS[k] = DOMAINS_SETS[v]
+
 DOMAINS_SET = '2026-07-13'
 DOMAINS = DOMAINS_SETS[DOMAINS_SET]
 
