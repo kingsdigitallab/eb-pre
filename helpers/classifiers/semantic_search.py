@@ -1,9 +1,13 @@
-from helpers import settings
-from pathlib import Path
-from tqdm import tqdm
-from .base_classifier import BaseClassifier
-import re
 import json
+import math
+import re
+from pathlib import Path
+
+from tqdm import tqdm
+
+from helpers import settings
+
+from .base_classifier import BaseClassifier
 
 
 class SemanticSearch(BaseClassifier):
@@ -111,6 +115,9 @@ class SemanticSearch(BaseClassifier):
             for k, v in parts
         ]) + '.tv2'
 
+    def get_domains_neightbours_path(self, edition=7):
+        return self.get_file_path(f'{settings.DOMAINS_SET}/{self.get_model_filename(edition)}_domains.json')
+
     def before_classify(self, edition=7):
         '''       
         Compute self.domain_results, a dictionnary mapping a domain_key to a 
@@ -120,39 +127,34 @@ class SemanticSearch(BaseClassifier):
 
         The dictionnary is saved to a json file.
 
-        If the file already exists self.domain_results is read from it 
-        rather than computer.
+        If the file already exists 
+        self.domain_results is read from it 
+        rather than computed.
         '''
-        # edition = entry["edition"]
-        options = self.get_options()
-        top2vec_domains_path = self.get_file_path(f'{settings.DOMAINS_SET}/{self.get_model_filename(edition)}_domains.json')
+        top2vec_domains_path = self.get_domains_neightbours_path(edition=edition)
+
+        top2vec_domains_path.unlink(missing_ok=True)
 
         # print(f'before_classify: {top2vec_domains_path}')
-        if top2vec_domains_path.exists():
-            print(f'READ domains neighbours from {top2vec_domains_path}')
-            self.domain_results = json.loads(top2vec_domains_path.read_text())
-        else:
-            print(f'COMPUTE domains neighbours...')
-            self.domain_results = {}
-            model = self.load_model(edition)
+        # if top2vec_domains_path.exists():
+        #     print(f'READ domains neighbours from {top2vec_domains_path}')
+        #     self.domain_results = json.loads(top2vec_domains_path.read_text())
+        # else:
+        print(f'COMPUTE domains neighbours...')
+        self.domain_results = {}
+        model = self.load_model(edition)
 
-            # if 0:
-            #     for seeds in [['SACRED'], ['sacred'], ['sacred', 'SACRED'], ['sacred', 'sacred']]:
-            #     # for seeds in [['sacred', 'sacred']]:
-            #         res = self.search_documents_by_seeds(model, seeds)
-            #     exit()
+        for domain_key, domain_def in settings.DOMAINS.items():
+            res = self.search_documents_by_seeds(model, domain_def['name_modern'])
 
-            for domain_key, domain_def in settings.DOMAINS.items():
-                res = self.search_documents_by_seeds(model, domain_def['name_modern'])
+            self.domain_results[domain_key] = {
+                'scores': res[0].tolist(),
+                'aids': res[1].tolist(),
+            }
 
-                self.domain_results[domain_key] = {
-                    'scores': res[0].tolist(),
-                    'aids': res[1].tolist(),
-                }
-
-            top2vec_domains_path.parent.mkdir(parents=True, exist_ok=True)
-            top2vec_domains_path.write_text(json.dumps(self.domain_results))
-            print(f'WRITTEN domains neighbours into {top2vec_domains_path}')
+        top2vec_domains_path.parent.mkdir(parents=True, exist_ok=True)
+        top2vec_domains_path.write_text(json.dumps(self.domain_results))
+        print(f'WRITTEN domains neighbours into {top2vec_domains_path}')
 
     def get_index(self):
         if not self.index:
@@ -247,12 +249,19 @@ class SemanticSearch(BaseClassifier):
 
         return ret
 
+    def remove_model(self, edition):
+        model_path = self.get_model_path(edition)
+        model_path.unlink(missing_ok=True)
+        (model_path.with_suffix('.json')).unlink(missing_ok=True)
+        self.get_domains_neightbours_path(edition).unlink(missing_ok=True)
+
     def load_model(self, edition):
         '''
         Load the embeding model.
         Or train it if it doesn't already exist.
         '''
         model_path = self.get_model_path(edition)
+
         if self.model_path != model_path:
             if model_path.exists():
                 print(f'Load model {model_path}...')
@@ -344,4 +353,23 @@ class SemanticSearch(BaseClassifier):
 
         return model
 
+    def compress_model(self, edition, decimals=2):
+        self.compress_embedding_file(str(self.get_model_path(edition)) + '.json', decimals)
 
+    def compress_embedding_file(self, file_path, decimals=2):
+        path_out = re.sub(r'(\.tv2\.json)', fr'-de_{decimals}\1', str(file_path))
+
+        k = math.pow(10, decimals)
+
+        print(file_path)
+
+        t0 = Path(file_path).read_text()
+        vectors = json.loads(t0)
+
+        for label, v in vectors.items():
+            vectors[label] = [int(c*k) for c in v]
+
+        t1 = json.dumps(vectors, separators=(',', ':'))
+        Path(path_out).write_text(t1)
+
+        print(f'COMPRESSED model ({len(t0)/1024/1024:.2f}MB -> {len(t1)/1024/1024:.2f}MB {path_out})')

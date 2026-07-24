@@ -1,3 +1,4 @@
+import argparse
 import sys
 from pathlib import Path
 from tqdm import tqdm
@@ -51,10 +52,13 @@ def test_classifier(ClassifierClass):
     return ret
 
 
-def classify_corpus(ClassifierClass, edition=7):
+def classify_corpus(ClassifierClass, edition=7, rebuild_model=False):
     classifier = ClassifierClass()
 
     print(f'Classifier model: {classifier.get_model_filename(edition)}; type: {classifier.get_class_key()}')
+
+    if rebuild_model:
+        classifier.remove_model(edition=edition)
 
     classifier.before_classify(edition=edition)
 
@@ -74,6 +78,13 @@ def classify_corpus(ClassifierClass, edition=7):
     print(f'WRITE assigned domains back to the index {index.get_path()}')
     index.save()
 
+    classifier.compress_model(edition, 2)
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--rebuild', action='store_true', help='Rebuild embedding model')
+args = parser.parse_args()
+
 # from helpers.classifiers.test import Test as Classifier
 # from helpers.classifiers.subjects_taxonomy import SubjectsTaxonomy as Classifier
 # from helpers.classifiers.title_taxonomy import TitleTaxonomy as Classifier
@@ -89,4 +100,4 @@ if 0:
     print(res['classifier'].get_params_str())
     print(f'Accuracy: {int(res["correct"] / res["tested"] * 100)}% = {res["correct"]} / {res["tested"]}')
 else:
-    classify_corpus(Classifier)
+    classify_corpus(Classifier, edition=7, rebuild_model=args.rebuild)

@@ -7,8 +7,61 @@ def get_path_from_top_directory(directory_name):
     return ret
 
 DOMAINS_SETS = {
-   '2026-07-16': '2026-07-13',
-   '2026-07-13': {
+    '2026-07-19': '2026-07-18',
+    '2026-07-18': {
+        'sacred_history': {
+            'name': 'Sacred History',
+            'name_modern': ['ecclesiastical', 'prophet', 'SACRED'],
+        },
+        # 2026-07-13 pl: remove "historian", "STATISTICS"; add "ANNALS, "biography"
+        'civil_history': {
+            'name': 'Civil History',
+            'name_modern': ['ANNALS', 'antiquities', 'biography', 'civilization', 'CHRONICLE', 'MEMOIRS', 'reputation'],
+        },
+        # 2026-07-13 pl: add 'MAMMALIA', 'OCEAN', 'POLAR SEAS', 'STATISTICS'; remove 'BOTANY'
+        'natural_history': {
+            'name': 'Natural History',
+            'name_modern': ['ANIMAL KINGDOM', 'celestial', 'MAMMALIA', 'METEOR', 'monsters', 'MINERALOGY', 
+                            'NATURAL HISTORY', 'OCEAN', 'PHYSICAL GEOGRAPHY', 'POLAR SEAS', 'POLITICAL ECONOMY', 
+                            'STATISTICS', 'wonders'],
+        },
+        # 2026-07-13 pl: add 'COTTON MANUFACTURE', 'SILK', 'TAN', 'WOOL, AND ITS MANUFACTURERS'; 
+        # remove 'manufacture; change 'goldsmith' to 'GOLDSMITH', 'masonry' to 'MASONRY', 'mills' to 'MILL'
+        'useful_arts': {
+            'name': 'Useful Arts',
+            'name_modern': ['COTTON MANUFACTURE', 'FORGE', 'GLASS', 'GOLDSMITH', 'handicraft',
+                            'LAPIDARY', 'manufacture', 'MASONRY', 'MILL', 'SILK', 'skins', 'TAN', 'WEAVING',
+                            'WOOL, AND ITS MANUFACTURES'],
+        },
+        # Reason
+        'theology': {
+            'name': 'Theology',
+            'name_modern': ['demons', 'DIVINATION', 'religion', 'SUPERSTITION', 'THEOLOGY'],
+        },
+        'philosophy': {
+            'name': 'Philosophy',
+            'name_modern': ['ETHICS', 'GRAMMAR', 'ideas', 'INDUCTION', 'LEGISLATION', 'logic', 'MEMORY', 'PRINTING',
+                            'PROPOSITION', 'RHETORIC', 'SOUL', 'syllogism', 'WRITING'],
+        },
+        # 2026-07-18 pl; add 'PATHOLOGY, GENERAL', VETERINARY SCIENCE; remove "PHYSIC, PRACTICE OF",
+        # POLITICAL ECONOMY
+        # 2026-02-13: renamed from natural_philosophy
+        'natural_science': {
+            'name': 'Natural Science',
+            'name_modern': ['anatomy', 'ANGLING, or the art of fishing with rod and line', 'ARITHMETIC', 'ASTRONOMY',
+                            'ATMOSPHERE', 'BOTANY', 'CHEMISTRY', 'COSMOLOGY', 'DYNAMICS', 'ELECTRICITY',
+                            'GEOMETRY', 'HORSEMANSHIP', 'HYDRODYNAMICS', 'METEOROLOGY', 'OPTICS',
+                            'ORNITHOLOGY', 'PHYSIOLOGY', 'PNEUMATICS', 'PROBABILITY', 'STATICS',
+                            'VETERINARY SCIENCE'],
+        },
+        # Imagination
+        'fine_arts': {
+            'name': 'Fine Arts',
+            'name_modern': ['ARCHITECT', 'DRAMA', 'ENGRAVING', 'MUSIC', 'novel', 'PAINTING', 'POETRY', 'SCULPTURE'],
+        },
+    },
+    '2026-07-16': '2026-07-13',
+    '2026-07-13': {
         'sacred_history': {
             'name': 'Sacred History',
             'name_modern': ['ecclesiastical', 'prophet', 'SACRED'],
@@ -333,7 +386,7 @@ for k, v in DOMAINS_SETS.items():
     if isinstance(v, str):
         DOMAINS_SETS[k] = DOMAINS_SETS[v]
 
-DOMAINS_SET = '2026-07-13'
+DOMAINS_SET = '2026-07-19'
 DOMAINS = DOMAINS_SETS[DOMAINS_SET]
 
 

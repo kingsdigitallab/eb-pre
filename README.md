@@ -26,10 +26,11 @@ To run tools, you first need to enter the development environment:
 | :--- | :---   | :--- | :---    | :---                           | :---                                 | :--- |
 | 1    | corpus | 4GB  | XML,TXT | Britannica 7th & 9th editions  | Nineteenth-Century Knowledge Project | data/kp-editions/ |   
 | 2    | domain definitions | 1MB  | Python | Research | PI,KDL | Data  | helpers/settings.py |   
-| 3    | entries index  | 23MB | JSON    | 1 (XML)                | tools/prep.py                        | data/DOMAINS_SET/index.json |   
+| 3    | entries index  | 23MB | JSON    | 1 (XML)                | tools/index.py                        | data/DOMAINS_SET/index.json |   
 | 4    | embedding model | 146MB | TV2 (topic2vec) & JSON | 1 (TXT)      | tools/classify.py | app/data/semantic_search/semantic_search-edition_7-doc2vec-learn-mc_40-ng_1-tm_0.5-ch_sentence.tv2 & .json|   
-| 5    | domain embeddings | 5MB  | JSON | 2,4 | tools/classify.py | data/semantic_search/DOMAINS_SET/semantic_search-edition_7-doc2vec-learn-mc_40-ng_1-tm_0.5-ch_sentence.tv2_domains.json |   
-| 6    | compressed model | 48MB  | JSON | 4 | tools/compress.py | data/semantic_search/semantic_search-edition_7-doc2vec-learn-mc_40-ng_1-tm_0.5-ch_sentence-de_2.tv2.json |   
+| 5    | compressed model | 48MB  | JSON | 4 (JSON) | tools/compress.py | data/semantic_search/semantic_search-edition_7-doc2vec-learn-mc_40-ng_1-tm_0.5-ch_sentence-de_2.tv2.json |
+| 6    | domain neighbours | 5MB  | JSON | 2, 4 (TV2) | tools/classify.py | data/semantic_search/DOMAINS_SET/semantic_search-edition_7-doc2vec-learn-mc_40-ng_1-tm_0.5-ch_sentence.tv2_domains.json |   
+   
 
 Note that: 
 * `classify.py` also updates the index with the nearest domain to each entry and their cosine similarity;
@@ -77,18 +78,23 @@ This operation takes approximately 30 minutes.
 Follow sections below on how to "rebuild the words and entries embeddings" 
 and "classify using new domain definitions".
 
-## How to rebuild the embeddings model?
+## How to (re)build the embeddings model?
 
-Remove the existing model:
+```bash
+cd tools
+python classify.py --rebuild
+```
 
-`rm data/semantic_search/*.tv2 data/semantic_search/*.json`
+That command will also (re)classify the entries.
 
-Then see below on how to "classify using new domain definitions".
+## How to reclassify entries using new domain definitions?
 
-## How to classify using new domain definitions?
+After adding new domain definitions in `settings.py`, reclassify like this:
 
 ```bash
 cd tools
 python classify.py
-python compress.py ../data/semantic_search/semantic_search-edition_7-doc2vec-learn-mc_40-ng_1-tm_0.5-ch_sentence.tv2.json 2
 ```
+
+The index will be updated so each each entry records 
+its top domain and their cosine score.
