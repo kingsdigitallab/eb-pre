@@ -20,6 +20,14 @@ To run tools, you first need to enter the development environment:
 
 `bash activate.sh`
 
+## Run notebooks
+
+To open JupyterLab (for the notebooks in `notebooks/`) inside the development container:
+
+`bash notebook.sh`
+
+then open `http://localhost:8888/lab` (it opens automatically when ready). CTRL+C to exit.
+
 # Data files
 
 | ID   | Name   | Size | Format  | Produced from                  | Produced by                          | Path |
