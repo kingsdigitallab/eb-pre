@@ -289,10 +289,8 @@
         onClickDensity() {
           let ret = 0
           let res = this._search(100000)
-          let c = 0
           for (item of res.data.items) {
             ret += item.mtld
-            c++
           }
           this.density = (ret / res.data.items.length).toFixed(2)
         },
