@@ -34,7 +34,9 @@ def index_linguistic_properties(index, query=None):
 
 def index_in_x(index, query=None):
     '''
-
+    Extract patterns like ", in geography" 
+    from the start of an entry 
+    and add geography to the index
     '''
     corpus = Corpus()
   
@@ -54,6 +56,7 @@ def index_in_x(index, query=None):
             if occurrences:
                 pattern['groups'].update([o.lower() for o in occurrences])
                 if pattern_key == 'in_x':
+                    # print(occurrences[0].lower())
                     index.update(aid, pattern_key, occurrences[0].lower())
 
     index.save()
@@ -62,15 +65,15 @@ def main():
     index = Index()
     index.load_or_create()
 
-    if 1:
-        # takes 30mins
+    if 0:
+        # takes 30 mins
         print('COMPUTE lexical diversity of every entry and add it to the index')
         index_linguistic_properties(index)
 
-    if 0:
-        # takes 30mins
+    if 1:
+        # takes 2 secs
         print('COMPUTE in_x property of every entry and add it to the index')
-        index_linguistic_properties(index)
+        index_in_x(index)
 
     print('DONE')
 

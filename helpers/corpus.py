@@ -84,9 +84,11 @@ class Corpus:
             path = str(aid).replace('XML', 'TXT').replace(suffix + '.xml', '.txt')
             path = Path(self.path, path)
             if path.exists():
-                ret = path.read_text()
+                content = path.read_text()
                 # remove the header
-                ret = re.sub(r'(?s)^.*===\+\s*', r'', ret)
+                ret = re.sub(r'(?s)^.*===\+\s*', r'', content)
+                if len(content) == len(ret):
+                    print(f"WARNING: {aid} doesn't have a header")
                 break
 
         return ret
