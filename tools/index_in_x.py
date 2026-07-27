@@ -1,26 +1,20 @@
-# %%
-import sys
-import os
-from collections import Counter
 import re
+import sys
+from collections import Counter
 from pathlib import Path
+
 parent_path = str(Path(__file__).parent.parent)
 sys.path.append(parent_path)
 
-from helpers import settings
-
-domains = settings.DOMAINS
-
 from helpers.index import Index
+from helpers.corpus import Corpus
+
 index = Index()
 index.load()
 
-from helpers.corpus import Corpus
 corpus = Corpus()
 
 from tqdm import tqdm
-
-# %%
 
 patterns = {
     'in_x': {
@@ -47,8 +41,4 @@ index.save()
 print(patterns)
 
 print('done')
-
-# %%
-
-
 
