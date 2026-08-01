@@ -127,9 +127,9 @@ class SemanticSearch(BaseClassifier):
 
         The dictionnary is saved to a json file.
 
-        If the file already exists 
-        self.domain_results is read from it 
-        rather than computed.
+        # If the file already exists 
+        # self.domain_results is read from it 
+        # rather than computed.
         '''
         top2vec_domains_path = self.get_domains_neightbours_path(edition=edition)
 
@@ -147,14 +147,17 @@ class SemanticSearch(BaseClassifier):
         for domain_key, domain_def in settings.DOMAINS.items():
             res = self.search_documents_by_seeds(model, domain_def['name_modern'])
 
+            scores_and_neighbours = res['scores_and_neighbours']
+            # res['seeds_vector']
+
             self.domain_results[domain_key] = {
-                'scores': res[0].tolist(),
-                'aids': res[1].tolist(),
+                'scores': scores_and_neighbours[0].tolist(),
+                'aids': scores_and_neighbours[1].tolist(),
             }
 
+        print(f'WRITE domains neighbours into {top2vec_domains_path}')
         top2vec_domains_path.parent.mkdir(parents=True, exist_ok=True)
         top2vec_domains_path.write_text(json.dumps(self.domain_results))
-        print(f'WRITTEN domains neighbours into {top2vec_domains_path}')
 
     def get_index(self):
         if not self.index:
@@ -166,8 +169,20 @@ class SemanticSearch(BaseClassifier):
         return self.index
 
     def search_documents_by_seeds(self, model, seeds, edition=7):
-        # TODO: avoid calling private methods
+        seeds_vector = self.get_vector_from_seeds(model, seeds, edition)
+        
+        scores_and_neighbours = model.search_documents_by_vector(
+            seeds_vector,
+            10000,
+            return_documents=False
+        )
 
+        return {
+            'seeds_vector': seeds_vector,
+            'scores_and_neighbours': scores_and_neighbours
+        }
+
+    def get_vector_from_seeds(self, model, seeds, edition=7):
         vectors = model._words2word_vectors([s for s in seeds if s == s.lower()]).tolist()
 
         index = self.get_index()
@@ -187,30 +202,9 @@ class SemanticSearch(BaseClassifier):
                     raise Exception(f'Document with id = {aid} is in the index but not in the model (Query title = {seed} and edition = {edition})')
                 vectors.append(model.document_vectors[doc_idx])
                 
-        vector = model._get_combined_vec(vectors, [])
-        
-        res = model.search_documents_by_vector(
-            vector,
-            10000,
-            return_documents=False
-        )
+        # TODO: avoid calling private methods
+        return model._get_combined_vec(vectors, [])
 
-        # print(f'seeds: {seeds}')
-        # print(res[0][:10])
-
-        return res
-
-    def search_documents_by_seeds_old(self, model, seeds):
-        res = model.search_documents_by_keywords(
-            seeds,
-            10000,
-            return_documents=False
-        )
-
-        print(f'seeds: {seeds}')
-        print(res[0][:10])
-
-        return res
 
     def classify(self, entry, scores=None):
         '''
@@ -264,11 +258,11 @@ class SemanticSearch(BaseClassifier):
 
         if self.model_path != model_path:
             if model_path.exists():
-                print(f'Load model {model_path}...')
+                print(f'LOAD model {model_path}...')
                 from top2vec import Top2Vec
                 self.model = Top2Vec.load(model_path)
             else:
-                print(f'Train model... (Not found at {model_path})')
+                print(f'TRAIN model... (Not found at {model_path})')
                 self.model = self.train(edition)
                 self.convert_model_to_json(edition)
             self.model_path = model_path
@@ -292,6 +286,7 @@ class SemanticSearch(BaseClassifier):
         # ops:
         # . label <-> vector
         res = {}
+        
         if 1:
             vectors = model.word_vectors.tolist()
             res = {
@@ -300,10 +295,9 @@ class SemanticSearch(BaseClassifier):
                 in model.word_indexes.items()
             }
             print(f'{len(vectors)} word vectors')
+        
         if 1:
-            from helpers.index import Index
-            index = Index()
-            index.load()
+            index = self.get_index()
 
             vectors = model.document_vectors.tolist()
             res = res | {
@@ -312,11 +306,20 @@ class SemanticSearch(BaseClassifier):
                 in model.doc_id2index.items()
             }
             print(f'{len(vectors)} document vectors')
+
+        if 1:
+            res = res | {
+                f'<{domain_key}>': self.get_vector_from_seeds(model, domain_def['name_modern'], edition).tolist()
+                for domain_key, domain_def
+                in settings.DOMAINS.items()
+            }
+            print(f'{len(settings.DOMAINS.keys())} domain vectors')
+
         print(f'{len(res)} vectors')
         # path_json = Path(settings.DATA_PATH, 'semantic_search', f'edition_{edition}-')
         json_path = Path(str(self.get_model_path(edition)) + '.json')
         json_path.write_text(json.dumps(res))
-        print(f'Written {json_path}')
+        print(f'WRITTEN {json_path}')
 
     def train(self, edition):
         from top2vec import Top2Vec
@@ -342,7 +345,7 @@ class SemanticSearch(BaseClassifier):
             if max_docs > -1 and len(options['documents']) > max_docs:
                 break
 
-        print(f'Training model on {len(options["document_ids"])} documents.')
+        print(f'TRAIN model on {len(options["document_ids"])} documents.')
         # exit()
 
         model = Top2Vec(
@@ -361,7 +364,7 @@ class SemanticSearch(BaseClassifier):
 
         k = math.pow(10, decimals)
 
-        print(file_path)
+        print(f'LOAD model {file_path}')
 
         t0 = Path(file_path).read_text()
         vectors = json.loads(t0)

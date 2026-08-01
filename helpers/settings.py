@@ -7,6 +7,7 @@ def get_path_from_top_directory(directory_name):
     return ret
 
 DOMAINS_SETS = {
+    #'2026-07-18b': '2026-07-18',
     '2026-07-18': {
         'sacred_history': {
             'name': 'Sacred History',
@@ -386,7 +387,8 @@ for k, v in DOMAINS_SETS.items():
         DOMAINS_SETS[k] = DOMAINS_SETS[v]
 
 # DOMAINS_SET = '2026-07-16b'
-DOMAINS_SET = '2026-07-18'
+# DOMAINS_SET = '2026-07-18'
+DOMAINS_SET = list(DOMAINS_SETS.keys())[0]
 DOMAINS = DOMAINS_SETS[DOMAINS_SET]
 
 

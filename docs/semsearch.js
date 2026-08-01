@@ -52,8 +52,10 @@ class VectorIndex {
         let ret = null
         if (type == 'documents') {
             ret = Object.values(this.vs).filter(v => v.label !== v.label.toLowerCase())
+        } else if (type == 'domains') {
+            ret = Object.values(this.vs).filter(v => v.label.startsWith('<'))
         } else if (type == 'words') {
-            ret = Object.values(this.vs).filter(v => v.label == v.label.toLowerCase())
+            ret = Object.values(this.vs).filter(v => v.label == v.label.toLowerCase() && !v.label.startsWith('<'))
         }
         if (!ret) {
             ret = Object.values(this.vs)
@@ -203,7 +205,7 @@ createApp({
     computed: {
         density() {
             let ret = 0
-            for (item of this.items.documents) {
+            for (let item of this.items.documents) {
                 ret += this.titlesEntry[item.label].mtld
             }
             if (ret > 0) {
@@ -244,8 +246,9 @@ createApp({
         let v = this.index.getVectorFromLabel(this.query)
         if (v) {
             this.items = {
-                words: this.index.findNearestVectors(v, 'words', this.precision).slice(0, this.limit),
                 documents: this.filterNearestDocVectorsByLength(this.index.findNearestVectors(v, 'documents', this.precision)),
+                words: this.index.findNearestVectors(v, 'words', this.precision).slice(0, this.limit),
+                domains: this.index.findNearestVectors(v, 'domains', this.precision).slice(0, this.limit),
             }
         } else {
             this.items.words = []

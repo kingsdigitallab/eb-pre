@@ -93,6 +93,7 @@
                     <option>10</option>
                     <option>25</option>
                     <option>100</option>
+                    <option>500</option>
                   </select>
                 </div>
               </div>
@@ -112,7 +113,7 @@
             <p>Loading dataset, please wait...</p>
           </div>
           <template v-else>
-            <div class="column is-5 results">
+            <div class="column is-4 results">
               <h2 class="title is-4">Nearest entries</h2>
               <div v-for="(item, idx) in items.documents">
                 <a href="#" @click.prevent.default="onClickItem(item)">{{idx + 1}}. {{ item.label }}</a>
@@ -122,10 +123,16 @@
                 </span>
               </div>
             </div>
-            <div class="column is-5 results">
+            <div class="column is-3 results">
               <h2 class="title is-4">Nearest words</h2>
               <div v-for="(item, idx) in items.words">
                 <a href="#" @click.prevent.default="onClickItem(item)">{{idx + 1}}. {{ item.label }}</a>
+              </div>
+            </div>
+            <div class="column is-3 results">
+              <h2 class="title is-4">Nearest domains</h2>
+              <div v-for="(item, idx) in items.domains">
+                <a href="#" @click.prevent.default="onClickItem(item)">{{( item.similarity || 0.0).toLocaleString(undefined, { minimumFractionDigits: 2 }) }} {{ item.label }}</a>
               </div>
             </div>
           </div>

@@ -17,6 +17,8 @@ class Index:
         mtld:       74.52
         chars:      32406
         words:      123
+        semantic_search-label:  "philosophy"
+        semantic_search-score:  0.2242414038
     '''
     def __init__(self):
         self.corpus = Corpus()
