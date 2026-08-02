@@ -34,15 +34,16 @@ function expandURL(relativeURL) {
 class VectorIndex {
 
     constructor() {
+        // e.g. {'canal' => [-1, 22, 7, ...] with a .label = 'canal'}
         this.vs = {}
     }
 
     get_size(type='any') {
         let ret = []
         if (type == 'documents') {
-            ret = Object.values(this.vs).filter(v => v.label !== v.label.toLowerCase())
+            ret = Object.values(this.vs).filter(v => !v.label.startsWith('<') && v.label !== v.label.toLowerCase())
         } else if (type == 'words') {
-            ret = Object.values(this.vs).filter(v => v.label == v.label.toLowerCase())
+            ret = Object.values(this.vs).filter(v => !v.label.startsWith('<') && v.label == v.label.toLowerCase())
         }
         return ret.length
     }
