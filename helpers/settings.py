@@ -7,7 +7,8 @@ def get_path_from_top_directory(directory_name):
     return ret
 
 DOMAINS_SETS = {
-    #'2026-07-18b': '2026-07-18',
+    '2026-07-18fix1': '2026-07-18',
+    '2026-07-18retrained': '2026-07-18',
     '2026-07-18': {
         'sacred_history': {
             'name': 'Sacred History',
