@@ -9,6 +9,9 @@ from helpers import settings
 
 from .base_classifier import BaseClassifier
 
+CHAR_LENGTH_OF_ENTRIES_TO_IGNORE = 10
+DOMAIN_NEIGHBOURS_CUT_OFF = 10000
+# DOMAIN_NEIGHBOURS_CUT_OFF = 30000
 
 class SemanticSearch(BaseClassifier):
     '''
@@ -170,10 +173,10 @@ class SemanticSearch(BaseClassifier):
 
     def search_documents_by_seeds(self, model, seeds, edition=7):
         seeds_vector = self.get_vector_from_seeds(model, seeds, edition)
-        
+
         scores_and_neighbours = model.search_documents_by_vector(
             seeds_vector,
-            10000,
+            min(DOMAIN_NEIGHBOURS_CUT_OFF, len(self.model.doc_id2index)),
             return_documents=False
         )
 
@@ -294,18 +297,22 @@ class SemanticSearch(BaseClassifier):
                 for label, idx
                 in model.word_indexes.items()
             }
-            print(f'{len(vectors)} word vectors')
+            print(f'  {len(vectors)} word vectors converted from .tv2 model')
         
         if 1:
             index = self.get_index()
 
             vectors = model.document_vectors.tolist()
-            res = res | {
+            converted_vectors = {
                 f'{index.get_row(label)["title"]}': vectors[idx]
                 for label, idx
                 in model.doc_id2index.items()
             }
-            print(f'{len(vectors)} document vectors')
+            res = res | converted_vectors
+            print(f'  {len(vectors)} document vectors converted from .tv2 model')
+            duplicates_count = len(vectors) - len(converted_vectors)
+            if duplicates_count:
+                print(f'    WARNING: {duplicates_count} entries lost in conversion due to duplicate titles')
 
         if 1:
             res = res | {
@@ -313,7 +320,7 @@ class SemanticSearch(BaseClassifier):
                 for domain_key, domain_def
                 in settings.DOMAINS.items()
             }
-            print(f'{len(settings.DOMAINS.keys())} domain vectors')
+            print(f'  {len(settings.DOMAINS.keys())} new domain vectors added (as absent from .tv2 model)')
 
         print(f'{len(res)} vectors')
         # path_json = Path(settings.DATA_PATH, 'semantic_search', f'edition_{edition}-')
@@ -337,7 +344,7 @@ class SemanticSearch(BaseClassifier):
         options = self.get_options().copy()
         for aid in tqdm(index.query(query).index):
             body = corpus.read_body(aid)
-            if len(body) > 10:
+            if len(body) > CHAR_LENGTH_OF_ENTRIES_TO_IGNORE:
                 options['documents'].append(body.lower())
                 options['document_ids'].append(aid)
             else:
