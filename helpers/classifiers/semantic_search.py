@@ -240,10 +240,6 @@ class SemanticSearch(BaseClassifier):
         if scores is not None:
             scores.extend(domain_scores)
 
-        if 0:
-            for idx in [0, 1, -1]:
-                print(f'  {domain_scores[idx]}')
-
         return ret
 
     def remove_model(self, edition):
