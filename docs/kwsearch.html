@@ -134,10 +134,12 @@
                 </tr>
                 <tr>
                   <td colspan="5">
+                    <template v-if="item['semantic_search-label']">
                     domain: {{ item['semantic_search-label'] }}
-                    ({{ (item['semantic_search-score'] || 0.0).toLocaleString(undefined, { minimumFractionDigits: 2 }) }})
-                    | 
-                    diversity: {{ item['mtld'].toFixed(2) }}
+                    ({{ (item['semantic_search-score'] || 0.0).toLocaleString(undefined, { minimumFractionDigits: 2 }) }}<template v-if="typeof item['margin'] === 'number'">, {{ (item['margin'] || 0) }}%</template>)
+                    |
+                    </template>
+                    divers.: {{ item['mtld'].toFixed(2) }}
                     <br>
                     Subject terms: {{ getStringFromLabels(item) }}
                   </td>
@@ -183,10 +185,10 @@
             content: 'Click on an entry heading in the results to show its content here.'
           },
           density: 0,
-          domainSets: ['2026-07-18', '2026-07-16', '2026-07-13', '2025-10-29', '2025-06-05', '2025-04-30', '2024-07-09-fixed', '2024-07-09-bugged', '2023'],
+          domainSets: ['2026-07-18fix1', '2026-07-18', '2026-07-16', '2026-07-13', '2025-10-29', '2025-06-05', '2025-04-30', '2024-07-09-fixed', '2024-07-09-bugged', '2023'],
           // domainSet: '2024-07-09',
           // domainSet: '2023',
-          domainSet: '2026-07-18',
+          domainSet: '2026-07-18fix1',
           status: 'loading',
         }
       },
