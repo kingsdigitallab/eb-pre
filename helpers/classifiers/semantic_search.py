@@ -10,8 +10,9 @@ from helpers import settings
 from .base_classifier import BaseClassifier
 
 CHAR_LENGTH_OF_ENTRIES_TO_IGNORE = 10
+# DOMAIN_NEIGHBOURS_CUT_OFF = 10000
 DOMAIN_NEIGHBOURS_CUT_OFF = 10000
-# DOMAIN_NEIGHBOURS_CUT_OFF = 30000
+DOMAIN_NEIGHBOURS_CUT_OFF_IN_FILE = 10000
 
 class SemanticSearch(BaseClassifier):
     '''
@@ -158,9 +159,20 @@ class SemanticSearch(BaseClassifier):
                 'aids': scores_and_neighbours[1].tolist(),
             }
 
+        # Truncate number of nearest neighbours to keep backward compatible results
+        # (not mandatory, but keeps the file smaller in github)
+        domain_results_truncated = {
+            k: {
+                'scores': results['scores'][:DOMAIN_NEIGHBOURS_CUT_OFF_IN_FILE],
+                'aids': results['aids'][:DOMAIN_NEIGHBOURS_CUT_OFF_IN_FILE],
+            }
+            for k, results
+            in self.domain_results.items()
+        }
+
         print(f'WRITE domains neighbours into {top2vec_domains_path}')
         top2vec_domains_path.parent.mkdir(parents=True, exist_ok=True)
-        top2vec_domains_path.write_text(json.dumps(self.domain_results))
+        top2vec_domains_path.write_text(json.dumps(domain_results_truncated))
 
     def get_index(self):
         if not self.index:
