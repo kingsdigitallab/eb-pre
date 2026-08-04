@@ -78,7 +78,7 @@ def classify_corpus(ClassifierClass, edition=7, rebuild_model=False):
         # print(entry['title'], domain)
         index.update(aid, f'{ClassifierClass.get_class_key()}-label', label_score[0])
         index.update(aid, f'{ClassifierClass.get_class_key()}-score', label_score[1])
-        index.update(aid, f'margin', int((1 - abs(scores[1][1]) / abs(scores[0][1])) * 100) if scores[0][1] else 0.0)
+        # index.update(aid, f'margin', int((1 - abs(scores[1][1]) / abs(scores[0][1])) * 100) if scores[0][1] else 0.0)
 
     print(f'WRITE assigned domains back to the index {index.get_path()}')
     index.save()
